@@ -1,0 +1,17 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<package xmlns="http://schemas.microsoft.com/packaging/2012/06/nuspec.xsd">
+  <metadata>
+    <id>Game</id>
+    <version>1.0.0</version>
+    <authors>Game</authors>
+    <description>Package Description</description>
+    <repository type="git" commit="703d3b5eb013cef28bee8237ee7ae376241b277a" />
+    <dependencies>
+      <group targetFramework="net10.0" />
+    </dependencies>
+  </metadata>
+  <files>
+    <file src="C:\Users\fixinlab\RiderProjects\Project-H\Game\bin\Debug\net10.0\Game.runtimeconfig.json" target="lib\net10.0\Game.runtimeconfig.json" />
+    <file src="C:\Users\fixinlab\RiderProjects\Project-H\Game\bin\Debug\net10.0\Game.dll" target="lib\net10.0\Game.dll" />
+  </files>
+</package>

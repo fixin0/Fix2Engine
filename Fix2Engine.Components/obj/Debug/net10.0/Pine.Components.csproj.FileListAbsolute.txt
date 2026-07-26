@@ -1,0 +1,13 @@
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\bin\Debug\net10.0\Pine.Components.deps.json
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\bin\Debug\net10.0\Pine.Components.dll
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\bin\Debug\net10.0\Pine.Components.pdb
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\obj\Debug\net10.0\Pine.Components.csproj.AssemblyReference.cache
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\obj\Debug\net10.0\Pine.Components.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\obj\Debug\net10.0\Pine.Components.AssemblyInfoInputs.cache
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\obj\Debug\net10.0\Pine.Components.AssemblyInfo.cs
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\obj\Debug\net10.0\Pine.Components.csproj.CoreCompileInputs.cache
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\obj\Debug\net10.0\Pine.Components.sourcelink.json
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\obj\Debug\net10.0\Pine.Components.dll
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\obj\Debug\net10.0\refint\Pine.Components.dll
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\obj\Debug\net10.0\Pine.Components.pdb
+C:\Users\fixinlab\RiderProjects\Project-H\Pine.Components\obj\Debug\net10.0\ref\Pine.Components.dll
