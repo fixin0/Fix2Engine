@@ -47,3 +47,5 @@ Clone the repository:
 Open Fix2Engine.sln in Visual Studio or JetBrains Rider.
 
 Set Game as the startup project and run.
+
+Documentation: Coming soon...
