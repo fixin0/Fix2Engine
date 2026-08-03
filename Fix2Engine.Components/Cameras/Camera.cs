@@ -34,6 +34,14 @@ namespace Fix2Engine.Graphics
         // ThirdPerson için takip mesafesi
         public Vector3 TargetOffset { get; set; } = new Vector3(0.0f, 3.0f, 5.0f);
 
+        // Hareket & Bakış Hassasiyeti
+        public float MoveSpeed { get; set; } = 6.0f;
+        public float MouseSensitivity { get; set; } = 0.003f;
+
+        // Kırpma Düzlemleri (Clip Planes) - büyük ölçekli sahnelerde z-fighting/kırpılmayı önler
+        public double NearPlane { get; set; } = 0.05;
+        public double FarPlane { get; set; } = 10000.0;
+
         // --- CONSTRUCTORS (YAPICI METOTLAR) ---
         
         /// <summary>
@@ -78,9 +86,22 @@ namespace Fix2Engine.Graphics
             if (Type == CameraType.Free || Type == CameraType.FirstPerson)
             {
                 Camera3D rCam = GetRaylibCamera();
-                CameraMode mode = Type == CameraType.FirstPerson ? CameraMode.FirstPerson : CameraMode.Free;
-                
-                UpdateCamera(ref rCam, mode);
+                float dt = GetFrameTime();
+
+                Vector3 movement = Vector3.Zero;
+                movement.X = (IsKeyDown(KeyboardKey.W) ? 1.0f : 0.0f) - (IsKeyDown(KeyboardKey.S) ? 1.0f : 0.0f);
+                movement.Y = (IsKeyDown(KeyboardKey.D) ? 1.0f : 0.0f) - (IsKeyDown(KeyboardKey.A) ? 1.0f : 0.0f);
+                movement.Z = (IsKeyDown(KeyboardKey.Space) ? 1.0f : 0.0f) - (IsKeyDown(KeyboardKey.LeftControl) ? 1.0f : 0.0f);
+                movement *= MoveSpeed * dt * 10.0f;
+
+                Vector2 mouseDelta = GetMouseDelta();
+                Vector3 rotation = new Vector3(
+                    mouseDelta.X * MouseSensitivity,
+                    mouseDelta.Y * MouseSensitivity,
+                    0.0f
+                );
+
+                UpdateCameraPro(ref rCam, movement, rotation, 0.0f);
 
                 // Raylib'in güncellediği pozisyonu kendi sınıfımıza aktarırız
                 Position = rCam.Position;
@@ -110,6 +131,7 @@ namespace Fix2Engine.Graphics
         /// </summary>
         public void Begin()
         {
+            Rlgl.SetClipPlanes(NearPlane, FarPlane);
             BeginMode3D(GetRaylibCamera());
         }
 

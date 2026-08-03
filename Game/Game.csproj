@@ -5,6 +5,7 @@
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
+        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
         <PublishAot>true</PublishAot>
         <InvariantGlobalization>true</InvariantGlobalization>
     </PropertyGroup>
@@ -12,6 +13,7 @@
     <ItemGroup>
       <ProjectReference Include="..\Fix2Engine.Components\Fix2Engine.Components.csproj" />
       <ProjectReference Include="..\Fix2Engine.Graphics\Fix2Engine.Graphics.csproj" />
+      <ProjectReference Include="..\Fix2Engine.IMGUI\Fix2Engine.IMGUI.csproj" />
     </ItemGroup>
 
     <ItemGroup>

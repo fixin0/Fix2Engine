@@ -1,0 +1,130 @@
+{
+  "runtimeTarget": {
+    "name": ".NETCoreApp,Version=v10.0",
+    "signature": ""
+  },
+  "compilationOptions": {},
+  "targets": {
+    ".NETCoreApp,Version=v10.0": {
+      "Fix2Engine.IMGUI/1.0.0": {
+        "dependencies": {
+          "Raylib-cs": "8.0.0",
+          "rlImgui-cs": "3.2.0"
+        },
+        "runtime": {
+          "Fix2Engine.IMGUI.dll": {}
+        }
+      },
+      "ImGui.NET/1.91.6.1": {
+        "runtime": {
+          "lib/net8.0/ImGui.NET.dll": {
+            "assemblyVersion": "1.91.6.1",
+            "fileVersion": "1.91.6.1"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/libcimgui.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx/native/libcimgui.dylib": {
+            "rid": "osx",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-arm64/native/cimgui.dll": {
+            "rid": "win-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/cimgui.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/cimgui.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "Raylib-cs/8.0.0": {
+        "runtime": {
+          "lib/net10.0/Raylib-cs.dll": {
+            "assemblyVersion": "0.0.0.0",
+            "fileVersion": "0.0.0.0"
+          }
+        },
+        "runtimeTargets": {
+          "runtimes/linux-x64/native/libraylib.so": {
+            "rid": "linux-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-arm64/native/libraylib.dylib": {
+            "rid": "osx-arm64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/osx-x64/native/libraylib.dylib": {
+            "rid": "osx-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x64/native/raylib.dll": {
+            "rid": "win-x64",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          },
+          "runtimes/win-x86/native/raylib.dll": {
+            "rid": "win-x86",
+            "assetType": "native",
+            "fileVersion": "0.0.0.0"
+          }
+        }
+      },
+      "rlImgui-cs/3.2.0": {
+        "dependencies": {
+          "ImGui.NET": "1.91.6.1",
+          "Raylib-cs": "8.0.0"
+        },
+        "runtime": {
+          "lib/net6.0/rlImGui.dll": {
+            "assemblyVersion": "3.2.0.0",
+            "fileVersion": "3.2.0.0"
+          }
+        }
+      }
+    }
+  },
+  "libraries": {
+    "Fix2Engine.IMGUI/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "ImGui.NET/1.91.6.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-Ph3j8pO6UM28PPJWP+5LEJSPVPkd8ivpVS8tRyY9b0IHn1HDIrMZ2o/FdiXaYW6YhNxMHmbevw6Jcfs+IDKi0Q==",
+      "path": "imgui.net/1.91.6.1",
+      "hashPath": "imgui.net.1.91.6.1.nupkg.sha512"
+    },
+    "Raylib-cs/8.0.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-m+fStTZjOGtkx05RNflERtKbmEUrIZ5/PFV5QXnlA02kAEwxxOC+XhNeCSZJhaGHu9d8m0eTMmefRhHueS3hkg==",
+      "path": "raylib-cs/8.0.0",
+      "hashPath": "raylib-cs.8.0.0.nupkg.sha512"
+    },
+    "rlImgui-cs/3.2.0": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-FmVDFI+5PRWyQCIOMo3KQuEiwjiUxDcQmSY8YgBhxqdhT+MiW1lUZXDYdYG2Vla/nTbm546U8eqfUSOWnG5QIg==",
+      "path": "rlimgui-cs/3.2.0",
+      "hashPath": "rlimgui-cs.3.2.0.nupkg.sha512"
+    }
+  }
+}

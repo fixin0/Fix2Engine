@@ -10,6 +10,7 @@
         "dependencies": {
           "Fix2Engine.Components": "1.0.0",
           "Fix2Engine.Graphics": "1.0.0",
+          "Fix2Engine.IMGUI": "1.0.0",
           "rlImgui-cs": "3.2.0"
         },
         "runtime": {
@@ -121,6 +122,18 @@
             "fileVersion": "1.0.0.0"
           }
         }
+      },
+      "Fix2Engine.IMGUI/1.0.0": {
+        "dependencies": {
+          "Raylib-cs": "8.0.0",
+          "rlImgui-cs": "3.2.0"
+        },
+        "runtime": {
+          "Fix2Engine.IMGUI.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -157,6 +170,11 @@
       "sha512": ""
     },
     "Fix2Engine.Graphics/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fix2Engine.IMGUI/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

@@ -55,12 +55,12 @@ namespace Fix2Engine.Graphics
             }
         }
 
-        public void Draw(Vector3 cameraPosition)
+        public void Draw(Vector3 cameraPosition, float radius = 5000.0f)
         {
             Rlgl.DisableDepthTest();
             Rlgl.DisableBackfaceCulling();
 
-            DrawModel(_skyboxModel, cameraPosition, 500.0f, Color.White);
+            DrawModel(_skyboxModel, cameraPosition, radius, Color.White);
 
             Rlgl.EnableBackfaceCulling();
             Rlgl.EnableDepthTest();

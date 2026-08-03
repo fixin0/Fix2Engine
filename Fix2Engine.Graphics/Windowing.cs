@@ -68,7 +68,7 @@ namespace Fix2Engine.Graphics
             ClearBackground(Color.Black);
 
             // Örnek varsayılan çizim
-            DrawFPS(10, 10);
+            
         }
 
         /// <summary>

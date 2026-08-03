@@ -3,16 +3,18 @@ using rlImGui_cs;
 using Fix2Engine.Components;
 using Fix2Engine.Components.Scene; // ya da SceneManager namespace'in
 using Fix2Engine.Graphics;
+using Fix2Engine.IMGUI;
 
 namespace Fix2Engine
 {
     public class Game : Windowing
     {
-        public Game() : base(1024, 768, "Fix2Engine - DEBUGGING") { }
+        public Game() : base(1280, 720, "Horror Squad") { }
 
         protected override void Start()
         {
             rlImGui.Setup(true);
+            Theme.ApplyDark();
 
             SceneManager.LoadScene<MainMenuScene>();
         }

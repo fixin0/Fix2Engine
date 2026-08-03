@@ -11,3 +11,16 @@ C:\Users\fixinlab\RiderProjects\Project-H\Fix2Engine.Graphics\obj\Debug\net10.0\
 C:\Users\fixinlab\RiderProjects\Project-H\Fix2Engine.Graphics\obj\Debug\net10.0\refint\Fix2Engine.Graphics.dll
 C:\Users\fixinlab\RiderProjects\Project-H\Fix2Engine.Graphics\obj\Debug\net10.0\Fix2Engine.Graphics.pdb
 C:\Users\fixinlab\RiderProjects\Project-H\Fix2Engine.Graphics\obj\Debug\net10.0\ref\Fix2Engine.Graphics.dll
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\bin\Debug\net10.0\Fix2Engine.Graphics.deps.json
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\bin\Debug\net10.0\Fix2Engine.Graphics.dll
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\bin\Debug\net10.0\Fix2Engine.Graphics.pdb
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\obj\Debug\net10.0\Fix2Engine.Graphics.csproj.AssemblyReference.cache
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\obj\Debug\net10.0\Fix2Engine.Graphics.GeneratedMSBuildEditorConfig.editorconfig
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\obj\Debug\net10.0\Fix2Engine.Graphics.AssemblyInfoInputs.cache
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\obj\Debug\net10.0\Fix2Engine.Graphics.AssemblyInfo.cs
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\obj\Debug\net10.0\Fix2Engine.Graphics.csproj.CoreCompileInputs.cache
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\obj\Debug\net10.0\Fix2Engine.Graphics.sourcelink.json
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\obj\Debug\net10.0\Fix2Engine.Graphics.dll
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\obj\Debug\net10.0\refint\Fix2Engine.Graphics.dll
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\obj\Debug\net10.0\Fix2Engine.Graphics.pdb
+C:\Users\fixinlab\RiderProjects\Fix2Engine\Fix2Engine.Graphics\obj\Debug\net10.0\ref\Fix2Engine.Graphics.dll

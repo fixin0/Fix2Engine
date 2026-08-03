@@ -124,6 +124,20 @@
         "runtime": {
           "bin/placeholder/Fix2Engine.Graphics.dll": {}
         }
+      },
+      "Fix2Engine.IMGUI/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Raylib-cs": "8.0.0",
+          "rlImgui-cs": "3.2.0"
+        },
+        "compile": {
+          "bin/placeholder/Fix2Engine.IMGUI.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fix2Engine.IMGUI.dll": {}
+        }
       }
     },
     "net10.0/win-x64": {
@@ -216,6 +230,20 @@
         },
         "runtime": {
           "bin/placeholder/Fix2Engine.Graphics.dll": {}
+        }
+      },
+      "Fix2Engine.IMGUI/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Raylib-cs": "8.0.0",
+          "rlImgui-cs": "3.2.0"
+        },
+        "compile": {
+          "bin/placeholder/Fix2Engine.IMGUI.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fix2Engine.IMGUI.dll": {}
         }
       }
     }
@@ -388,12 +416,18 @@
       "type": "project",
       "path": "../Fix2Engine.Graphics/Fix2Engine.Graphics.csproj",
       "msbuildProject": "../Fix2Engine.Graphics/Fix2Engine.Graphics.csproj"
+    },
+    "Fix2Engine.IMGUI/1.0.0": {
+      "type": "project",
+      "path": "../Fix2Engine.IMGUI/Fix2Engine.IMGUI.csproj",
+      "msbuildProject": "../Fix2Engine.IMGUI/Fix2Engine.IMGUI.csproj"
     }
   },
   "projectFileDependencyGroups": {
     "net10.0": [
       "Fix2Engine.Components >= 1.0.0",
       "Fix2Engine.Graphics >= 1.0.0",
+      "Fix2Engine.IMGUI >= 1.0.0",
       "Microsoft.DotNet.ILCompiler >= 10.0.10",
       "Microsoft.NET.ILLink.Tasks >= 10.0.10",
       "rlImgui-cs >= 3.2.0"
@@ -405,11 +439,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\fixinlab\\RiderProjects\\Project-H\\Game\\Game.csproj",
+      "projectUniqueName": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Game\\Game.csproj",
       "projectName": "Game",
-      "projectPath": "C:\\Users\\fixinlab\\RiderProjects\\Project-H\\Game\\Game.csproj",
+      "projectPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Game\\Game.csproj",
       "packagesPath": "C:\\Users\\fixinlab\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fixinlab\\RiderProjects\\Project-H\\Game\\obj\\",
+      "outputPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Game\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\fixinlab\\AppData\\Roaming\\NuGet\\NuGet.Config"
@@ -425,11 +459,14 @@
           "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {
-            "C:\\Users\\fixinlab\\RiderProjects\\Project-H\\Fix2Engine.Components\\Fix2Engine.Components.csproj": {
-              "projectPath": "C:\\Users\\fixinlab\\RiderProjects\\Project-H\\Fix2Engine.Components\\Fix2Engine.Components.csproj"
+            "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Components\\Fix2Engine.Components.csproj": {
+              "projectPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Components\\Fix2Engine.Components.csproj"
             },
-            "C:\\Users\\fixinlab\\RiderProjects\\Project-H\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj": {
-              "projectPath": "C:\\Users\\fixinlab\\RiderProjects\\Project-H\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj"
+            "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj": {
+              "projectPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj"
+            },
+            "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.IMGUI\\Fix2Engine.IMGUI.csproj": {
+              "projectPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.IMGUI\\Fix2Engine.IMGUI.csproj"
             }
           }
         }

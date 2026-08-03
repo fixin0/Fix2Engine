@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Fix2Engine.Components")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+703d3b5eb013cef28bee8237ee7ae376241b277a")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+e36707a51152412a5b87690fd1c895de74787e7b")]
 [assembly: System.Reflection.AssemblyProductAttribute("Fix2Engine.Components")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Fix2Engine.Components")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

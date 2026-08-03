@@ -1,46 +1,83 @@
+using System;
+using System.Numerics;
 using Fix2Engine.Components;
-using Raylib_cs;
-using ImGuiNET;
 using Fix2Engine.Components.Scene;
+using Fix2Engine.IMGUI;
+using Raylib_cs;
 
 namespace Fix2Engine
 {
     public class MainMenuScene : IFixScene
     {
-        public void Start()
-        {
-        }
+        private readonly Vector2 _menuSize = new Vector2(360, 360);
+        private readonly Vector2 _buttonSize = new Vector2(280, 48);
 
-        public void Update(float dt)
-        {
-        }
+        private bool _musicEnabled = true;
+
+        public void Start() { }
+        public void Update(float dt) { }
 
         public void Render()
         {
-            Raylib.ClearBackground(Color.Black);
+            Raylib.ClearBackground(new Color(15, 15, 20, 255));
         }
 
         public void RenderUI()
         {
-            ImGui.SetNextWindowPos(new System.Numerics.Vector2(ImGui.GetIO().DisplaySize.X * 0.5f, ImGui.GetIO().DisplaySize.Y * 0.5f), ImGuiCond.FirstUseEver, new System.Numerics.Vector2(0.5f, 0.5f));
-            ImGui.SetNextWindowSize(new System.Numerics.Vector2(300, 150), ImGuiCond.FirstUseEver);
-
-            ImGui.Begin("Main Menu");
-
-            if (ImGui.Button("Go to Debug3DScene", new System.Numerics.Vector2(250, 50)))
+            if (IMGUI.IMGUI.BeginCenteredPanel("MainMenu", _menuSize))
             {
-                SceneManager.LoadScene<Debug3DScene>();
+                IMGUI.IMGUI.Header("MAIN MENU");
+
+                if (IMGUI.IMGUI.Button("3D Engine Showcase", _buttonSize))
+                {
+                    SceneManager.LoadScene<Debug3DScene>();
+                }
+
+                if (IMGUI.IMGUI.Button("2D Engine Showcase", _buttonSize))
+                {
+                     SceneManager.LoadScene<Debug2DPixelScene>();
+                }
+
+                if (IMGUI.IMGUI.Button("Settings", _buttonSize))
+                {
+                    Modal.Open("SettingsModal");
+                }
+
+                Widgets.Spacer(4);
+
+                if (IMGUI.IMGUI.DangerButton("Exit Game", _buttonSize))
+                {
+                    Modal.Open("ExitConfirm");
+                }
+            }
+            IMGUI.IMGUI.EndPanel(); // Stilleri ve ImGui.End()'i kendisi halleder
+
+            if (Modal.Confirm("ExitConfirm", "Oyundan çıkmak istediğine emin misin?", "Çık", "İptal") == true)
+            {
+                Environment.Exit(0);
             }
 
-            ImGui.End();
+            RenderSettingsModal();
         }
 
-        public void Unload()
+        private void RenderSettingsModal()
         {
+            if (Modal.Begin("SettingsModal", new Vector2(320, 180)))
+            {
+                IMGUI.IMGUI.Header("AYARLAR");
+
+                Widgets.Toggle("Müzik", ref _musicEnabled);
+
+                Widgets.Spacer(12);
+                if (IMGUI.IMGUI.Button("Kapat", new Vector2(120, 36)))
+                {
+                    ImGuiNET.ImGui.CloseCurrentPopup();
+                }
+                Modal.End();
+            }
         }
 
-        public void Dispose()
-        {
-        }
+        public void Unload() { }
+        public void Dispose() { }
     }
 }
