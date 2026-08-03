@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Raylib_cs;
 using ImGuiNET;
@@ -88,38 +88,38 @@ namespace Fix2Engine
             ImGui.SetNextWindowSize(new Vector2(340, 0), ImGuiCond.FirstUseEver);
             ImGui.Begin("Fix2Engine Inspector");
 
-            ImGui.TextColored(Palette.TextMuted, "Kamera & Fare Kontrolü: F1 (Serbest/Kilit)");
+            ImGui.TextColored(Palette.TextMuted, "Camera & Mouse Controls: F1 (Free/Lock)");
 
-            Widgets.SeparatorWithLabel("KAMERA");
+            Widgets.SeparatorWithLabel("CAMERA");
             Vector3 camPos = _camera.Position;
-            if (ImGui.DragFloat3("Konum##cam", ref camPos, 0.1f)) _camera.Position = camPos;
+            if (ImGui.DragFloat3("Position##cam", ref camPos, 0.1f)) _camera.Position = camPos;
 
             float fov = _camera.FOV;
             if (Widgets.SliderFloat("FOV", ref fov, 30.0f, 120.0f)) _camera.FOV = fov;
 
             float moveSpeed = _camera.MoveSpeed;
-            if (Widgets.SliderFloat("Hareket Hızı", ref moveSpeed, 20.0f, 60.0f)) _camera.MoveSpeed = moveSpeed;
+            if (Widgets.SliderFloat("Move Speed", ref moveSpeed, 20.0f, 60.0f)) _camera.MoveSpeed = moveSpeed;
 
             float mouseSensitivity = _camera.MouseSensitivity;
-            if (Widgets.SliderFloat("Fare Hassasiyeti", ref mouseSensitivity, 0.0f, 1.0f)) _camera.MouseSensitivity = mouseSensitivity;
+            if (Widgets.SliderFloat("Mouse Sensitivity", ref mouseSensitivity, 0.0f, 1.0f)) _camera.MouseSensitivity = mouseSensitivity;
 
             Widgets.SeparatorWithLabel("MODEL");
             Vector3 pos = _sponzaModel.Position;
-            if (ImGui.DragFloat3("Konum##model", ref pos, 0.1f)) _sponzaModel.Position = pos;
+            if (ImGui.DragFloat3("Position##model", ref pos, 0.1f)) _sponzaModel.Position = pos;
 
             Vector3 rot = _sponzaModel.Rotation;
-            if (ImGui.DragFloat3("Rotasyon (X, Y, Z)", ref rot, 1.0f, -180.0f, 180.0f)) _sponzaModel.Rotation = rot;
+            if (ImGui.DragFloat3("Rotation (X, Y, Z)", ref rot, 1.0f, -180.0f, 180.0f)) _sponzaModel.Rotation = rot;
 
             Vector3 scale = _sponzaModel.Scale;
-            if (ImGui.DragFloat3("Ölçek", ref scale, 1.0f, 0.01f, 1000.0f)) _sponzaModel.Scale = scale;
+            if (ImGui.DragFloat3("Scale", ref scale, 1.0f, 0.01f, 1000.0f)) _sponzaModel.Scale = scale;
 
-            ImGui.ColorEdit3("Renk (Tint)", ref _modelColorNormalized);
+            ImGui.ColorEdit3("Color (Tint)", ref _modelColorNormalized);
 
-            Widgets.SeparatorWithLabel("IŞIKLANDIRMA");
-            ImGui.DragFloat3("Işık Konumu", ref _lightPosition, 0.1f);
+            Widgets.SeparatorWithLabel("LIGHTING");
+            ImGui.DragFloat3("Light Position", ref _lightPosition, 0.1f);
 
             Widgets.SeparatorWithLabel("DEBUG");
-            Widgets.Toggle("ImGui Demo Penceresi", ref _showDemoWindow);
+            Widgets.Toggle("ImGui Demo Window", ref _showDemoWindow);
 
             ImGui.End();
 
@@ -136,7 +136,7 @@ namespace Fix2Engine
 
         public void Dispose()
         {
-            // VRAM Temizliği
+            // VRAM Cleanup
         }
     }
 }
