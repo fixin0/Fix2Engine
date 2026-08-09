@@ -47,7 +47,7 @@ Fix2Engine/
 Clone the repository:
 
 
-```git clone https://github.com/your-username/Fix2Engine.git```
+```git clone https://github.com/fixin0/Fix2Engine.git```
 <br></br>
 Open Fix2Engine.sln in Visual Studio or JetBrains Rider.
 
