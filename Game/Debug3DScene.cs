@@ -5,6 +5,8 @@ using ImGuiNET;
 using Fix2Engine.Graphics;
 using Fix2Engine.Components.Scene;
 using Fix2Engine.IMGUI;
+using Fix2Engine.Input;
+using Tomlyn;
 using static Raylib_cs.Raylib;
 
 namespace Fix2Engine
@@ -40,6 +42,10 @@ namespace Fix2Engine
                 Rotation = new Vector3(0.0f, 0.0f, 0.0f),
                 Scale = new Vector3(100.0f, 100.0f, 100.0f)
             };
+            
+            string x = File.ReadAllText("inputconfig.toml");
+            InputConfig config = TomlSerializer.Deserialize<InputConfig>(x);
+            Console.WriteLine(config.Actions["Jump"][0]);
 
         }
 

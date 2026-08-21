@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Physics\\Fix2Engine.Physics.csproj": {}
+    "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Physics\\Fix2Engine.Physics.csproj": {}
   },
   "projects": {
-    "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Physics\\Fix2Engine.Physics.csproj": {
+    "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Physics\\Fix2Engine.Physics.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Physics\\Fix2Engine.Physics.csproj",
+        "projectUniqueName": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Physics\\Fix2Engine.Physics.csproj",
         "projectName": "Fix2Engine.Physics",
-        "projectPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Physics\\Fix2Engine.Physics.csproj",
+        "projectPath": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Physics\\Fix2Engine.Physics.csproj",
         "packagesPath": "C:\\Users\\fixinlab\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Physics\\obj\\",
+        "outputPath": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Physics\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\fixinlab\\AppData\\Roaming\\NuGet\\NuGet.Config"

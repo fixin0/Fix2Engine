@@ -1,5 +1,6 @@
 ﻿using System;
 using Fix2Engine.Graphics;
+using Fix2Engine.Input;
 
 namespace Fix2Engine
 {
@@ -7,6 +8,10 @@ namespace Fix2Engine
     {
         static void Main(string[] args)
         {
+            
+            AppContext.SetSwitch(
+                "Tomlyn.TomlSerializer.IsReflectionEnabledByDefault",
+                true);
             using var game = new Fix2Engine.Game();
             game.Run();
 

@@ -14,6 +14,7 @@
       <ProjectReference Include="..\Fix2Engine.Components\Fix2Engine.Components.csproj" />
       <ProjectReference Include="..\Fix2Engine.Graphics\Fix2Engine.Graphics.csproj" />
       <ProjectReference Include="..\Fix2Engine.IMGUI\Fix2Engine.IMGUI.csproj" />
+      <ProjectReference Include="..\Fix2Engine.Input\Fix2Engine.Input.csproj" />
     </ItemGroup>
 
     <ItemGroup>

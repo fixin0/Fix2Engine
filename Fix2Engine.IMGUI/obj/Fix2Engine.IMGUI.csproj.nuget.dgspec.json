@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.IMGUI\\Fix2Engine.IMGUI.csproj": {}
+    "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.IMGUI\\Fix2Engine.IMGUI.csproj": {}
   },
   "projects": {
-    "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.IMGUI\\Fix2Engine.IMGUI.csproj": {
+    "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.IMGUI\\Fix2Engine.IMGUI.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.IMGUI\\Fix2Engine.IMGUI.csproj",
+        "projectUniqueName": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.IMGUI\\Fix2Engine.IMGUI.csproj",
         "projectName": "Fix2Engine.IMGUI",
-        "projectPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.IMGUI\\Fix2Engine.IMGUI.csproj",
+        "projectPath": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.IMGUI\\Fix2Engine.IMGUI.csproj",
         "packagesPath": "C:\\Users\\fixinlab\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.IMGUI\\obj\\",
+        "outputPath": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.IMGUI\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\fixinlab\\AppData\\Roaming\\NuGet\\NuGet.Config"

@@ -1,8 +1,9 @@
 ﻿using Raylib_cs;
 using rlImGui_cs;
 using Fix2Engine.Components;
-using Fix2Engine.Components.Scene; // ya da SceneManager namespace'in
+using Fix2Engine.Components.Scene; 
 using Fix2Engine.Graphics;
+using Fix2Engine.Input;
 using Fix2Engine.IMGUI;
 
 namespace Fix2Engine

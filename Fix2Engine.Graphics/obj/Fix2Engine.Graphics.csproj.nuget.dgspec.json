@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj": {}
+    "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj": {}
   },
   "projects": {
-    "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj": {
+    "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj",
+        "projectUniqueName": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj",
         "projectName": "Fix2Engine.Graphics",
-        "projectPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj",
+        "projectPath": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Graphics\\Fix2Engine.Graphics.csproj",
         "packagesPath": "C:\\Users\\fixinlab\\.nuget\\packages\\",
-        "outputPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Graphics\\obj\\",
+        "outputPath": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Graphics\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\fixinlab\\AppData\\Roaming\\NuGet\\NuGet.Config"

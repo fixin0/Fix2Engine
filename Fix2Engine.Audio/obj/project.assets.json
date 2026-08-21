@@ -171,11 +171,11 @@
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Audio\\Fix2Engine.Audio.csproj",
+      "projectUniqueName": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Audio\\Fix2Engine.Audio.csproj",
       "projectName": "Fix2Engine.Audio",
-      "projectPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Audio\\Fix2Engine.Audio.csproj",
+      "projectPath": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Audio\\Fix2Engine.Audio.csproj",
       "packagesPath": "C:\\Users\\fixinlab\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Audio\\obj\\",
+      "outputPath": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Audio\\obj\\",
       "projectStyle": "PackageReference",
       "configFilePaths": [
         "C:\\Users\\fixinlab\\AppData\\Roaming\\NuGet\\NuGet.Config"

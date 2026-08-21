@@ -12,6 +12,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Audio", "Fix2Eng
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Physics", "Fix2Engine.Physics\Fix2Engine.Physics.csproj", "{50C67DA8-92FC-4C19-9C54-742799E632C8}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Input", "Fix2Engine.Input\Fix2Engine.Input.csproj", "{5D79DFB1-9B5F-4562-A3F5-6C32D47594CC}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -42,5 +44,9 @@ Global
 		{50C67DA8-92FC-4C19-9C54-742799E632C8}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{50C67DA8-92FC-4C19-9C54-742799E632C8}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{50C67DA8-92FC-4C19-9C54-742799E632C8}.Release|Any CPU.Build.0 = Release|Any CPU
+		{5D79DFB1-9B5F-4562-A3F5-6C32D47594CC}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{5D79DFB1-9B5F-4562-A3F5-6C32D47594CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{5D79DFB1-9B5F-4562-A3F5-6C32D47594CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{5D79DFB1-9B5F-4562-A3F5-6C32D47594CC}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

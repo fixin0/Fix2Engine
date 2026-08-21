@@ -1,8 +1,8 @@
 {
   "version": 2,
-  "dgSpecHash": "jvLGgdrNuIY=",
+  "dgSpecHash": "YH/gC/+T4Qc=",
   "success": true,
-  "projectFilePath": "C:\\Users\\fixinlab\\RiderProjects\\Fix2Engine\\Fix2Engine.Audio\\Fix2Engine.Audio.csproj",
+  "projectFilePath": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Audio\\Fix2Engine.Audio.csproj",
   "expectedPackageFiles": [
     "C:\\Users\\fixinlab\\.nuget\\packages\\microsoft.dotnet.platformabstractions\\3.1.6\\microsoft.dotnet.platformabstractions.3.1.6.nupkg.sha512",
     "C:\\Users\\fixinlab\\.nuget\\packages\\microsoft.extensions.dependencymodel\\9.0.9\\microsoft.extensions.dependencymodel.9.0.9.nupkg.sha512",
