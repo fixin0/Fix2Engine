@@ -5,6 +5,8 @@ using ImGuiNET;
 using Fix2Engine.Graphics;
 using Fix2Engine.Components.Scene;
 using Fix2Engine.IMGUI;
+using Fix2Engine.Input;
+using Fix2Engine.Input.InputBackend;
 using static Raylib_cs.Raylib;
 
 namespace Fix2Engine
@@ -66,7 +68,7 @@ namespace Fix2Engine
 
         public void Update(float dt)
         {
-            if (IsKeyPressed(KeyboardKey.F1))
+            if (InputManager.Input.IsPressed(Keys.F1))
             {
                 if (IsCursorHidden())
                     EnableCursor();
@@ -74,12 +76,12 @@ namespace Fix2Engine
                     DisableCursor();
             }
 
-            if (IsKeyPressed(KeyboardKey.Escape))
+            if (InputManager.Input.IsPressed(Keys.Escape))
             {
                 EnableCursor();
             }
 
-            if (IsKeyPressed(KeyboardKey.F))
+            if (InputManager.Input.IsPressed(Keys.F))
             {
                 _flashlightEnabled = !_flashlightEnabled;
             }
@@ -97,10 +99,10 @@ namespace Fix2Engine
             _cameraPosition = _camera.Position;
 
             bool moving =
-                IsKeyDown(KeyboardKey.W) ||
-                IsKeyDown(KeyboardKey.A) ||
-                IsKeyDown(KeyboardKey.S) ||
-                IsKeyDown(KeyboardKey.D);
+                InputManager.Input.IsDown(Keys.W) ||
+                InputManager.Input.IsDown(Keys.A) ||
+                InputManager.Input.IsDown(Keys.S) ||
+                InputManager.Input.IsDown(Keys.D);
 
             if (moving)
             {
@@ -524,8 +526,7 @@ namespace Fix2Engine
             );
         }
 
-        private void DrawPillar(
-            Vector3 position)
+        private void DrawPillar(Vector3 position)
         {
             Color main =
                 GetLitColor(
@@ -592,8 +593,7 @@ namespace Fix2Engine
             );
         }
 
-        private void DrawWallDecoration(
-            Vector3 position)
+        private void DrawWallDecoration(Vector3 position)
         {
             Color metal =
                 GetLitColor(
