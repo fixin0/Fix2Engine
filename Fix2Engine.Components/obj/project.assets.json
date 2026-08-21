@@ -85,10 +85,27 @@
           "lib/net6.0/rlImGui.dll": {}
         }
       },
+      "Tomlyn/2.10.1": {
+        "type": "package",
+        "compile": {
+          "lib/net10.0/Tomlyn.dll": {
+            "related": ".xml"
+          }
+        },
+        "runtime": {
+          "lib/net10.0/Tomlyn.dll": {
+            "related": ".xml"
+          }
+        },
+        "build": {
+          "buildTransitive/Tomlyn.targets": {}
+        }
+      },
       "Fix2Engine.Graphics/1.0.0": {
         "type": "project",
         "framework": ".NETCoreApp,Version=v10.0",
         "dependencies": {
+          "Fix2Engine.Input": "1.0.0",
           "Raylib-cs": "8.0.0",
           "rlImgui-cs": "3.2.0"
         },
@@ -97,6 +114,19 @@
         },
         "runtime": {
           "bin/placeholder/Fix2Engine.Graphics.dll": {}
+        }
+      },
+      "Fix2Engine.Input/1.0.0": {
+        "type": "project",
+        "framework": ".NETCoreApp,Version=v10.0",
+        "dependencies": {
+          "Tomlyn": "2.10.1"
+        },
+        "compile": {
+          "bin/placeholder/Fix2Engine.Input.dll": {}
+        },
+        "runtime": {
+          "bin/placeholder/Fix2Engine.Input.dll": {}
         }
       }
     }
@@ -161,10 +191,36 @@
         "rlimgui-cs.nuspec"
       ]
     },
+    "Tomlyn/2.10.1": {
+      "sha512": "ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og==",
+      "type": "package",
+      "path": "tomlyn/2.10.1",
+      "files": [
+        ".nupkg.metadata",
+        ".signature.p7s",
+        "Tomlyn.png",
+        "analyzers/dotnet/cs/Tomlyn.SourceGeneration.dll",
+        "buildTransitive/Tomlyn.targets",
+        "lib/net10.0/Tomlyn.dll",
+        "lib/net10.0/Tomlyn.xml",
+        "lib/net8.0/Tomlyn.dll",
+        "lib/net8.0/Tomlyn.xml",
+        "lib/netstandard2.0/Tomlyn.dll",
+        "lib/netstandard2.0/Tomlyn.xml",
+        "readme.md",
+        "tomlyn.2.10.1.nupkg.sha512",
+        "tomlyn.nuspec"
+      ]
+    },
     "Fix2Engine.Graphics/1.0.0": {
       "type": "project",
       "path": "../Fix2Engine.Graphics/Fix2Engine.Graphics.csproj",
       "msbuildProject": "../Fix2Engine.Graphics/Fix2Engine.Graphics.csproj"
+    },
+    "Fix2Engine.Input/1.0.0": {
+      "type": "project",
+      "path": "../Fix2Engine.Input/Fix2Engine.Input.csproj",
+      "msbuildProject": "../Fix2Engine.Input/Fix2Engine.Input.csproj"
     }
   },
   "projectFileDependencyGroups": {

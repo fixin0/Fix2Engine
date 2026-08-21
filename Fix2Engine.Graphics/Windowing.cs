@@ -1,4 +1,5 @@
-﻿using System;
+using Fix2Engine.Input;
+using System;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -91,6 +92,7 @@ namespace Fix2Engine.Graphics
                 }
 
                 
+                InputManager.Input.Update();
                 Update(dt);
 
               

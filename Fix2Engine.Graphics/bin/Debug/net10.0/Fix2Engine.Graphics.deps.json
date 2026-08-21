@@ -8,6 +8,7 @@
     ".NETCoreApp,Version=v10.0": {
       "Fix2Engine.Graphics/1.0.0": {
         "dependencies": {
+          "Fix2Engine.Input": "1.0.0",
           "Raylib-cs": "8.0.0",
           "rlImgui-cs": "3.2.0"
         },
@@ -96,6 +97,25 @@
             "fileVersion": "3.2.0.0"
           }
         }
+      },
+      "Tomlyn/2.10.1": {
+        "runtime": {
+          "lib/net10.0/Tomlyn.dll": {
+            "assemblyVersion": "2.0.0.0",
+            "fileVersion": "2.10.1.0"
+          }
+        }
+      },
+      "Fix2Engine.Input/1.0.0": {
+        "dependencies": {
+          "Tomlyn": "2.10.1"
+        },
+        "runtime": {
+          "Fix2Engine.Input.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
       }
     }
   },
@@ -125,6 +145,18 @@
       "sha512": "sha512-FmVDFI+5PRWyQCIOMo3KQuEiwjiUxDcQmSY8YgBhxqdhT+MiW1lUZXDYdYG2Vla/nTbm546U8eqfUSOWnG5QIg==",
       "path": "rlimgui-cs/3.2.0",
       "hashPath": "rlimgui-cs.3.2.0.nupkg.sha512"
+    },
+    "Tomlyn/2.10.1": {
+      "type": "package",
+      "serviceable": true,
+      "sha512": "sha512-ykjOY3IpYmC4SpPcAZRTl/w2jTmhPMDydHq8xcV7tTBAQ22nKBsOkPqauIrZlMjHm03cmKfV23UOPscKp+J4Og==",
+      "path": "tomlyn/2.10.1",
+      "hashPath": "tomlyn.2.10.1.nupkg.sha512"
+    },
+    "Fix2Engine.Input/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
     }
   }
 }

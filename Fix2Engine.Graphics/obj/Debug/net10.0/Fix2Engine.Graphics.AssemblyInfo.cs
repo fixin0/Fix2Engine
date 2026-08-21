@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Fix2Engine.Graphics")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05365164f0be5ee03aa79bffeec7317f4d5b3856")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+062d104de8bfbafeba2e8fc3eefffda91164ba3f")]
 [assembly: System.Reflection.AssemblyProductAttribute("Fix2Engine.Graphics")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Fix2Engine.Graphics")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

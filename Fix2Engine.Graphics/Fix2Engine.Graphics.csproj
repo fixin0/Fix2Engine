@@ -16,4 +16,8 @@
       <Folder Include="Shaders\" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Fix2Engine.Input\Fix2Engine.Input.csproj" />
+    </ItemGroup>
+
 </Project>

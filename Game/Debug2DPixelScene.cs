@@ -2,6 +2,8 @@
 using System.Collections.Generic;
 using System.Numerics;
 using Fix2Engine.Components.Scene;
+using Fix2Engine.Input;
+using Fix2Engine.Input.InputBackend;
 using ImGuiNET;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -90,20 +92,30 @@ public class Debug2DPixelScene : IFixScene
 
     public void Update(float dt)
     {
-        if (IsKeyPressed(KeyboardKey.Escape))
+        // F1:
+        // Cursor'u kilitle / serbest bırak.
+        if (InputManager.Input.IsPressed(Keys.F1))
+        {
+            if (IsCursorHidden())
+            {
+                EnableCursor();
+            }
+            else
+            {
+                DisableCursor();
+            }
+        }
+
+        // ESC:
+        // Cursor'u serbest bırak.
+        if (InputManager.Input.IsPressed(Keys.Escape))
         {
             EnableCursor();
         }
 
-        if (IsKeyPressed(KeyboardKey.F1))
-        {
-            if (IsCursorHidden())
-                EnableCursor();
-            else
-                DisableCursor();
-        }
-
-        if (IsKeyPressed(KeyboardKey.R))
+        // R:
+        // Oyunu yeniden başlat.
+        if (InputManager.Input.IsPressed(Keys.R))
         {
             Start();
             return;
@@ -112,13 +124,17 @@ public class Debug2DPixelScene : IFixScene
         if (_gameOver)
             return;
 
+        // Keyboard input cursor durumundan bağımsız.
+        UpdatePlayer(dt);
+
+        // Mouse ile ilgili işlemler sadece
+        // cursor kilitliyken yapılır.
         if (IsCursorHidden())
         {
             UpdateMouseAim();
-            UpdatePlayer(dt);
+            UpdatePlayerShooting(dt);
         }
 
-        UpdatePlayerShooting();
         UpdateBullets(dt);
         UpdateEnemies(dt);
 
@@ -155,36 +171,57 @@ public class Debug2DPixelScene : IFixScene
         Vector2 movement =
             Vector2.Zero;
 
-        if (IsKeyDown(KeyboardKey.W))
+        // W = ileri
+        if (InputManager.Input.IsDown(Keys.W))
         {
             movement += forward;
         }
 
-        if (IsKeyDown(KeyboardKey.S))
+        // S = geri
+        if (InputManager.Input.IsDown(Keys.S))
         {
             movement -= forward;
         }
 
-        if (movement.LengthSquared() > 0.0f)
+        // Sağ vektör
+        Vector2 right =
+            new Vector2(
+                -forward.Y,
+                forward.X
+            );
+
+        // A = sola
+        if (InputManager.Input.IsDown(Keys.A))
         {
-            movement =
-                Vector2.Normalize(
-                    movement
-                );
+            movement -= right;
+        }
 
-            Vector2 newPosition =
-                _playerPosition +
-                movement *
-                _playerSpeed *
-                dt;
+        // D = sağa
+        if (InputManager.Input.IsDown(Keys.D))
+        {
+            movement += right;
+        }
 
-            if (!IsInsideWall(
-                newPosition,
-                20.0f))
-            {
-                _playerPosition =
-                    newPosition;
-            }
+        if (movement.LengthSquared() <= 0.0f)
+            return;
+
+        movement =
+            Vector2.Normalize(
+                movement
+            );
+
+        Vector2 newPosition =
+            _playerPosition +
+            movement *
+            _playerSpeed *
+            dt;
+
+        if (!IsInsideWall(
+            newPosition,
+            20.0f))
+        {
+            _playerPosition =
+                newPosition;
         }
 
         _playerPosition.X =
@@ -202,17 +239,18 @@ public class Debug2DPixelScene : IFixScene
             );
     }
 
-    private void UpdatePlayerShooting()
+    private void UpdatePlayerShooting(float dt)
     {
-        _shootCooldown -=
-            GetFrameTime();
+        _shootCooldown -= dt;
 
         if (!IsCursorHidden())
             return;
 
         if (!IsMouseButtonDown(
                 MouseButton.Left))
+        {
             return;
+        }
 
         if (_shootCooldown > 0.0f)
             return;
@@ -749,7 +787,7 @@ public class Debug2DPixelScene : IFixScene
             )
         );
 
-        int gridSize = 40;
+        const int gridSize = 40;
 
         for (int x = 0;
              x < ScreenWidth;
@@ -1020,6 +1058,9 @@ public class Debug2DPixelScene : IFixScene
     {
         foreach (Bullet bullet in _bullets)
         {
+            if (bullet.Velocity.LengthSquared() <= 0.001f)
+                continue;
+
             Vector2 direction =
                 Vector2.Normalize(
                     bullet.Velocity
