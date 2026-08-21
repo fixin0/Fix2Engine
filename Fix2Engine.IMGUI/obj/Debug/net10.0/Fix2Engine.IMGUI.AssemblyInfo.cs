@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Fix2Engine.IMGUI")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+bba4f2ae8bc5fe1c04bb1ca4826508aa5890c7fa")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+05365164f0be5ee03aa79bffeec7317f4d5b3856")]
 [assembly: System.Reflection.AssemblyProductAttribute("Fix2Engine.IMGUI")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Fix2Engine.IMGUI")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

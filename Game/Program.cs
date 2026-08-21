@@ -8,14 +8,18 @@ namespace Fix2Engine
     {
         static void Main(string[] args)
         {
-            
-            AppContext.SetSwitch(
-                "Tomlyn.TomlSerializer.IsReflectionEnabledByDefault",
-                true);
+            TomlynSettings();
             using var game = new Fix2Engine.Game();
             game.Run();
 
 
+        }
+
+        static void TomlynSettings()
+        {
+            AppContext.SetSwitch(
+                "Tomlyn.TomlSerializer.IsReflectionEnabledByDefault",
+                true);
         }
     }
 }
