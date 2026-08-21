@@ -27,7 +27,6 @@ The repository is organized into distinct class libraries to isolate responsibil
 * **Language & Runtime:** C# / .NET
 * **Rendering:** Raylib (`Raylib-cs`)
 * **GUI / Inspector:** ImGuiNET (`Dear ImGui` bindings)
-* **IDE Support:** JetBrains Rider / Visual Studio
 
 ---
 
