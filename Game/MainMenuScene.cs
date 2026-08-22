@@ -32,7 +32,7 @@ namespace Fix2Engine
                 {
                     SceneManager.LoadScene<Debug3DScene>();
                 }
-
+                
                 if (IMGUI.IMGUI.Button("2D Engine Showcase", _buttonSize))
                 {
                      SceneManager.LoadScene<Debug2DPixelScene>();

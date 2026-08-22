@@ -10,7 +10,7 @@ namespace Fix2Engine
 {
     public class Game : Windowing
     {
-        public Game() : base(1280, 720, "Horror Squad") { }
+        public Game() : base(1280, 720, "F2Engine Demo") { }
 
         protected override void Start()
         {

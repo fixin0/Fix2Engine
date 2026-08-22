@@ -13,7 +13,7 @@ using System.Reflection;
 [assembly: System.Reflection.AssemblyCompanyAttribute("Fix2Engine.Audio")]
 [assembly: System.Reflection.AssemblyConfigurationAttribute("Debug")]
 [assembly: System.Reflection.AssemblyFileVersionAttribute("1.0.0.0")]
-[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+062d104de8bfbafeba2e8fc3eefffda91164ba3f")]
+[assembly: System.Reflection.AssemblyInformationalVersionAttribute("1.0.0+fbaeb2f388b98c35de4e6abbf0a4e8821de693eb")]
 [assembly: System.Reflection.AssemblyProductAttribute("Fix2Engine.Audio")]
 [assembly: System.Reflection.AssemblyTitleAttribute("Fix2Engine.Audio")]
 [assembly: System.Reflection.AssemblyVersionAttribute("1.0.0.0")]

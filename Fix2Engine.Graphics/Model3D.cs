@@ -12,6 +12,7 @@ namespace Fix2Engine.Graphics
         Metalness,
         Roughness,
         Emission,
+        Irradiance,
         Height
     }
     public class Model3D
@@ -68,6 +69,9 @@ namespace Fix2Engine.Graphics
                         break;
                     case MaterialMaps.Height:
                         _model.Materials[0].Maps[(int)MaterialMapIndex.Height].Texture = _customTexture.Value;
+                        break;
+                    case MaterialMaps.Irradiance:
+                        _model.Materials[0].Maps[(int)MaterialMapIndex.Irradiance].Texture = _customTexture.Value;
                         break;
                     default:
                         Console.WriteLine("NOT TEXTURE FOR MODEL");
