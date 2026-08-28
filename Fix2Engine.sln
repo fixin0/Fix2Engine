@@ -1,4 +1,4 @@
-﻿
+
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{0F026A5D-1F50-4F32-AAF5-1DE499BFCA11}"
 EndProject
@@ -6,13 +6,13 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Graphics", "Fix2
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Components", "Fix2Engine.Components\Fix2Engine.Components.csproj", "{317AB0A7-3EDD-4BBB-85DB-519A68017D5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.IMGUI", "Fix2Engine.IMGUI\Fix2Engine.IMGUI.csproj", "{06A0C00B-A99C-4D15-9784-5E5F59BCAD67}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Audio", "Fix2Engine.Audio\Fix2Engine.Audio.csproj", "{6DBBDDDC-D94F-4275-BA4D-9EE2CEAB8891}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Physics", "Fix2Engine.Physics\Fix2Engine.Physics.csproj", "{50C67DA8-92FC-4C19-9C54-742799E632C8}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Input", "Fix2Engine.Input\Fix2Engine.Input.csproj", "{5D79DFB1-9B5F-4562-A3F5-6C32D47594CC}"
+EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Console", "Fix2Console\Fix2Console.csproj", "{2BEFE1EE-64A7-4606-BDC0-927DC0E8D54B}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -32,10 +32,6 @@ Global
 		{317AB0A7-3EDD-4BBB-85DB-519A68017D5D}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{317AB0A7-3EDD-4BBB-85DB-519A68017D5D}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{317AB0A7-3EDD-4BBB-85DB-519A68017D5D}.Release|Any CPU.Build.0 = Release|Any CPU
-		{06A0C00B-A99C-4D15-9784-5E5F59BCAD67}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{06A0C00B-A99C-4D15-9784-5E5F59BCAD67}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{06A0C00B-A99C-4D15-9784-5E5F59BCAD67}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{06A0C00B-A99C-4D15-9784-5E5F59BCAD67}.Release|Any CPU.Build.0 = Release|Any CPU
 		{6DBBDDDC-D94F-4275-BA4D-9EE2CEAB8891}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{6DBBDDDC-D94F-4275-BA4D-9EE2CEAB8891}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{6DBBDDDC-D94F-4275-BA4D-9EE2CEAB8891}.Release|Any CPU.ActiveCfg = Release|Any CPU
@@ -48,5 +44,9 @@ Global
 		{5D79DFB1-9B5F-4562-A3F5-6C32D47594CC}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{5D79DFB1-9B5F-4562-A3F5-6C32D47594CC}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{5D79DFB1-9B5F-4562-A3F5-6C32D47594CC}.Release|Any CPU.Build.0 = Release|Any CPU
+		{2BEFE1EE-64A7-4606-BDC0-927DC0E8D54B}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{2BEFE1EE-64A7-4606-BDC0-927DC0E8D54B}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{2BEFE1EE-64A7-4606-BDC0-927DC0E8D54B}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{2BEFE1EE-64A7-4606-BDC0-927DC0E8D54B}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 EndGlobal

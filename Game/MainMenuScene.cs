@@ -2,7 +2,7 @@ using System;
 using System.Numerics;
 using Fix2Engine.Components;
 using Fix2Engine.Components.Scene;
-using Fix2Engine.IMGUI;
+using ImGuiNET;
 using Raylib_cs;
 
 namespace Fix2Engine
@@ -24,37 +24,66 @@ namespace Fix2Engine
 
         public void RenderUI()
         {
-            if (IMGUI.IMGUI.BeginCenteredPanel("MainMenu", _menuSize))
-            {
-                IMGUI.IMGUI.Header("MAIN MENU");
+            var viewport = ImGui.GetMainViewport();
+            ImGui.SetNextWindowPos(viewport.GetCenter(), ImGuiCond.Always, new Vector2(0.5f, 0.5f));
+            ImGui.SetNextWindowSize(_menuSize, ImGuiCond.Always);
 
-                if (IMGUI.IMGUI.Button("3D Engine Showcase", _buttonSize))
-                {
+            ImGuiWindowFlags flags = ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoSavedSettings;
+            if (ImGui.Begin("MainMenu", flags))
+            {
+                float winW = ImGui.GetWindowSize().X;
+                string header = "MAIN MENU";
+                float tw = ImGui.CalcTextSize(header).X;
+                ImGui.SetCursorPosX((winW - tw) * 0.5f);
+                ImGui.TextColored(new Vector4(0.90f, 0.92f, 0.98f, 1.00f), header);
+                ImGui.Separator();
+                ImGui.Dummy(new Vector2(0, 10));
+
+                ImGui.SetCursorPosX((winW - _buttonSize.X) * 0.5f);
+                if (ImGui.Button("3D Engine Showcase", _buttonSize))
                     SceneManager.LoadScene<Debug3DScene>();
-                }
-                
-                if (IMGUI.IMGUI.Button("2D Engine Showcase", _buttonSize))
-                {
-                     SceneManager.LoadScene<Debug2DPixelScene>();
-                }
 
-                if (IMGUI.IMGUI.Button("Settings", _buttonSize))
-                {
-                    Modal.Open("SettingsModal");
-                }
+                ImGui.SetCursorPosX((winW - _buttonSize.X) * 0.5f);
+                if (ImGui.Button("2D Engine Showcase", _buttonSize))
+                    SceneManager.LoadScene<Debug2DPixelScene>();
 
-                Widgets.Spacer(4);
+                ImGui.SetCursorPosX((winW - _buttonSize.X) * 0.5f);
+                if (ImGui.Button("Settings", _buttonSize))
+                    ImGui.OpenPopup("SettingsModal");
 
-                if (IMGUI.IMGUI.DangerButton("Exit Game", _buttonSize))
-                {
-                    Modal.Open("ExitConfirm");
-                }
+                ImGui.Dummy(new Vector2(0, 4));
+
+                ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.45f, 0.15f, 0.18f, 0.80f));
+                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.65f, 0.20f, 0.22f, 1.00f));
+                ImGui.SetCursorPosX((winW - _buttonSize.X) * 0.5f);
+                bool exitClicked = ImGui.Button("Exit Game", _buttonSize);
+                ImGui.PopStyleColor(2);
+                if (exitClicked)
+                    ImGui.OpenPopup("ExitConfirm");
+
+                ImGui.End();
             }
-            IMGUI.IMGUI.EndPanel(); // Stilleri ve ImGui.End()'i kendisi halleder
 
-            if (Modal.Confirm("ExitConfirm", "Oyundan çıkmak istediğine emin misin?", "Çık", "İptal") == true)
+            if (ImGui.BeginPopupModal("ExitConfirm", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoSavedSettings))
             {
-                Environment.Exit(0);
+                ImGui.Text("Oyundan cikmak istedigine emin misin?");
+                ImGui.Separator();
+                float btnW = 120f;
+                float spacing = ImGui.GetStyle().ItemSpacing.X;
+                float totalW = btnW * 2 + spacing;
+                ImGui.SetCursorPosX((ImGui.GetWindowSize().X - totalW) * 0.5f);
+                ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.45f, 0.15f, 0.18f, 0.80f));
+                ImGui.PushStyleColor(ImGuiCol.ButtonHovered, new Vector4(0.65f, 0.20f, 0.22f, 1.00f));
+                if (ImGui.Button("Cik", new Vector2(btnW, 0)))
+                {
+                    ImGui.CloseCurrentPopup();
+                    Environment.Exit(0);
+                }
+                ImGui.PopStyleColor(2);
+                ImGui.SameLine();
+                if (ImGui.Button("Iptal", new Vector2(btnW, 0)))
+                    ImGui.CloseCurrentPopup();
+                ImGui.EndPopup();
             }
 
             RenderSettingsModal();
@@ -62,18 +91,24 @@ namespace Fix2Engine
 
         private void RenderSettingsModal()
         {
-            if (Modal.Begin("SettingsModal", new Vector2(320, 180)))
+            ImGui.SetNextWindowSize(new Vector2(320, 180), ImGuiCond.Appearing);
+            if (ImGui.BeginPopupModal("SettingsModal", ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoSavedSettings))
             {
-                IMGUI.IMGUI.Header("AYARLAR");
+                string header = "AYARLAR";
+                float winW = ImGui.GetWindowSize().X;
+                float tw = ImGui.CalcTextSize(header).X;
+                ImGui.SetCursorPosX((winW - tw) * 0.5f);
+                ImGui.TextColored(new Vector4(0.90f, 0.92f, 0.98f, 1.00f), header);
+                ImGui.Separator();
+                ImGui.Dummy(new Vector2(0, 10));
 
-                Widgets.Toggle("Müzik", ref _musicEnabled);
-
-                Widgets.Spacer(12);
-                if (IMGUI.IMGUI.Button("Kapat", new Vector2(120, 36)))
-                {
-                    ImGuiNET.ImGui.CloseCurrentPopup();
-                }
-                Modal.End();
+                ImGui.Checkbox("Muzik", ref _musicEnabled);
+                ImGui.Dummy(new Vector2(0, 12));
+                float btnW = 120f;
+                ImGui.SetCursorPosX((winW - btnW) * 0.5f);
+                if (ImGui.Button("Kapat", new Vector2(btnW, 36)))
+                    ImGui.CloseCurrentPopup();
+                ImGui.EndPopup();
             }
         }
 

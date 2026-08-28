@@ -1,4 +1,4 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
         <OutputType>Exe</OutputType>
@@ -13,8 +13,11 @@
     <ItemGroup>
       <ProjectReference Include="..\Fix2Engine.Components\Fix2Engine.Components.csproj" />
       <ProjectReference Include="..\Fix2Engine.Graphics\Fix2Engine.Graphics.csproj" />
-      <ProjectReference Include="..\Fix2Engine.IMGUI\Fix2Engine.IMGUI.csproj" />
       <ProjectReference Include="..\Fix2Engine.Input\Fix2Engine.Input.csproj" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <PackageReference Include="ImGui.NET" Version="1.91.6.1" />
     </ItemGroup>
 
     <ItemGroup>

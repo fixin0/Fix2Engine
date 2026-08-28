@@ -4,7 +4,7 @@ using Raylib_cs;
 using ImGuiNET;
 using Fix2Engine.Graphics;
 using Fix2Engine.Components.Scene;
-using Fix2Engine.IMGUI;
+
 using Fix2Engine.Input;
 using Fix2Engine.Input.InputBackend;
 using static Raylib_cs.Raylib;
@@ -816,9 +816,9 @@ namespace Fix2Engine
                 "F - Flashlight"
             );
 
-            Widgets.SeparatorWithLabel(
-                "CAMERA"
-            );
+            ImGui.Separator();
+            ImGui.Text("CAMERA");
+            ImGui.Separator();
 
             Vector3 camPos =
                 _camera.Position;
@@ -838,7 +838,7 @@ namespace Fix2Engine
             float fov =
                 _camera.FOV;
 
-            if (Widgets.SliderFloat(
+            if (ImGui.SliderFloat(
                 "FOV",
                 ref fov,
                 30.0f,
@@ -850,7 +850,7 @@ namespace Fix2Engine
             float moveSpeed =
                 _camera.MoveSpeed;
 
-            if (Widgets.SliderFloat(
+            if (ImGui.SliderFloat(
                 "Move Speed",
                 ref moveSpeed,
                 1.0f,
@@ -863,7 +863,7 @@ namespace Fix2Engine
             float sensitivity =
                 _camera.MouseSensitivity;
 
-            if (Widgets.SliderFloat(
+            if (ImGui.SliderFloat(
                 "Mouse Sensitivity",
                 ref sensitivity,
                 0.0f,
@@ -873,9 +873,9 @@ namespace Fix2Engine
                     sensitivity;
             }
 
-            Widgets.SeparatorWithLabel(
-                "FLASHLIGHT"
-            );
+            ImGui.Separator();
+            ImGui.Text("FLASHLIGHT");
+            ImGui.Separator();
 
             ImGui.Text(
                 _flashlightEnabled
@@ -883,9 +883,9 @@ namespace Fix2Engine
                     : "OFF"
             );
 
-            Widgets.SeparatorWithLabel(
-                "LIGHT"
-            );
+            ImGui.Separator();
+            ImGui.Text("LIGHT");
+            ImGui.Separator();
 
             ImGui.DragFloat3(
                 "Light Position",
@@ -893,11 +893,11 @@ namespace Fix2Engine
                 0.1f
             );
 
-            Widgets.SeparatorWithLabel(
-                "DEBUG"
-            );
+            ImGui.Separator();
+            ImGui.Text("DEBUG");
+            ImGui.Separator();
 
-            Widgets.Toggle(
+            ImGui.Checkbox(
                 "ImGui Demo Window",
                 ref _showDemoWindow
             );
