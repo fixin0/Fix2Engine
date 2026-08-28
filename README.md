@@ -1,13 +1,11 @@
+
 # Fix2Engine
 
 Fix2Engine is a modular, code-first game engine built with C# and .NET. It is designed to offer full control over engine logic while keeping core systems separate, lightweight, and easy to maintain.
 
 ---
 
-<img width="1277" height="718" alt="image" src="https://github.com/user-attachments/assets/63c42f76-a220-4fa1-a87a-786a0f3ca790" />
-
-_The model shown in the image was obtained from mixamo.com._
-
+<img width="1276" height="752" alt="f2engine_2demo" src="https://github.com/user-attachments/assets/0d17fe5a-4ca3-4463-b47d-86e44669243b" />
 
 ## Architecture Overview
 
