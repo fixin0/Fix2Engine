@@ -47,9 +47,9 @@ Scene switching is **deferred** — the actual switch happens at the start of th
 `Game` inherits from `Windowing` (see [Windowing & Game Loop](WindowingAndGameLoop.md)):
 
 ```csharp
+using Fix2Engine.Components.Scene;
 using Fix2Engine.Graphics;
-using Fix2Engine.Components;
-using Fix2Engine.IMGUI;
+using ImGuiNET;
 using Raylib_cs;
 using rlImGui_cs;
 
@@ -57,12 +57,14 @@ namespace Fix2Engine
 {
     public class Game : Windowing
     {
+        public bool ShowPerformanceMonitor { get; set; } = true;
+
         public Game() : base(1280, 720, "My Game") { }
 
         protected override void Start()
         {
             rlImGui.Setup(true);
-            Theme.ApplyDark();
+            ApplyImGuiTheme();
             SceneManager.LoadScene<MainMenuScene>();
         }
 
@@ -73,12 +75,22 @@ namespace Fix2Engine
             SceneManager.Render();
             rlImGui.Begin();
             SceneManager.RenderUI();
+            if (ShowPerformanceMonitor) DrawPerformanceMonitor();
             rlImGui.End();
             Raylib.DrawFPS(Width - 90, 10);
+        }
+
+        private static void ApplyImGuiTheme()
+        {
+            var style = ImGui.GetStyle();
+            style.WindowRounding = 12.0f;
+            // ... set colors ...
         }
     }
 }
 ```
+
+UI uses native `ImGuiNET` inside `rlImGui.Begin()`/`End()` — no wrapper library.
 
 ## 5. Entry Point
 
@@ -96,9 +108,18 @@ internal static class Program
 }
 ```
 
+Or scaffold a new project:
+
+```bash
+dotnet run --project Fix2Console -- --new-project MyGame
+cd MyGame && dotnet run
+```
+
+The generated project uses native ImGui and references `Fix2Engine.Graphics`, `Fix2Engine.Components`, `Fix2Engine.Input`, `Fix2Engine.Physics`, `Fix2Engine.Audio`.
+
 ## 6. Next Steps
 
-- Handle keyboard input → [Input](Input.md)
+- Handle keyboard input → [Input](Input.md) (`InputManager.IsDown` / `IsPressed`)
 - Draw something → [Graphics](Graphics.md)
-- Control the camera → [Camera](Camera.md)
-- Build a UI → [IMGUI / UI](IMGUI.md)
+- Control the camera → [Camera](Camera.md) (`Fix2Engine.Components.Cameras.Camera`)
+- Build a UI → native `ImGuiNET` inside `RenderUI`

@@ -27,7 +27,7 @@ namespace Fix2Engine.Graphics
         }
 
         /// <summary>
-        /// Pencere açılmadan hemen önce çalışır. Ilk yapılandırmalar burada yapılır.
+        /// Called before the window is created. Perform initial configuration here.
         /// </summary>
         protected virtual void Init()
         {
@@ -35,7 +35,7 @@ namespace Fix2Engine.Graphics
         }
 
         /// <summary>
-        /// Oyun döngüsü başlamadan hemen önce, pencere açıldıktan sonra 1 kez çalışır.
+        /// Called once after the window is opened, before the game loop starts.
         /// </summary>
         protected virtual void Start()
         {
@@ -43,37 +43,37 @@ namespace Fix2Engine.Graphics
         }
 
         /// <summary>
-        /// Kare hızıyla (FPS) senkronize çalışır. Her karede bir kez çağrılır.
+        /// Runs synchronized with the frame rate (FPS). Called once per frame.
         /// </summary>
-        /// <param name="dt">Geçen kare süresi (Delta Time)</param>
+        /// <param name="dt">Elapsed time since last frame (Delta Time)</param>
         protected virtual void Update(float dt)
         {
             
         }
 
         /// <summary>
-        /// Kare hızından bağımsız, SABİT zaman aralıklarında çalışır.
-        /// Fizik ve çarpışma (Collision) hesaplamaları için idealdir.
+        /// Runs at fixed time intervals, independent of frame rate.
+        /// Ideal for physics and collision calculations.
         /// </summary>
-        /// <param name="fixedDt">Sabit zaman adımı (Varsayılan 1/60 sn)</param>
+        /// <param name="fixedDt">Fixed time step (default 1/60 sec)</param>
         protected virtual void FixedUpdate(float fixedDt)
         {
             
         }
 
         /// <summary>
-        /// Çizimlerin yapıldığı metottur. Her karede çalışır.
+        /// Handles rendering. Called every frame.
         /// </summary>
         protected virtual void Render()
         {
             ClearBackground(Color.Black);
 
-            // Örnek varsayılan çizim
+            // Example default drawing
             
         }
 
         /// <summary>
-        /// Tüm yaşam döngüsünü başlatır ve pencere kapanana kadar döngüyü sürdürür.
+        /// Starts the main lifecycle and runs the loop until the window is closed.
         /// </summary>
         public void Run()
         {
@@ -92,7 +92,7 @@ namespace Fix2Engine.Graphics
                 }
 
                 
-                InputManager.Input.Update();
+                Fix2Engine.Input.InputManager.Update();
                 Update(dt);
 
               

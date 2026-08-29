@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using Fix2Engine.Components.Scene;
 
 namespace Fix2Engine.Components
@@ -20,7 +20,7 @@ namespace Fix2Engine.Components
 
         public static void Update(float dt)
         {
-            // Sahne geçişi kare başında güvenle yapılır (Deferred Switch)
+            // Scene transition is safely performed at the start of the frame (Deferred Switch)
             if (_nextScene != null)
             {
                 CurrentScene?.Dispose();

@@ -6,11 +6,11 @@ Both modules are currently **stubs** — the projects exist and are referenced, 
 
 ## Physics — `Fix2Engine.Physics`
 
-**Current content:** `Class1.cs`
+**Current content:** `PhysicsWorld.cs`
 
 ```csharp
 namespace Fix2Engine.Physics;
-public class Class1 { }
+public class PhysicsWorld { }
 ```
 
 **Project:** `Fix2Engine.Physics.csproj` — `net10.0`, no package references.

@@ -1,7 +1,7 @@
-﻿using Fix2Engine.Input.InputBackend;
+using Fix2Engine.Input.InputBackend;
 
-namespace InputManager;
-public static class Input
+namespace Fix2Engine.Input;
+public static class InputManager
 {
     private static readonly bool[] CurrentKeys = new bool[256];
     private static readonly bool[] PreviousKeys = new bool[256];
@@ -17,7 +17,7 @@ public static class Input
         for (int i = 0; i < CurrentKeys.Length; i++)
         {
             CurrentKeys[i] =
-                InputBackend_Windows.IsDown((Keys)i);
+                WindowsInputBackend.IsDown((Keys)i);
         }
     }
 

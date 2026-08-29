@@ -2,8 +2,9 @@ using System;
 using System.Numerics;
 using Raylib_cs;
 using ImGuiNET;
-using Fix2Engine.Graphics;
+using Fix2Engine.Components.Cameras;
 using Fix2Engine.Components.Scene;
+using Fix2Engine.Graphics;
 
 using Fix2Engine.Input;
 using Fix2Engine.Input.InputBackend;
@@ -68,7 +69,7 @@ namespace Fix2Engine
 
         public void Update(float dt)
         {
-            if (InputManager.Input.IsPressed(Keys.F1))
+            if (Fix2Engine.Input.InputManager.IsPressed(Keys.F1))
             {
                 if (IsCursorHidden())
                     EnableCursor();
@@ -76,12 +77,12 @@ namespace Fix2Engine
                     DisableCursor();
             }
 
-            if (InputManager.Input.IsPressed(Keys.Escape))
+            if (Fix2Engine.Input.InputManager.IsPressed(Keys.Escape))
             {
                 EnableCursor();
             }
 
-            if (InputManager.Input.IsPressed(Keys.F))
+            if (Fix2Engine.Input.InputManager.IsPressed(Keys.F))
             {
                 _flashlightEnabled = !_flashlightEnabled;
             }
@@ -99,10 +100,10 @@ namespace Fix2Engine
             _cameraPosition = _camera.Position;
 
             bool moving =
-                InputManager.Input.IsDown(Keys.W) ||
-                InputManager.Input.IsDown(Keys.A) ||
-                InputManager.Input.IsDown(Keys.S) ||
-                InputManager.Input.IsDown(Keys.D);
+                Fix2Engine.Input.InputManager.IsDown(Keys.W) ||
+                Fix2Engine.Input.InputManager.IsDown(Keys.A) ||
+                Fix2Engine.Input.InputManager.IsDown(Keys.S) ||
+                Fix2Engine.Input.InputManager.IsDown(Keys.D);
 
             if (moving)
             {

@@ -1,9 +1,9 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
-namespace Fix2Engine.Graphics
+namespace Fix2Engine.Components.Cameras
 {
     public enum CameraType
     {
@@ -21,31 +21,31 @@ namespace Fix2Engine.Graphics
 
     public class Camera
     {
-        // Uzay & Yönelim Özellikleri
+        // Space & Orientation Properties
         public Vector3 Position { get; set; }
         public Vector3 Target { get; set; }
         public Vector3 Up { get; set; } = new Vector3(0.0f, 1.0f, 0.0f);
 
-        // Görüş & Perspektif Özellikleri
+        // View & Perspective Properties
         public float FOV { get; set; } = 60.0f;
         public CameraType Type { get; set; } = CameraType.FirstPerson;
         public ProjectionType Projection { get; set; } = ProjectionType.Perspective;
 
-        // ThirdPerson için takip mesafesi
+        // Follow distance for ThirdPerson
         public Vector3 TargetOffset { get; set; } = new Vector3(0.0f, 3.0f, 5.0f);
 
-        // Hareket & Bakış Hassasiyeti
+        // Movement & Look Sensitivity
         public float MoveSpeed { get; set; } = 6.0f;
         public float MouseSensitivity { get; set; } = 0.003f;
 
-        // Kırpma Düzlemleri (Clip Planes) - büyük ölçekli sahnelerde z-fighting/kırpılmayı önler
+        // Clip Planes - prevents z-fighting/clipping in large-scale scenes
         public double NearPlane { get; set; } = 0.05;
         public double FarPlane { get; set; } = 10000.0;
 
-        // --- CONSTRUCTORS (YAPICI METOTLAR) ---
+        // --- CONSTRUCTORS ---
         
         /// <summary>
-        /// Boş Kamera Oluşturur
+        /// Creates an empty camera.
         /// </summary>
         public Camera()
         {
@@ -54,7 +54,7 @@ namespace Fix2Engine.Graphics
         }
 
         /// <summary>
-        /// Belirli Pozisyon ve Hedef ile Kamera Oluşturur
+        /// Creates a camera with specified position and target.
         /// </summary>
         public Camera(Vector3 position, Vector3 target, float fov = 60.0f, CameraType type = CameraType.FirstPerson)
         {
@@ -64,10 +64,10 @@ namespace Fix2Engine.Graphics
             Type = type;
         }
 
-        // --- İŞLEVSEL METOTLAR ---
+        // --- FUNCTIONAL METHODS ---
 
         /// <summary>
-        /// Kamerayı bir hedef noktaya veya karaktere kilitler (ThirdPerson için idealdir)
+        /// Locks the camera to a target point or character (ideal for ThirdPerson).
         /// </summary>
         public void Follow(Vector3 targetPosition)
         {
@@ -79,7 +79,7 @@ namespace Fix2Engine.Graphics
         }
 
         /// <summary>
-        /// Raylib'in yerleşik kamera kontrolleriyle kamerayı günceller.
+        /// Updates the camera using Raylib's built-in camera controls.
         /// </summary>
         public void Update()
         {
@@ -103,14 +103,14 @@ namespace Fix2Engine.Graphics
 
                 UpdateCameraPro(ref rCam, movement, rotation, 0.0f);
 
-                // Raylib'in güncellediği pozisyonu kendi sınıfımıza aktarırız
+                // Transfer the position updated by Raylib to our class
                 Position = rCam.Position;
                 Target = rCam.Target;
             }
         }
 
         /// <summary>
-        /// Verileri Raylib'in anlayacağı Camera3D struct yapısına çevirir.
+        /// Converts data to Raylib's Camera3D struct.
         /// </summary>
         public Camera3D GetRaylibCamera()
         {
@@ -127,7 +127,7 @@ namespace Fix2Engine.Graphics
         }
 
         /// <summary>
-        /// 3D Çizim modunu başlatır.
+        /// Begins 3D rendering mode.
         /// </summary>
         public void Begin()
         {
@@ -136,7 +136,7 @@ namespace Fix2Engine.Graphics
         }
 
         /// <summary>
-        /// 3D Çizim modunu bitirir.
+        /// Ends 3D rendering mode.
         /// </summary>
         public void End()
         {

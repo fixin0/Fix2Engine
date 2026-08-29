@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Numerics;
 using Fix2Engine.Components.Scene;
@@ -92,9 +92,8 @@ public class Debug2DPixelScene : IFixScene
 
     public void Update(float dt)
     {
-        // F1:
-        // Cursor'u kilitle / serbest bırak.
-        if (InputManager.Input.IsPressed(Keys.F1))
+        // F1: Lock / unlock cursor.
+        if (Fix2Engine.Input.InputManager.IsPressed(Keys.F1))
         {
             if (IsCursorHidden())
             {
@@ -106,16 +105,14 @@ public class Debug2DPixelScene : IFixScene
             }
         }
 
-        // ESC:
-        // Cursor'u serbest bırak.
-        if (InputManager.Input.IsPressed(Keys.Escape))
+        // ESC: Release cursor.
+        if (Fix2Engine.Input.InputManager.IsPressed(Keys.Escape))
         {
             EnableCursor();
         }
 
-        // R:
-        // Oyunu yeniden başlat.
-        if (InputManager.Input.IsPressed(Keys.R))
+        // R: Restart the game.
+        if (Fix2Engine.Input.InputManager.IsPressed(Keys.R))
         {
             Start();
             return;
@@ -124,11 +121,11 @@ public class Debug2DPixelScene : IFixScene
         if (_gameOver)
             return;
 
-        // Keyboard input cursor durumundan bağımsız.
+        // Keyboard input is independent of cursor state.
         UpdatePlayer(dt);
 
-        // Mouse ile ilgili işlemler sadece
-        // cursor kilitliyken yapılır.
+        // Mouse-related operations only
+        // when the cursor is locked.
         if (IsCursorHidden())
         {
             UpdateMouseAim();
@@ -171,33 +168,33 @@ public class Debug2DPixelScene : IFixScene
         Vector2 movement =
             Vector2.Zero;
 
-        // W = ileri
-        if (InputManager.Input.IsDown(Keys.W))
+        // W = forward
+        if (Fix2Engine.Input.InputManager.IsDown(Keys.W))
         {
             movement += forward;
         }
 
-        // S = geri
-        if (InputManager.Input.IsDown(Keys.S))
+        // S = backward
+        if (Fix2Engine.Input.InputManager.IsDown(Keys.S))
         {
             movement -= forward;
         }
 
-        // Sağ vektör
+        // Right vector
         Vector2 right =
             new Vector2(
                 -forward.Y,
                 forward.X
             );
 
-        // A = sola
-        if (InputManager.Input.IsDown(Keys.A))
+        // A = left
+        if (Fix2Engine.Input.InputManager.IsDown(Keys.A))
         {
             movement -= right;
         }
 
-        // D = sağa
-        if (InputManager.Input.IsDown(Keys.D))
+        // D = right
+        if (Fix2Engine.Input.InputManager.IsDown(Keys.D))
         {
             movement += right;
         }

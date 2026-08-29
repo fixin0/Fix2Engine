@@ -1,6 +1,6 @@
 # Camera
 
-Source: `Fix2Engine.Components/Cameras/Camera.cs` — namespace `Fix2Engine.Graphics` (declared as Graphics despite living under Components)
+Source: `Fix2Engine.Components/Cameras/Camera.cs` — namespace `Fix2Engine.Components.Cameras`
 
 ## Enums
 
@@ -41,9 +41,9 @@ public class Camera
 
 ## Usage
 
-### First-Person (FPS)
-
 ```csharp
+using Fix2Engine.Components.Cameras;
+
 var camera = new Camera(
     position: new Vector3(0, 1.8f, 0),
     target:   new Vector3(0, 1.8f, -1),
@@ -65,6 +65,8 @@ camera.End();
 ### Third-Person
 
 ```csharp
+using Fix2Engine.Components.Cameras;
+
 var camera = new Camera(Vector3.Zero, Vector3.Zero, 60.0f, CameraType.ThirdPerson);
 camera.TargetOffset = new Vector3(0, 3, 5);
 
@@ -101,4 +103,4 @@ var forward = Vector3.Normalize(rc.Target - rc.Position);
 var right   = Vector3.Normalize(Vector3.Cross(forward, rc.Up));
 ```
 
-Use `forward` for raycasts, gun placement, etc. (see `FpsDemoScene` / `Racing3DScene`).
+Use `forward` for raycasts, gun placement, etc.

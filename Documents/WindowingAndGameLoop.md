@@ -38,7 +38,7 @@ Run()
       while (accumulator >= 1/60)
           FixedUpdate(1/60)     // deterministic 60 Hz
           accumulator -= 1/60
-      InputManager.Input.Update() // polls all 256 keys via Win32
+      Fix2Engine.Input.InputManager.Update() // polls all 256 keys via WindowsInputBackend
       Update(dt)                // per-frame logic
       BeginDrawing()
         Render()               // your drawing (ClearBackground etc.)
@@ -53,6 +53,8 @@ Inherit and override only what you need:
 ```csharp
 public class Game : Windowing
 {
+    public bool ShowPerformanceMonitor { get; set; } = true;
+
     public Game() : base(1280, 720, "Demo") { }
 
     protected override void Init()
@@ -63,7 +65,7 @@ public class Game : Windowing
     protected override void Start()
     {
         rlImGui.Setup(true);
-        Theme.ApplyDark();
+        ApplyImGuiTheme();
         SceneManager.LoadScene<MainMenuScene>();
     }
 
@@ -80,14 +82,17 @@ public class Game : Windowing
         SceneManager.Render();
         rlImGui.Begin();
         SceneManager.RenderUI();
+        if (ShowPerformanceMonitor) DrawPerformanceMonitor();
         rlImGui.End();
     }
 }
 ```
 
+`ApplyImGuiTheme()` sets `ImGui.GetStyle()` colors/rounding natively (no `Fix2Engine.IMGUI` wrapper).
+
 ## Notes
 
 - `FixedUpdate` is ideal for physics. Use `Update` for input and gameplay.
-- `InputManager.Input.Update()` is called automatically before `Update` — do not call it yourself.
+- `Fix2Engine.Input.InputManager.Update()` is called automatically before `Update` — do not call it yourself.
 - `Width`/`Height`/`Title` are mutable but changing them does not resize the window; use Raylib `SetWindowSize` / `SetWindowTitle` if needed.
 - `Run()` blocks until the window closes. Call it once from `Program.Main`.

@@ -1,41 +1,43 @@
 # Input
 
 Sources:
-- `Fix2Engine.Input/InputBackend/Input.cs` — namespace `InputManager`
-- `Fix2Engine.Input/InputBackend/InputBackend_Windows.cs` — namespace `Fix2Engine.Input.InputBackend`
+- `Fix2Engine.Input/InputBackend/Input.cs` — namespace `Fix2Engine.Input` (`InputManager` class)
+- `Fix2Engine.Input/InputBackend/WindowsInputBackend.cs` — namespace `Fix2Engine.Input.InputBackend`
 - `Fix2Engine.Input/InputBackend/Keys.cs` — enum `Keys`
 - `Fix2Engine.Input/InputBackend/KeyState.cs` — enum `KeyState` (reserved)
 - `Fix2Engine.Input/InputConfig.cs` + `ConfigReader.cs` — TOML action maps
 
 ## Polling API
 
-`Input` is a **static** class. It is pumped once per frame by `Windowing.Run()` before `Update(dt)` — no manual call needed.
+`InputManager` is a **static** class in `Fix2Engine.Input`. It is pumped once per frame by `Windowing.Run()` before `Update(dt)` — no manual call needed.
 
 ```csharp
+using Fix2Engine.Input; // for InputManager
 using Fix2Engine.Input.InputBackend; // for Keys
-// Input lives in namespace InputManager
 
-bool held     = InputManager.Input.IsDown(Keys.W);
-bool pressed  = InputManager.Input.IsPressed(Keys.Space);   // edge: down this frame, up last frame
-bool released = InputManager.Input.IsReleased(Keys.Escape); // edge: up this frame, down last frame
+bool held     = InputManager.IsDown(Keys.W);
+bool pressed  = InputManager.IsPressed(Keys.Space);   // edge: down this frame, up last frame
+bool released = InputManager.IsReleased(Keys.Escape); // edge: up this frame, down last frame
 ```
+
+Or fully qualified: `Fix2Engine.Input.InputManager.IsDown(Keys.W)`.
 
 Call `IsDown` for continuous movement, `IsPressed` for one-shot actions (jump, shoot, menu toggle).
 
 ```csharp
 public void Update(float dt)
 {
-    if (InputManager.Input.IsDown(Keys.W))    MoveForward(dt);
-    if (InputManager.Input.IsPressed(Keys.R)) Reload();
-    if (InputManager.Input.IsPressed(Keys.F1)) ToggleCursor();
+    if (InputManager.IsDown(Keys.W))    MoveForward(dt);
+    if (InputManager.IsPressed(Keys.R)) Reload();
+    if (InputManager.IsPressed(Keys.F1)) ToggleCursor();
 }
 ```
 
 ### How It Works
 
 - Two `bool[256]` arrays: `CurrentKeys` and `PreviousKeys`.
-- `Update()` does `Array.Copy(Current → Previous)` then fills `Current` via `InputBackend_Windows.IsDown((Keys)i)` for all 256 virtual-key codes.
-- `InputBackend_Windows` P/Invokes `user32.dll!GetAsyncKeyState` and checks bit `0x8000`.
+- `Update()` does `Array.Copy(Current → Previous)` then fills `Current` via `WindowsInputBackend.IsDown((Keys)i)` for all 256 virtual-key codes.
+- `WindowsInputBackend` P/Invokes `user32.dll!GetAsyncKeyState` and checks bit `0x8000`.
 
 ## Keys Enum
 
@@ -73,7 +75,7 @@ foreach (var kv in config.Actions)
 
 ## Raylib vs Native — Adding Linux Support
 
-The current backend is **Windows-only** (`user32.dll`). For cross-platform input you have two options:
+The current backend is **Windows-only** (`user32.dll` via `WindowsInputBackend`). For cross-platform input you have two options:
 
 | Approach | Pros | Cons |
 |----------|------|------|
@@ -86,7 +88,7 @@ The current backend is **Windows-only** (`user32.dll`). For cross-platform input
 // Fix2Engine.Input/InputBackend/IInputBackend.cs
 public interface IInputBackend { bool IsDown(Keys key); }
 
-// Windows: GetAsyncKeyState
+// Windows: GetAsyncKeyState via WindowsInputBackend
 // Linux/macOS: Raylib.IsKeyDown((KeyboardKey)key)
 ```
 

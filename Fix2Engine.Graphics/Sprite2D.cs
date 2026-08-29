@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -34,7 +34,7 @@ public class Sprite2D : IDisposable
     }
 
     /// <summary>
-    /// Pivot noktasını dokunun tam merkezine ayarlar.
+    /// Sets the pivot to the center of the texture.
     /// </summary>
     public void CenterOrigin()
     {
@@ -42,13 +42,13 @@ public class Sprite2D : IDisposable
     }
 
     /// <summary>
-    /// Sprite'ı mevcut parametreleri ile ekrana çizer.
+    /// Draws the sprite with current parameters.
     /// </summary>
     public void Draw()
     {
         if (_isDisposed || Texture.Id == 0) return;
 
-        // Ekrana çizilecek hedef alan ve boyut hesabı
+        // Calculate destination area and size for rendering
         Rectangle destRect = new Rectangle(
             Position.X,
             Position.Y,

@@ -1,15 +1,13 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
-using System.Drawing;
 using System.Numerics;
 using Fix2Engine.Graphics;
-// Kullandığın grafik kütüphanesine göre (Raylib-cs, MonoGame vs.) buradaki türleri ayarlayabilirsin:
- using Raylib_cs;
- using Rectangle = Raylib_cs.Rectangle;
+using Raylib_cs;
+using Rectangle = Raylib_cs.Rectangle;
 
- namespace Fix2Engine.Components;
+namespace Fix2Engine.Components;
 
-public class PineObject2D
+public class Node2D
 {
     public Guid Guid { get; private set; }
     public string Name { get; set; }
@@ -24,19 +22,19 @@ public class PineObject2D
     
     public Raylib_cs.Color Tint {get; set;} = Raylib_cs.Color.White;
     
-    public PineObject2D? Parent { get; private set; }
-    private readonly List<PineObject2D> _children = new();
-    public IReadOnlyList<PineObject2D> Children => _children.AsReadOnly();
+    public Node2D? Parent { get; private set; }
+    private readonly List<Node2D> _children = new();
+    public IReadOnlyList<Node2D> Children => _children.AsReadOnly();
 
     public Vector2 GlobalPosition => Parent == null ? Position : Parent.GlobalPosition + Position;
 
-    public PineObject2D(string name = "PineObject2D")
+    public Node2D(string name = "Node2D")
     {
         Guid = Guid.NewGuid();
         Name = name;
     }
 
-    public void AddChild(PineObject2D child)
+    public void AddChild(Node2D child)
     {
         if (child == null || child == this || _children.Contains(child)) return;
         child.Parent?._children.Remove(child);
@@ -44,7 +42,7 @@ public class PineObject2D
         _children.Add(child);
     }
 
-    public void RemoveChild(PineObject2D child)
+    public void RemoveChild(Node2D child)
     {
         if (child == null || !_children.Contains(child)) return;
         child.Parent = null;
@@ -65,18 +63,14 @@ public class PineObject2D
     {
         if (!IsActive) return;
 
-        // Texture varsa burada ekrana çizdirme mantığını çağırırsın:
         if (TexturePath != null)
         {
-            // Örn Raylib için:
-            // Raylib.DrawTextureEx((Texture2D)Texture, GlobalPosition, Rotation, Scale.X, Color.WHITE)
-            Sprite2D _renderTextureForSprite = new Sprite2D(TexturePath);
-            _renderTextureForSprite.Scale = Scale;
-            _renderTextureForSprite.Rotation = Rotation;
-            _renderTextureForSprite.Origin = Origin;
-            _renderTextureForSprite.Tint = Tint;
-            _renderTextureForSprite.SourceRect = new Rectangle();
-
+            Sprite2D sprite = new Sprite2D(TexturePath);
+            sprite.Scale = Scale;
+            sprite.Rotation = Rotation;
+            sprite.Origin = Origin;
+            sprite.Tint = Tint;
+            sprite.SourceRect = new Rectangle();
         }
         for (int i = 0; i < _children.Count; i++)
         {

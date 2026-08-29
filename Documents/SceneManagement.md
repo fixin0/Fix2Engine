@@ -42,7 +42,7 @@ public class MyScene : IFixScene
 
     public void Update(float dt)
     {
-        if (InputManager.Input.IsPressed(Keys.Escape))
+        if (InputManager.IsPressed(Keys.Escape))
             SceneManager.LoadScene<MainMenuScene>();
         _camera.Update();
     }
@@ -57,11 +57,12 @@ public class MyScene : IFixScene
 
     public void RenderUI()
     {
-        if (IMGUI.BeginCenteredPanel("HUD", new Vector2(200, 80)))
+        ImGui.SetNextWindowPos(new Vector2(10, 10), ImGuiCond.FirstUseEver);
+        if (ImGui.Begin("HUD", ImGuiWindowFlags.NoSavedSettings))
         {
-            IMGUI.Header("MY SCENE");
+            ImGui.Text("MY SCENE");
             ImGui.Text("Hello, world!");
-            IMGUI.EndPanel();
+            ImGui.End();
         }
     }
 
@@ -116,7 +117,7 @@ This makes it safe to call `LoadScene` from inside `Update`, from a button callb
 protected override void Start()
 {
     rlImGui.Setup(true);
-    Theme.ApplyDark();
+    ApplyImGuiTheme();
     SceneManager.LoadScene<MainMenuScene>();
 }
 
@@ -127,7 +128,8 @@ protected override void Render()
     SceneManager.Render();       // 3D world
 
     rlImGui.Begin();
-    SceneManager.RenderUI();     // ImGui
+    SceneManager.RenderUI();     // ImGui (native ImGuiNET)
+    if (ShowPerformanceMonitor) DrawPerformanceMonitor();
     rlImGui.End();
 
     Raylib.DrawFPS(Width - 90, 10);
