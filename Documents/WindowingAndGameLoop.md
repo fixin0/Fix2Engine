@@ -38,7 +38,7 @@ Run()
       while (accumulator >= 1/60)
           FixedUpdate(1/60)     // deterministic 60 Hz
           accumulator -= 1/60
-      Fix2Engine.Input.InputManager.Update() // polls all 256 keys via WindowsInputBackend
+      Fix2Engine.Input.InputManager.Update() // polls all keys via OS-appropriate backend
       Update(dt)                // per-frame logic
       BeginDrawing()
         Render()               // your drawing (ClearBackground etc.)
@@ -53,8 +53,6 @@ Inherit and override only what you need:
 ```csharp
 public class Game : Windowing
 {
-    public bool ShowPerformanceMonitor { get; set; } = true;
-
     public Game() : base(1280, 720, "Demo") { }
 
     protected override void Init()
@@ -69,7 +67,11 @@ public class Game : Windowing
         SceneManager.LoadScene<MainMenuScene>();
     }
 
-    protected override void Update(float dt) => SceneManager.Update(dt);
+    protected override void Update(float dt)
+    {
+        PerformanceMonitor.Update(dt);
+        SceneManager.Update(dt);
+    }
 
     protected override void FixedUpdate(float fixedDt)
     {
@@ -82,13 +84,13 @@ public class Game : Windowing
         SceneManager.Render();
         rlImGui.Begin();
         SceneManager.RenderUI();
-        if (ShowPerformanceMonitor) DrawPerformanceMonitor();
+        PerformanceMonitor.Draw($"Resolution: {Width}x{Height}   Scene: {SceneManager.CurrentScene?.GetType().Name}");
         rlImGui.End();
     }
 }
 ```
 
-`ApplyImGuiTheme()` sets `ImGui.GetStyle()` colors/rounding natively (no `Fix2Engine.IMGUI` wrapper).
+`ApplyImGuiTheme()` sets `ImGui.GetStyle()` colors/rounding natively (no `Fix2Engine.IMGUI` wrapper). `PerformanceMonitor` (namespace `Fix2Engine.Monitoring`) owns the performance overlay — see `Monitoring.md`.
 
 ## Notes
 

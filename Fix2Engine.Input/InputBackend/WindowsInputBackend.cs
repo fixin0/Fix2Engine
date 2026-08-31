@@ -10,11 +10,8 @@ public static class WindowsInputBackend
     {
         return (GetAsyncKeyState((int)key) & 0x8000) != 0;
     }
-    
-    
-    
-    
-    
-    
-    
+
+
+
+
 }

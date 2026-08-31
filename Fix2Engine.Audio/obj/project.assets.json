@@ -1,5 +1,5 @@
 {
-  "version": 4,
+  "version": 3,
   "targets": {
     "net10.0": {
       "Microsoft.DotNet.PlatformAbstractions/3.1.6": {
@@ -166,29 +166,29 @@
     ]
   },
   "packageFolders": {
-    "C:\\Users\\fixinlab\\.nuget\\packages\\": {}
+    "/home/fixin/.nuget/packages/": {}
   },
   "project": {
     "version": "1.0.0",
     "restore": {
-      "projectUniqueName": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Audio\\Fix2Engine.Audio.csproj",
+      "projectUniqueName": "/home/fixin/Documents/Projects/Fix2Engine/Fix2Engine.Audio/Fix2Engine.Audio.csproj",
       "projectName": "Fix2Engine.Audio",
-      "projectPath": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Audio\\Fix2Engine.Audio.csproj",
-      "packagesPath": "C:\\Users\\fixinlab\\.nuget\\packages\\",
-      "outputPath": "C:\\Users\\fixinlab\\Desktop\\Personal\\Fix2Engine\\Fix2Engine.Audio\\obj\\",
+      "projectPath": "/home/fixin/Documents/Projects/Fix2Engine/Fix2Engine.Audio/Fix2Engine.Audio.csproj",
+      "packagesPath": "/home/fixin/.nuget/packages/",
+      "outputPath": "/home/fixin/Documents/Projects/Fix2Engine/Fix2Engine.Audio/obj/",
       "projectStyle": "PackageReference",
       "configFilePaths": [
-        "C:\\Users\\fixinlab\\AppData\\Roaming\\NuGet\\NuGet.Config"
+        "/home/fixin/.nuget/NuGet/NuGet.Config"
       ],
       "originalTargetFrameworks": [
         "net10.0"
       ],
       "sources": {
+        "/usr/lib/dotnet/library-packs": {},
         "https://api.nuget.org/v3/index.json": {}
       },
       "frameworks": {
         "net10.0": {
-          "framework": "net10.0",
           "targetAlias": "net10.0",
           "projectReferences": {}
         }
@@ -203,11 +203,10 @@
         "auditLevel": "low",
         "auditMode": "all"
       },
-      "SdkAnalysisLevel": "10.0.300"
+      "SdkAnalysisLevel": "10.0.100"
     },
     "frameworks": {
       "net10.0": {
-        "framework": "net10.0",
         "targetAlias": "net10.0",
         "dependencies": {
           "Silk.NET.OpenAL": {
@@ -231,7 +230,7 @@
             "privateAssets": "all"
           }
         },
-        "runtimeIdentifierGraphPath": "C:\\Program Files\\dotnet\\sdk\\10.0.302/PortableRuntimeIdentifierGraph.json",
+        "runtimeIdentifierGraphPath": "/usr/lib/dotnet/sdk/10.0.111/PortableRuntimeIdentifierGraph.json",
         "packagesToPrune": {
           "Microsoft.CSharp": "(,4.7.32767]",
           "Microsoft.VisualBasic": "(,10.4.32767]",

@@ -108,10 +108,20 @@
       },
       "Fix2Engine.Input/1.0.0": {
         "dependencies": {
+          "Fix2Engine.User": "1.0.0",
+          "Raylib-cs": "8.0.0",
           "Tomlyn": "2.10.1"
         },
         "runtime": {
           "Fix2Engine.Input.dll": {
+            "assemblyVersion": "1.0.0.0",
+            "fileVersion": "1.0.0.0"
+          }
+        }
+      },
+      "Fix2Engine.User/1.0.0": {
+        "runtime": {
+          "Fix2Engine.User.dll": {
             "assemblyVersion": "1.0.0.0",
             "fileVersion": "1.0.0.0"
           }
@@ -154,6 +164,11 @@
       "hashPath": "tomlyn.2.10.1.nupkg.sha512"
     },
     "Fix2Engine.Input/1.0.0": {
+      "type": "project",
+      "serviceable": false,
+      "sha512": ""
+    },
+    "Fix2Engine.User/1.0.0": {
       "type": "project",
       "serviceable": false,
       "sha512": ""

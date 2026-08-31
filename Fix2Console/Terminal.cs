@@ -1,4 +1,5 @@
 using System;
+using Fix2Engine.User;
 
 namespace Fix2Console;
 
@@ -35,6 +36,7 @@ public class Terminal : IDisposable
                     ProjectGenerator.CreateNewProject(args[1]);
                     break;
                 case "--new-project":
+                    
                     Console.WriteLine("Error: --new-project requires a project name.");
                     Console.WriteLine("Usage: Fix2Console --new-project {project name}");
                     break;
@@ -60,6 +62,7 @@ public class Terminal : IDisposable
         try
         {
             Console.WriteLine("Fix2Console - Fix2Engine Project Tool");
+            Console.WriteLine($"Your OS - {Platform.PlatformInfo()}");
             Console.WriteLine();
             Console.WriteLine("Usage:");
             Console.WriteLine("  Fix2Console --new-project {project name}   Create a new Fix2Engine project in current directory");

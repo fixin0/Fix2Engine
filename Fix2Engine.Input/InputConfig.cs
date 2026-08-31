@@ -9,6 +9,8 @@ public class InputConfig
     public static InputConfig InputConfigLoader(string path)
     {
         return TomlSerializer.Deserialize<InputConfig>(File.ReadAllText(path));
+
+        
     }
     
     

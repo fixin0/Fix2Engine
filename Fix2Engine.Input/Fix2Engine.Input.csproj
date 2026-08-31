@@ -8,6 +8,11 @@
 
     <ItemGroup>
       <PackageReference Include="Tomlyn" Version="2.10.1" />
+      <PackageReference Include="Raylib-cs" Version="8.0.0" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="..\Fix2Engine.User\Fix2Engine.User.csproj" />
+    </ItemGroup>
+    
 </Project>

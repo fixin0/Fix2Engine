@@ -142,4 +142,4 @@ DrawCubeWires(position, 1, 1, 1, Color.Black);
 camera.End();
 ```
 
-This is how `FpsDemoScene` and `Debug3DScene` render without model files. See [Camera](Camera.md) for 3D context setup.
+This is how `Debug3DScene` renders without model files. See [Camera](Camera.md) for 3D context setup.

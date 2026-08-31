@@ -2,15 +2,17 @@
 
 ## Solution
 
-`Fix2Engine.sln` (Format 12.00) — 6 projects:
+`Fix2Engine.sln` (Format 12.00) — 7 projects:
 
 ```
 Fix2Engine.sln
 ├── Fix2Engine.Graphics   (class library)
 ├── Fix2Engine.Components (class library)
 ├── Fix2Engine.Input      (class library)
+├── Fix2Engine.User       (class library)  — platform info (Platform)
 ├── Fix2Engine.Physics    (class library)  — stub (PhysicsWorld)
 ├── Fix2Engine.Audio      (class library)  — stub
+├── Fix2Engine.Monitoring (class library)  — performance monitor overlay
 └── Game                  (executable)
 ```
 
@@ -32,6 +34,7 @@ Fix2Engine/
 │   ├── IMGUI.md                (legacy — now native ImGui, see below)
 │   ├── Components.md
 │   ├── PhysicsAndAudio.md
+│   ├── Monitoring.md
 │   └── ProjectStructure.md
 ├── Fix2Engine.Graphics/
 │   ├── Fix2Engine.Graphics.csproj
@@ -48,18 +51,24 @@ Fix2Engine/
 │   └── Node3D.cs               (was Character3D)
 ├── Fix2Engine.Input/
 │   ├── Fix2Engine.Input.csproj
-│   ├── InputBackend/Input.cs           (class InputManager, namespace Fix2Engine.Input)
+│   ├── InputBackend/Input.cs           (class InputManager, namespace Fix2Engine.Input, platform dispatch)
 │   ├── InputBackend/WindowsInputBackend.cs (was InputBackend_Windows.cs)
 │   ├── InputBackend/Keys.cs
 │   ├── InputBackend/KeyState.cs
 │   ├── InputConfig.cs
 │   └── ConfigReader.cs
+├── Fix2Engine.User/
+│   ├── Fix2Engine.User.csproj
+│   └── Platform.cs               (platform info helper)
 ├── Fix2Engine.Physics/
 │   ├── Fix2Engine.Physics.csproj
 │   └── PhysicsWorld.cs         (was Class1.cs)
 ├── Fix2Engine.Audio/
 │   ├── Fix2Engine.Audio.csproj
 │   └── OpenAL/SoundManager.cs (stub)
+├── Fix2Engine.Monitoring/
+│   ├── Fix2Engine.Monitoring.csproj
+│   └── PerformanceMonitor.cs   (FPS/frame-time/CPU/GPU ImGui overlay)
 ├── Fix2Console/
 │   ├── Fix2Console.csproj
 │   ├── Terminal.cs
@@ -70,7 +79,7 @@ Fix2Engine/
 └── Game/
     ├── Game.csproj
     ├── Program.cs
-    ├── Game.cs                (Windowing subclass, ShowPerformanceMonitor property)
+    ├── Game.cs                (Windowing subclass, uses PerformanceMonitor)
     ├── MainMenuScene.cs
     ├── Debug3DScene.cs
     └── Debug2DPixelScene.cs
@@ -82,9 +91,11 @@ Fix2Engine/
 Game ──→ Fix2Engine.Components ──→ Fix2Engine.Graphics ──→ Fix2Engine.Input
      ──→ Fix2Engine.Graphics
      ──→ Fix2Engine.Input
+     ──→ Fix2Engine.Monitoring ──→ Fix2Engine.Graphics
 
 Fix2Engine.Graphics ──→ Fix2Engine.Input
 Fix2Engine.Components ──→ Fix2Engine.Graphics
+Fix2Engine.Input ──→ Fix2Engine.User
 ```
 
 `Physics` and `Audio` are not yet referenced by `Game` (stubs). `Fix2Engine.IMGUI` was removed — UI now uses native `ImGui.NET` + `rlImGui-cs` directly.
@@ -95,10 +106,11 @@ Fix2Engine.Components ──→ Fix2Engine.Graphics
 |---------|----------|
 | `Graphics` | `Raylib-cs 8.0.0`, `rlImgui-cs 3.2.0` |
 | `Components` | `Raylib-cs 8.0.0` |
-| `Input` | `Tomlyn 2.10.1` |
+| `Input` | `Tomlyn 2.10.1`, `Raylib-cs 8.0.0` |
 | `Audio` | `Silk.NET.OpenAL 2.23.0` |
 | `Physics` | — |
-| `Game` | `rlImgui-cs 3.2.0`, `ImGui.NET 1.91.6.1`, `System.Diagnostics.PerformanceCounter 8.0.0` |
+| `Monitoring` | `ImGui.NET 1.91.6.1`, `rlImgui-cs 3.2.0`, `System.Diagnostics.PerformanceCounter 8.0.0` |
+| `Game` | `rlImgui-cs 3.2.0` |
 
 All projects: `<TargetFramework>net10.0</TargetFramework>`, `<ImplicitUsings>enable</ImplicitUsings>`, `<Nullable>enable</Nullable>`, `AllowUnsafeBlocks=true` where needed (Graphics, Game).
 
@@ -117,6 +129,6 @@ dotnet publish --project Game -c Release
 - **Scene graph:** `Node2D` / `Node3D` are the base scene-graph nodes (replacing `PineObject2D`/`Character3D`).
 - **Scenes:** implement `IFixScene` + `IDisposable`; register via `SceneManager.LoadScene<T>()`.
 - **UI:** native `ImGuiNET` inside `rlImGui.Begin()`/`End()` — `Game.Render()` already does this around `SceneManager.RenderUI()`. No wrapper library.
-- **Input:** poll via `InputManager.IsDown/IsPressed/IsReleased(Keys.X)` (or `Fix2Engine.Input.InputManager`) inside `Update`; do not call `InputManager.Update()` yourself (handled by `Windowing`).
-- **Performance:** `Game.ShowPerformanceMonitor { get; set; }` controls the ImGui performance overlay (FPS, frame time, CPU/GPU graphs).
+- **Input:** poll via `InputManager.IsDown/IsPressed/IsReleased(Keys.X)` (or `Fix2Engine.Input.InputManager`) inside `Update`; do not call `InputManager.Update()` yourself (handled by `Windowing`). Backend is auto-selected by OS — Win32 on Windows, Raylib on Linux/macOS.
+- **Performance:** `PerformanceMonitor` (`Fix2Engine.Monitoring`) draws the ImGui overlay (FPS, frame time, CPU/GPU graphs). Call `PerformanceMonitor.Update(dt)` in `Update` and `PerformanceMonitor.Draw()` (optionally with a context line) inside `rlImGui.Begin()`/`End()`.
 - **Unsafe code:** `Model3D.SetTexture` and `Skybox` use `unsafe` to assign Raylib material maps — project must allow unsafe blocks.

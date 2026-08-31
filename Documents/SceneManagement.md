@@ -90,7 +90,7 @@ public static class SceneManager
 
 ```csharp
 SceneManager.LoadScene<MainMenuScene>();          // generic — creates via new()
-SceneManager.LoadScene(new FpsDemoScene());       // instance
+SceneManager.LoadScene(new Debug2DPixelScene());   // instance
 SceneManager.LoadScene<Debug3DScene>();
 ```
 
@@ -121,7 +121,11 @@ protected override void Start()
     SceneManager.LoadScene<MainMenuScene>();
 }
 
-protected override void Update(float dt) => SceneManager.Update(dt);
+protected override void Update(float dt)
+{
+    PerformanceMonitor.Update(dt);
+    SceneManager.Update(dt);
+}
 
 protected override void Render()
 {
@@ -129,11 +133,11 @@ protected override void Render()
 
     rlImGui.Begin();
     SceneManager.RenderUI();     // ImGui (native ImGuiNET)
-    if (ShowPerformanceMonitor) DrawPerformanceMonitor();
+    PerformanceMonitor.Draw();
     rlImGui.End();
 
     Raylib.DrawFPS(Width - 90, 10);
 }
 ```
 
-Current scenes in `Game/`: `MainMenuScene`, `Debug3DScene`, `Debug2DPixelScene`, `FpsDemoScene`, `Racing3DScene`.
+Current scenes in `Game/`: `MainMenuScene`, `Debug3DScene`, `Debug2DPixelScene`.

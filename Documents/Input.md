@@ -1,9 +1,9 @@
 # Input
 
 Sources:
-- `Fix2Engine.Input/InputBackend/Input.cs` — namespace `Fix2Engine.Input` (`InputManager` class)
-- `Fix2Engine.Input/InputBackend/WindowsInputBackend.cs` — namespace `Fix2Engine.Input.InputBackend`
-- `Fix2Engine.Input/InputBackend/Keys.cs` — enum `Keys`
+- `Fix2Engine.Input/InputBackend/Input.cs` — namespace `Fix2Engine.Input` (`InputManager` class, platform dispatch)
+- `Fix2Engine.Input/InputBackend/WindowsInputBackend.cs` — Win32 keyboard backend (`user32.dll`)
+- `Fix2Engine.Input/InputBackend/Keys.cs` — enum `Keys` (Win32 virtual-key codes)
 - `Fix2Engine.Input/InputBackend/KeyState.cs` — enum `KeyState` (reserved)
 - `Fix2Engine.Input/InputConfig.cs` + `ConfigReader.cs` — TOML action maps
 
@@ -36,8 +36,30 @@ public void Update(float dt)
 ### How It Works
 
 - Two `bool[256]` arrays: `CurrentKeys` and `PreviousKeys`.
-- `Update()` does `Array.Copy(Current → Previous)` then fills `Current` via `WindowsInputBackend.IsDown((Keys)i)` for all 256 virtual-key codes.
-- `WindowsInputBackend` P/Invokes `user32.dll!GetAsyncKeyState` and checks bit `0x8000`.
+- `Update()` does `Array.Copy(Current → Previous)` then fills `Current` for all 256 virtual-key codes.
+- The backend is chosen once at startup based on the OS:
+  - **Windows** → `WindowsInputBackend.IsDown((Keys)i)` (P/Invokes `user32.dll!GetAsyncKeyState`, checks bit `0x8000`).
+  - **Anything else (Linux, macOS)** → maps each `Keys` value to a Raylib `KeyboardKey` and calls `Raylib.IsKeyDown(...)`.
+
+## Cross-Platform Backend
+
+`InputManager` dispatches automatically on the first call using `RuntimeInformation.IsOSPlatform(OSPlatform.Windows)`:
+
+```csharp
+if (IsWindows)
+    CurrentKeys[i] = WindowsInputBackend.IsDown((Keys)i);
+else if (VkToKey.TryGetValue(i, out var raylibKey))
+    CurrentKeys[i] = Raylib.IsKeyDown(raylibKey);
+```
+
+| OS | Backend | Mechanism |
+|----|---------|-----------|
+| Windows | `WindowsInputBackend` | `user32.dll!GetAsyncKeyState` |
+| Linux / macOS | Raylib | `Raylib.IsKeyDown(KeyboardKey)` via the current window's GLFW context |
+
+The `Keys` enum uses Win32 virtual-key codes, so a static `Dictionary<int, KeyboardKey>` `VkToKey` translates them to Raylib's `KeyboardKey` values (which follow GLFW key codes). Raylib's `KeyboardKey` enum only exposes `F1`–`F12`, so higher function keys (`F13`+) are not supported on non-Windows platforms.
+
+`Fix2Engine.Input` depends on `Raylib-cs 8.0.0` to provide the non-Windows path.
 
 ## Keys Enum
 
@@ -72,27 +94,6 @@ foreach (var kv in config.Actions)
 ```
 
 `ConfigReader.Reading(path)` is a thin wrapper around the same deserialization. Requires `AppContext.SetSwitch("Tomlyn.TomlSerializer.IsReflectionEnabledByDefault", true)` (already set in `Program.cs` due to `PublishAot`).
-
-## Raylib vs Native — Adding Linux Support
-
-The current backend is **Windows-only** (`user32.dll` via `WindowsInputBackend`). For cross-platform input you have two options:
-
-| Approach | Pros | Cons |
-|----------|------|------|
-| **Raylib** (`IsKeyDown`, `GetMousePosition`, etc.) | Already a dependency, cross-platform (X11/Wayland/macOS), trivial wrapper | Less low-level control |
-| **Native X11/Wayland** | Full control | Must handle X11 + Wayland separately, more code and maintenance |
-
-**Recommendation:** keep Raylib as the base. Abstract the backend:
-
-```csharp
-// Fix2Engine.Input/InputBackend/IInputBackend.cs
-public interface IInputBackend { bool IsDown(Keys key); }
-
-// Windows: GetAsyncKeyState via WindowsInputBackend
-// Linux/macOS: Raylib.IsKeyDown((KeyboardKey)key)
-```
-
-The engine already depends on `Raylib-cs` in `Graphics` and `Components`, so Raylib input adds zero new dependencies.
 
 ## Reserved
 

@@ -49,6 +49,7 @@ Scene switching is **deferred** — the actual switch happens at the start of th
 ```csharp
 using Fix2Engine.Components.Scene;
 using Fix2Engine.Graphics;
+using Fix2Engine.Monitoring;
 using ImGuiNET;
 using Raylib_cs;
 using rlImGui_cs;
@@ -57,8 +58,6 @@ namespace Fix2Engine
 {
     public class Game : Windowing
     {
-        public bool ShowPerformanceMonitor { get; set; } = true;
-
         public Game() : base(1280, 720, "My Game") { }
 
         protected override void Start()
@@ -68,14 +67,18 @@ namespace Fix2Engine
             SceneManager.LoadScene<MainMenuScene>();
         }
 
-        protected override void Update(float dt) => SceneManager.Update(dt);
+        protected override void Update(float dt)
+        {
+            PerformanceMonitor.Update(dt);
+            SceneManager.Update(dt);
+        }
 
         protected override void Render()
         {
             SceneManager.Render();
             rlImGui.Begin();
             SceneManager.RenderUI();
-            if (ShowPerformanceMonitor) DrawPerformanceMonitor();
+            PerformanceMonitor.Draw();
             rlImGui.End();
             Raylib.DrawFPS(Width - 90, 10);
         }
@@ -90,7 +93,7 @@ namespace Fix2Engine
 }
 ```
 
-UI uses native `ImGuiNET` inside `rlImGui.Begin()`/`End()` — no wrapper library.
+UI uses native `ImGuiNET` inside `rlImGui.Begin()`/`End()` — no wrapper library. The FPS/CPU/GPU overlay is provided by `PerformanceMonitor` (`Fix2Engine.Monitoring`) — see [Monitoring](Monitoring.md).
 
 ## 5. Entry Point
 

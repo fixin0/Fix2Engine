@@ -13,20 +13,22 @@ Fix2Engine is a modular, code-first game engine built with C# and .NET. It is de
 
 The repository is organized into distinct class libraries to isolate responsibilities across the engine pipeline:
 
-* **Fix2Engine.Graphics:** Handles rendering, 3D model loading, skybox drawing, and camera management. This module uses Raylib (`Raylib-cs`) as its rendering backend to provide low-level graphics operations without the overhead of heavy abstractions.
-* **Fix2Engine.Components:** Implements a component-based scene and object structure (`IFixScene`, scene camera controls, object properties).
-* **Fix2Engine.IMGUI:** Integrates Dear ImGui (`ImGuiNET`) to render in-engine inspector windows, debug overlays, and runtime control widgets.
+* **Fix2Engine.Graphics:** Handles windowing, rendering, 3D model loading, 2D sprites, and skybox drawing. Uses Raylib (`Raylib-cs`) as its rendering backend to provide low-level operations without heavy abstractions.
+* **Fix2Engine.Components:** Implements a component-based scene and object structure (`IFixScene`, `Node2D`/`Node3D`, camera controls).
+* **Fix2Engine.Input:** Cross-platform keyboard polling — Win32 backend on Windows, Raylib backend on Linux/macOS — plus optional TOML action maps.
+* **Fix2Engine.User:** Platform information helper.
+* **Fix2Engine.Monitoring:** Built-in `PerformanceMonitor` ImGui overlay (FPS, frame time, CPU/GPU).
 * **Fix2Engine.Audio:** Manages sound effects, music playback, and audio asset lifecycles.
 * **Fix2Engine.Physics:** Encapsulates collision detection, spatial checks, and physical movement logic.
-* **Game:** The entry point/sandbox project used to assemble scenes (`Debug3DScene`), test features, and run game code.
+* **Game:** The entry point/sandbox project used to assemble scenes (`Debug2DPixelScene`, `Debug3DScene`), test features, and run game code.
 
 ---
 
 ## Tech Stack
 
-* **Language & Runtime:** C# / .NET
+* **Language & Runtime:** C# / .NET 10
 * **Rendering:** Raylib (`Raylib-cs`)
-* **GUI / Inspector:** ImGuiNET (`Dear ImGui` bindings)
+* **GUI / Inspector:** ImGuiNET (`Dear ImGui` bindings) via `rlImGui-cs`
 
 ---
 
@@ -36,11 +38,15 @@ The repository is organized into distinct class libraries to isolate responsibil
 Fix2Engine/
 ├── Fix2Engine.Audio/          # Sound management
 ├── Fix2Engine.Components/     # Scene and component structures
-├── Fix2Engine.Graphics/       # Raylib rendering abstraction
-├── Fix2Engine.IMGUI/          # ImGui wrappers and UI widgets
+├── Fix2Engine.Graphics/       # Raylib rendering/windowing abstraction
+├── Fix2Engine.Input/          # Cross-platform keyboard input (Win32 + Raylib)
+├── Fix2Engine.Monitoring/     # Performance monitor ImGui overlay
 ├── Fix2Engine.Physics/        # Collision and physics logic
+├── Fix2Engine.User/           # Platform info helper
 └── Game/                      # Project runtime and test scenes
-``` 
+```
+
+Documentation: see [Documents/](Documents/README.md).
 
 ## Getting Started
 Clone the repository:
