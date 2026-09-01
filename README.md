@@ -47,15 +47,3 @@ Fix2Engine/
 ```
 
 Documentation: see [Documents/](Documents/README.md).
-
-## Getting Started
-Clone the repository:
-
-
-```git clone https://github.com/fixin0/Fix2Engine.git```
-<br></br>
-Open Fix2Engine.sln in Visual Studio or JetBrains Rider.
-
-Set Game as the startup project and run.
-
-Documentation: Coming soon...
