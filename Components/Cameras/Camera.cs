@@ -1,3 +1,4 @@
+using Fix2Engine.Input;
 using System;
 using System.Numerics;
 using Raylib_cs;
@@ -78,6 +79,9 @@ namespace Fix2Engine.Components.Cameras
             }
         }
 
+        private static bool IsMovementDown(string action, KeyboardKey fallback) =>
+            InputManager.HasAction(action) ? InputManager.IsDown(action) : IsKeyDown(fallback);
+
         /// <summary>
         /// Updates the camera using Raylib's built-in camera controls.
         /// </summary>
@@ -89,9 +93,9 @@ namespace Fix2Engine.Components.Cameras
                 float dt = GetFrameTime();
 
                 Vector3 movement = Vector3.Zero;
-                movement.X = (IsKeyDown(KeyboardKey.W) ? 1.0f : 0.0f) - (IsKeyDown(KeyboardKey.S) ? 1.0f : 0.0f);
-                movement.Y = (IsKeyDown(KeyboardKey.D) ? 1.0f : 0.0f) - (IsKeyDown(KeyboardKey.A) ? 1.0f : 0.0f);
-                movement.Z = (IsKeyDown(KeyboardKey.Space) ? 1.0f : 0.0f) - (IsKeyDown(KeyboardKey.LeftControl) ? 1.0f : 0.0f);
+                movement.X = (IsMovementDown("MoveForward", KeyboardKey.W) ? 1.0f : 0.0f) - (IsMovementDown("MoveBackward", KeyboardKey.S) ? 1.0f : 0.0f);
+                movement.Y = (IsMovementDown("MoveRight", KeyboardKey.D) ? 1.0f : 0.0f) - (IsMovementDown("MoveLeft", KeyboardKey.A) ? 1.0f : 0.0f);
+                movement.Z = (IsMovementDown("MoveUp", KeyboardKey.Space) ? 1.0f : 0.0f) - (IsMovementDown("MoveDown", KeyboardKey.LeftControl) ? 1.0f : 0.0f);
                 movement *= MoveSpeed * dt * 10.0f;
 
                 Vector2 mouseDelta = GetMouseDelta();

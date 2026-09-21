@@ -13,7 +13,7 @@ namespace Fix2Engine.Physics;
 public class PhysicsWorld { }
 ```
 
-**Project:** `Fix2Engine.Physics.csproj` — `net10.0`, no package references.
+**Project:** `Physics.csproj` — `net10.0`, no package references.
 
 **Intended use** (per `README`): collision detection, spatial checks, physical movement logic.
 
@@ -22,7 +22,7 @@ public class PhysicsWorld { }
 Add your systems and call them from `Windowing.FixedUpdate` (deterministic 60 Hz):
 
 ```csharp
-// Fix2Engine.Physics/Collision.cs
+// Physics/Collision.cs
 public static class Collision
 {
     public static bool SphereVsSphere(Vector3 a, float ra, Vector3 b, float rb)
@@ -56,7 +56,7 @@ namespace Fix2Engine.Audio.OpenAL;
 public class SoundManager { }
 ```
 
-**Project:** `Fix2Engine.Audio.csproj` — references `Silk.NET.OpenAL 2.23.0`.
+**Project:** `Audio.csproj` — references `Silk.NET.OpenAL 2.23.0`.
 
 **Intended use:** OpenAL-based sound playback (buffers, sources, listener).
 
@@ -107,7 +107,7 @@ Alternatively, for a simpler path, use Raylib's own audio (`InitAudioDevice`, `L
 
 | Module | Status | Next Step |
 |--------|--------|-----------|
-| `Fix2Engine.Physics` | Empty | Add collision helpers or integrate Bepu/Jitter; hook into `FixedUpdate` |
-| `Fix2Engine.Audio` | Empty | Wrap `Silk.NET.OpenAL` or use Raylib audio (`Raylib.InitAudioDevice`) |
+| `Physics` | Empty | Add collision helpers or integrate Bepu/Jitter; hook into `FixedUpdate` |
+| `Audio` | Empty | Wrap `Silk.NET.OpenAL` or use Raylib audio (`Raylib.InitAudioDevice`) |
 
 Both are safe to ignore for prototyping with primitives; add them when you need real physics or sound.

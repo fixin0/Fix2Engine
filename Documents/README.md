@@ -8,12 +8,12 @@ Fix2Engine is split into focused class-library projects plus a `Game` executable
 
 | Project | Purpose | Key Dependencies |
 |---------|---------|-----------------|
-| `Fix2Engine.Graphics` | Window, rendering, models, sprites, skybox | `Raylib-cs 8.0`, `rlImGui-cs 3.2` |
-| `Fix2Engine.Components` | Scene graph (`Node2D`/`Node3D`), camera, scene interface | `Raylib-cs 8.0` |
-| `Fix2Engine.Input` | Keyboard polling (`Windows`/`Raylib` backends) + TOML config | `Tomlyn 2.10`, `Raylib-cs 8.0` |
-| `Fix2Engine.Physics` | `PhysicsWorld` placeholder for collision / physics | — |
-| `Fix2Engine.Audio` | `SoundManager` placeholder for OpenAL audio | `Silk.NET.OpenAL 2.23` |
-| `Fix2Engine.Monitoring` | `PerformanceMonitor` ImGui overlay (FPS/CPU/GPU) | `ImGui.NET`, `rlImGui-cs` |
+| `Graphics` | Window, rendering, models, sprites, skybox | `Raylib-cs 8.0`, `rlImGui-cs 3.2` |
+| `Components` | Scene graph (`Node2D`/`Node3D`), camera, scene interface | `Raylib-cs 8.0` |
+| `Input` | Keyboard polling (`Windows`/`Raylib` backends) + TOML config | `Tomlyn 2.10`, `Raylib-cs 8.0` |
+| `Physics` | `PhysicsWorld` placeholder for collision / physics | — |
+| `Audio` | `SoundManager` placeholder for OpenAL audio | `Silk.NET.OpenAL 2.23` |
+| `Monitoring` | `PerformanceMonitor` ImGui overlay (FPS/CPU/GPU) | `ImGui.NET`, `rlImGui-cs` |
 | `Game` | Entry point, example scenes, menu, performance monitor | All above |
 | `Fix2Console` | CLI tool (`--new-project`) for scaffolding | — |
 

@@ -97,14 +97,14 @@ UI uses native `ImGuiNET` inside `rlImGui.Begin()`/`End()` — no wrapper librar
 
 ## 5. Entry Point
 
-`Game/Program.cs` enables Tomlyn reflection (required because `PublishAot=true`) and starts the loop:
+`Game/Program.cs` loads `InputMap.toml` and starts the loop:
 
 ```csharp
 internal static class Program
 {
     static void Main(string[] args)
     {
-        AppContext.SetSwitch("Tomlyn.TomlSerializer.IsReflectionEnabledByDefault", true);
+        Fix2Engine.Input.InputManager.LoadInputMap();
         using var game = new Game();
         game.Run();
     }
@@ -118,7 +118,9 @@ dotnet run --project Fix2Console -- --new-project MyGame
 cd MyGame && dotnet run
 ```
 
-The generated project uses native ImGui and references `Fix2Engine.Graphics`, `Fix2Engine.Components`, `Fix2Engine.Input`, `Fix2Engine.Physics`, `Fix2Engine.Audio`.
+The generated project uses native ImGui and references `Graphics`, `Components`, `Input`, `Physics`, `Audio`.
+
+Existing projects can run `Fix2Console --init /path/to/Fix2Engine` to save the engine directory in `Fix2Engine.toml` and create `InputMap.toml`. See [Input](Input.md) for the action API and setup details.
 
 ## 6. Next Steps
 

@@ -67,9 +67,9 @@ public static class ProjectGenerator
 
             try
             {
-                if (!Directory.Exists(Path.Combine(engineRoot, "Fix2Engine.Graphics")))
+                if (!Directory.Exists(Path.Combine(engineRoot, "Graphics")))
                 {
-                    Console.WriteLine($"Error: Engine root is incomplete, missing Fix2Engine.Graphics at: {engineRoot}");
+                    Console.WriteLine($"Error: Engine root is incomplete, missing Graphics at: {engineRoot}");
                     return;
                 }
             }
@@ -150,11 +150,15 @@ public static class ProjectGenerator
 
             try
             {
+                ProjectSettings.CreateFiles(targetDir, engineRoot);
                 VerifyProjectIntegrity(targetDir, projectName);
             }
             catch (Exception ex)
             {
-                Console.WriteLine($"Warning: Project integrity check failed: {ex.Message}");
+                Console.WriteLine($"Error completing project setup: {ex.Message}");
+                CleanupOnFailure(targetDir);
+                Environment.ExitCode = 1;
+                return;
             }
 
             Console.WriteLine();
@@ -197,7 +201,9 @@ public static class ProjectGenerator
             Path.Combine(targetDir, $"{projectName}.csproj"),
             Path.Combine(targetDir, "Program.cs"),
             Path.Combine(targetDir, "Game.cs"),
-            Path.Combine(targetDir, $"{projectName}Scene.cs")
+            Path.Combine(targetDir, $"{projectName}Scene.cs"),
+            Path.Combine(targetDir, "InputMap.toml"),
+            Path.Combine(targetDir, "Fix2Engine.toml")
         };
 
         foreach (var file in required)
@@ -214,7 +220,7 @@ public static class ProjectGenerator
         }
 
         string csproj = File.ReadAllText(required[0]);
-        string[] requiredRefs = { "Fix2Engine.Graphics", "Fix2Engine.Components", "Fix2Engine.Input" };
+        string[] requiredRefs = { "Graphics", "Components", "Input" };
         foreach (var r in requiredRefs)
         {
             if (!csproj.Contains(r))

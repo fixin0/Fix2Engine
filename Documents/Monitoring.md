@@ -1,6 +1,6 @@
 # Monitoring & Performance Monitor
 
-Source: `Fix2Engine.Monitoring/PerformanceMonitor.cs` — namespace `Fix2Engine.Monitoring`
+Source: `Monitoring/PerformanceMonitor.cs` — namespace `Fix2Engine.Monitoring`
 
 The engine's built-in performance overlay (FPS, frame time, CPU, GPU, memory) lives in its own project so the game loop stays clean.
 
@@ -54,6 +54,6 @@ Add a project reference to `Fix2Engine.Monitoring` from your game/executable pro
 
 ```xml
 <ItemGroup>
-  <ProjectReference Include="..\Fix2Engine.Monitoring\Fix2Engine.Monitoring.csproj" />
+  <ProjectReference Include="..\Monitoring\Monitoring.csproj" />
 </ItemGroup>
 ```

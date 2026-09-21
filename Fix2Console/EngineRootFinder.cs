@@ -1,73 +1,30 @@
-using System;
-using System.IO;
-
 namespace Fix2Console;
 
 public static class EngineRootFinder
 {
     public static string? FindEngineRoot()
     {
-        try
+        string? project = ProjectSettings.FindProjectDirectory(Environment.CurrentDirectory);
+        if (project is not null && ProjectSettings.ReadEngineDirectory(project) is { } configured)
         {
-            string? dir = AppContext.BaseDirectory;
-            for (int i = 0; i < 10; i++)
-            {
-                try
-                {
-                    if (dir == null) break;
-                    string candidate = Path.Combine(dir, "Fix2Engine.sln");
-                    if (File.Exists(candidate))
-                    {
-                        var full = Path.GetFullPath(dir);
-                        if (Directory.Exists(full) && File.Exists(Path.Combine(full, "Fix2Engine.sln")))
-                            return full;
-                    }
-                    dir = Path.GetDirectoryName(dir.TrimEnd(Path.DirectorySeparatorChar));
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Warning: Error checking directory '{dir}': {ex.Message}");
-                    try { dir = Path.GetDirectoryName(dir!.TrimEnd(Path.DirectorySeparatorChar)); } catch { break; }
-                }
-            }
-
-            string? alt = null;
-            try
-            {
-                alt = Path.GetDirectoryName(typeof(EngineRootFinder).Assembly.Location);
-            }
-            catch (Exception ex)
-            {
-                Console.WriteLine($"Warning: Could not get assembly location: {ex.Message}");
-            }
-
-            for (int i = 0; i < 10; i++)
-            {
-                try
-                {
-                    if (alt == null) break;
-                    string candidate = Path.Combine(alt, "Fix2Engine.sln");
-                    if (File.Exists(candidate))
-                    {
-                        var full = Path.GetFullPath(alt);
-                        if (Directory.Exists(full))
-                            return full;
-                    }
-                    alt = Path.GetDirectoryName(alt.TrimEnd(Path.DirectorySeparatorChar));
-                }
-                catch (Exception ex)
-                {
-                    Console.WriteLine($"Warning: Error checking alt directory '{alt}': {ex.Message}");
-                    try { alt = Path.GetDirectoryName(alt!.TrimEnd(Path.DirectorySeparatorChar)); } catch { break; }
-                }
-            }
-
-            return null;
+            Validate(configured);
+            return configured;
         }
-        catch (Exception ex)
-        {
-            Console.WriteLine($"Error finding engine root: {ex.Message}");
-            return null;
-        }
+
+        foreach (string start in new[] { Environment.CurrentDirectory, AppContext.BaseDirectory })
+            for (var dir = new DirectoryInfo(start); dir is not null; dir = dir.Parent)
+                if (File.Exists(Path.Combine(dir.FullName, "Fix2Engine.sln")))
+                {
+                    Validate(dir.FullName);
+                    return dir.FullName;
+                }
+        return null;
+    }
+
+    public static void Validate(string directory)
+    {
+        if (!File.Exists(Path.Combine(directory, "Fix2Engine.sln")) ||
+            !File.Exists(Path.Combine(directory, "Input", "Input.csproj")))
+            throw new DirectoryNotFoundException($"Invalid Fix2Engine directory: {directory}");
     }
 }

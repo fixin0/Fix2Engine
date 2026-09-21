@@ -1,6 +1,6 @@
 # Camera
 
-Source: `Fix2Engine.Components/Cameras/Camera.cs` — namespace `Fix2Engine.Components.Cameras`
+Source: `Components/Cameras/Camera.cs` — namespace `Fix2Engine.Components.Cameras`
 
 ## Enums
 

@@ -1,23 +1,18 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
 
     <PropertyGroup>
+        <RootNamespace>Fix2Engine.Components</RootNamespace>
         <TargetFramework>net10.0</TargetFramework>
         <ImplicitUsings>enable</ImplicitUsings>
         <Nullable>enable</Nullable>
-        <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
     </PropertyGroup>
 
     <ItemGroup>
       <PackageReference Include="Raylib-cs" Version="8.0.0" />
-      <PackageReference Include="rlImgui-cs" Version="3.2.0" />
     </ItemGroup>
 
     <ItemGroup>
-      <Folder Include="Shaders\" />
-    </ItemGroup>
-
-    <ItemGroup>
-      <ProjectReference Include="..\Fix2Engine.Input\Fix2Engine.Input.csproj" />
+      <ProjectReference Include="..\Graphics\Graphics.csproj" />
     </ItemGroup>
 
 </Project>

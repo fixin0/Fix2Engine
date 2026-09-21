@@ -11,14 +11,18 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <ProjectReference Include="..\Fix2Engine.Components\Fix2Engine.Components.csproj" />
-      <ProjectReference Include="..\Fix2Engine.Graphics\Fix2Engine.Graphics.csproj" />
-      <ProjectReference Include="..\Fix2Engine.Input\Fix2Engine.Input.csproj" />
-      <ProjectReference Include="..\Fix2Engine.Monitoring\Fix2Engine.Monitoring.csproj" />
+      <ProjectReference Include="..\Components\Components.csproj" />
+      <ProjectReference Include="..\Graphics\Graphics.csproj" />
+      <ProjectReference Include="..\Input\Input.csproj" />
+      <ProjectReference Include="..\Monitoring\Monitoring.csproj" />
     </ItemGroup>
 
     <ItemGroup>
       <PackageReference Include="rlImgui-cs" Version="3.2.0" />
+    </ItemGroup>
+
+    <ItemGroup>
+      <None Update="InputMap.toml" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
     </ItemGroup>
 
 </Project>

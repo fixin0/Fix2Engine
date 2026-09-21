@@ -1,7 +1,8 @@
-﻿<Project Sdk="Microsoft.NET.Sdk">
+<Project Sdk="Microsoft.NET.Sdk">
 
     <ItemGroup>
-      <ProjectReference Include="..\Fix2Engine.User\Fix2Engine.User.csproj" />
+      <ProjectReference Include="..\User\User.csproj" />
+      <ProjectReference Include="..\Input\Input.csproj" />
     </ItemGroup>
 
     <PropertyGroup>

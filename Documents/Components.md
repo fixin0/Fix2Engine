@@ -1,6 +1,6 @@
 # Components
 
-Sources: `Fix2Engine.Components/*`
+Sources: `Components/*`
 
 ## Node2D
 

@@ -1,6 +1,6 @@
 # Windowing & Game Loop
 
-Source: `Fix2Engine.Graphics/Windowing.cs` — namespace `Fix2Engine.Graphics`
+Source: `Graphics/Windowing.cs` — namespace `Fix2Engine.Graphics`
 
 ## Class
 

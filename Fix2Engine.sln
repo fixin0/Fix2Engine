@@ -2,21 +2,21 @@
 Microsoft Visual Studio Solution File, Format Version 12.00
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{0F026A5D-1F50-4F32-AAF5-1DE499BFCA11}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Graphics", "Fix2Engine.Graphics\Fix2Engine.Graphics.csproj", "{0B12CCBA-5FF2-4FE3-B094-B99F8E2EDE4C}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphics", "Graphics\Graphics.csproj", "{0B12CCBA-5FF2-4FE3-B094-B99F8E2EDE4C}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Components", "Fix2Engine.Components\Fix2Engine.Components.csproj", "{317AB0A7-3EDD-4BBB-85DB-519A68017D5D}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components", "Components\Components.csproj", "{317AB0A7-3EDD-4BBB-85DB-519A68017D5D}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Audio", "Fix2Engine.Audio\Fix2Engine.Audio.csproj", "{6DBBDDDC-D94F-4275-BA4D-9EE2CEAB8891}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Audio", "Audio\Audio.csproj", "{6DBBDDDC-D94F-4275-BA4D-9EE2CEAB8891}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Physics", "Fix2Engine.Physics\Fix2Engine.Physics.csproj", "{50C67DA8-92FC-4C19-9C54-742799E632C8}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Physics", "Physics\Physics.csproj", "{50C67DA8-92FC-4C19-9C54-742799E632C8}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Input", "Fix2Engine.Input\Fix2Engine.Input.csproj", "{5D79DFB1-9B5F-4562-A3F5-6C32D47594CC}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Input", "Input\Input.csproj", "{5D79DFB1-9B5F-4562-A3F5-6C32D47594CC}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Console", "Fix2Console\Fix2Console.csproj", "{2BEFE1EE-64A7-4606-BDC0-927DC0E8D54B}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.User", "Fix2Engine.User\Fix2Engine.User.csproj", "{36235EE9-8E4B-440C-8949-E67644559D1A}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "User", "User\User.csproj", "{36235EE9-8E4B-440C-8949-E67644559D1A}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Fix2Engine.Monitoring", "Fix2Engine.Monitoring\Fix2Engine.Monitoring.csproj", "{FE650AF0-8F0C-4AC0-9FCC-FD910897FDE6}"
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Monitoring", "Monitoring\Monitoring.csproj", "{FE650AF0-8F0C-4AC0-9FCC-FD910897FDE6}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution

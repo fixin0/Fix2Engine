@@ -20,7 +20,7 @@ public static class TemplateGenerator
                     string full = Path.Combine(engineRoot, lib);
                     string relative = Path.GetRelativePath(targetDir, full).Replace('\\', '/');
                     if (string.IsNullOrWhiteSpace(relative)) throw new InvalidOperationException($"Failed to compute relative path for {lib}");
-                    return relative;
+                    return System.Security.SecurityElement.Escape(relative)!;
                 }
                 catch (Exception ex)
                 {
@@ -39,15 +39,18 @@ public static class TemplateGenerator
                 + "        <InvariantGlobalization>true</InvariantGlobalization>\n"
                 + "    </PropertyGroup>\n\n"
                 + "    <ItemGroup>\n"
-                + $"      <ProjectReference Include=\"{rel("Fix2Engine.Graphics/Fix2Engine.Graphics.csproj")}\" />\n"
-                + $"      <ProjectReference Include=\"{rel("Fix2Engine.Components/Fix2Engine.Components.csproj")}\" />\n"
-                + $"      <ProjectReference Include=\"{rel("Fix2Engine.Input/Fix2Engine.Input.csproj")}\" />\n"
-                + $"      <ProjectReference Include=\"{rel("Fix2Engine.Physics/Fix2Engine.Physics.csproj")}\" />\n"
-                + $"      <ProjectReference Include=\"{rel("Fix2Engine.Audio/Fix2Engine.Audio.csproj")}\" />\n"
+                + $"      <ProjectReference Include=\"{rel("Graphics/Graphics.csproj")}\" />\n"
+                + $"      <ProjectReference Include=\"{rel("Components/Components.csproj")}\" />\n"
+                + $"      <ProjectReference Include=\"{rel("Input/Input.csproj")}\" />\n"
+                + $"      <ProjectReference Include=\"{rel("Physics/Physics.csproj")}\" />\n"
+                + $"      <ProjectReference Include=\"{rel("Audio/Audio.csproj")}\" />\n"
                 + "    </ItemGroup>\n\n"
                 + "    <ItemGroup>\n"
                 + "      <PackageReference Include=\"rlImgui-cs\" Version=\"3.2.0\" />\n"
                 + "    </ItemGroup>\n\n"
+                + "    <ItemGroup>\n"
+                + "      <None Update=\"InputMap.toml\" CopyToOutputDirectory=\"PreserveNewest\" CopyToPublishDirectory=\"PreserveNewest\" />\n"
+                + "    </ItemGroup>\n"
                 + "</Project>\n";
 
             if (!content.Contains(projectName) && false)
@@ -73,7 +76,7 @@ public static class TemplateGenerator
                 + "{\n"
                 + "    static void Main(string[] args)\n"
                 + "    {\n"
-                + "        AppContext.SetSwitch(\"Tomlyn.TomlSerializer.IsReflectionEnabledByDefault\", true);\n"
+                + "        Fix2Engine.Input.InputManager.LoadInputMap();\n"
                 + "        using var game = new Game();\n"
                 + "        game.Run();\n"
                 + "    }\n"

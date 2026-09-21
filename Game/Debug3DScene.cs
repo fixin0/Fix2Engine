@@ -69,7 +69,7 @@ namespace Fix2Engine
 
         public void Update(float dt)
         {
-            if (Fix2Engine.Input.InputManager.IsPressed(Keys.F1))
+            if (Fix2Engine.Input.InputManager.IsPressed("ToggleDebug"))
             {
                 if (IsCursorHidden())
                     EnableCursor();
@@ -77,12 +77,12 @@ namespace Fix2Engine
                     DisableCursor();
             }
 
-            if (Fix2Engine.Input.InputManager.IsPressed(Keys.Escape))
+            if (Fix2Engine.Input.InputManager.IsPressed("Pause"))
             {
                 EnableCursor();
             }
 
-            if (Fix2Engine.Input.InputManager.IsPressed(Keys.F))
+            if (Fix2Engine.Input.InputManager.IsPressed("Focus"))
             {
                 _flashlightEnabled = !_flashlightEnabled;
             }
@@ -100,10 +100,10 @@ namespace Fix2Engine
             _cameraPosition = _camera.Position;
 
             bool moving =
-                Fix2Engine.Input.InputManager.IsDown(Keys.W) ||
-                Fix2Engine.Input.InputManager.IsDown(Keys.A) ||
-                Fix2Engine.Input.InputManager.IsDown(Keys.S) ||
-                Fix2Engine.Input.InputManager.IsDown(Keys.D);
+                Fix2Engine.Input.InputManager.IsDown("MoveForward") ||
+                Fix2Engine.Input.InputManager.IsDown("MoveLeft") ||
+                Fix2Engine.Input.InputManager.IsDown("MoveBackward") ||
+                Fix2Engine.Input.InputManager.IsDown("MoveRight");
 
             if (moving)
             {

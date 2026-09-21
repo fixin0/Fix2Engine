@@ -93,7 +93,7 @@ public class Debug2DPixelScene : IFixScene
     public void Update(float dt)
     {
         // F1: Lock / unlock cursor.
-        if (Fix2Engine.Input.InputManager.IsPressed(Keys.F1))
+        if (Fix2Engine.Input.InputManager.IsPressed("ToggleDebug"))
         {
             if (IsCursorHidden())
             {
@@ -106,13 +106,13 @@ public class Debug2DPixelScene : IFixScene
         }
 
         // ESC: Release cursor.
-        if (Fix2Engine.Input.InputManager.IsPressed(Keys.Escape))
+        if (Fix2Engine.Input.InputManager.IsPressed("Pause"))
         {
             EnableCursor();
         }
 
         // R: Restart the game.
-        if (Fix2Engine.Input.InputManager.IsPressed(Keys.R))
+        if (Fix2Engine.Input.InputManager.IsPressed("Reset"))
         {
             Start();
             return;
@@ -169,13 +169,13 @@ public class Debug2DPixelScene : IFixScene
             Vector2.Zero;
 
         // W = forward
-        if (Fix2Engine.Input.InputManager.IsDown(Keys.W))
+        if (Fix2Engine.Input.InputManager.IsDown("MoveForward"))
         {
             movement += forward;
         }
 
         // S = backward
-        if (Fix2Engine.Input.InputManager.IsDown(Keys.S))
+        if (Fix2Engine.Input.InputManager.IsDown("MoveBackward"))
         {
             movement -= forward;
         }
@@ -188,13 +188,13 @@ public class Debug2DPixelScene : IFixScene
             );
 
         // A = left
-        if (Fix2Engine.Input.InputManager.IsDown(Keys.A))
+        if (Fix2Engine.Input.InputManager.IsDown("MoveLeft"))
         {
             movement -= right;
         }
 
         // D = right
-        if (Fix2Engine.Input.InputManager.IsDown(Keys.D))
+        if (Fix2Engine.Input.InputManager.IsDown("MoveRight"))
         {
             movement += right;
         }

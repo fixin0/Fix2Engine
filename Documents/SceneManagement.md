@@ -1,8 +1,8 @@
 # Scene Management
 
 Sources:
-- `Fix2Engine.Components/Scene/IFixScene.cs` — namespace `Fix2Engine.Components.Scene`
-- `Fix2Engine.Components/Scene/SceneLoader.cs` — namespace `Fix2Engine.Components` (class `SceneManager`)
+- `Components/Scene/IFixScene.cs` — namespace `Fix2Engine.Components.Scene`
+- `Components/Scene/SceneLoader.cs` — namespace `Fix2Engine.Components` (class `SceneManager`)
 
 ## IFixScene
 

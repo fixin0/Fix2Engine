@@ -1,6 +1,6 @@
 # Graphics
 
-Sources: `Fix2Engine.Graphics/*` — namespace `Fix2Engine.Graphics`
+Sources: `Graphics/*` — namespace `Fix2Engine.Graphics`
 
 ## Dependencies
 

@@ -13,13 +13,13 @@ Fix2Engine is a modular, code-first game engine built with C# and .NET. It is de
 
 The repository is organized into distinct class libraries to isolate responsibilities across the engine pipeline:
 
-* **Fix2Engine.Graphics:** Handles windowing, rendering, 3D model loading, 2D sprites, and skybox drawing. Uses Raylib (`Raylib-cs`) as its rendering backend to provide low-level operations without heavy abstractions.
-* **Fix2Engine.Components:** Implements a component-based scene and object structure (`IFixScene`, `Node2D`/`Node3D`, camera controls).
-* **Fix2Engine.Input:** Cross-platform keyboard polling — Win32 backend on Windows, Raylib backend on Linux/macOS — plus optional TOML action maps.
-* **Fix2Engine.User:** Platform information helper.
-* **Fix2Engine.Monitoring:** Built-in `PerformanceMonitor` ImGui overlay (FPS, frame time, CPU/GPU).
-* **Fix2Engine.Audio:** Manages sound effects, music playback, and audio asset lifecycles.
-* **Fix2Engine.Physics:** Encapsulates collision detection, spatial checks, and physical movement logic.
+* **Graphics:** Handles windowing, rendering, 3D model loading, 2D sprites, and skybox drawing. Uses Raylib (`Raylib-cs`) as its rendering backend to provide low-level operations without heavy abstractions.
+* **Components:** Implements a component-based scene and object structure (`IFixScene`, `Node2D`/`Node3D`, camera controls).
+* **Input:** Cross-platform keyboard polling — Win32 backend on Windows, Raylib backend on Linux/macOS — plus optional TOML action maps.
+* **User:** Platform information helper.
+* **Monitoring:** Built-in `PerformanceMonitor` ImGui overlay (FPS, frame time, CPU/GPU).
+* **Audio:** Manages sound effects, music playback, and audio asset lifecycles.
+* **Physics:** Encapsulates collision detection, spatial checks, and physical movement logic.
 * **Game:** The entry point/sandbox project used to assemble scenes (`Debug2DPixelScene`, `Debug3DScene`), test features, and run game code.
 
 ---
@@ -36,13 +36,13 @@ The repository is organized into distinct class libraries to isolate responsibil
 
 ```text
 Fix2Engine/
-├── Fix2Engine.Audio/          # Sound management
-├── Fix2Engine.Components/     # Scene and component structures
-├── Fix2Engine.Graphics/       # Raylib rendering/windowing abstraction
-├── Fix2Engine.Input/          # Cross-platform keyboard input (Win32 + Raylib)
-├── Fix2Engine.Monitoring/     # Performance monitor ImGui overlay
-├── Fix2Engine.Physics/        # Collision and physics logic
-├── Fix2Engine.User/           # Platform info helper
+├── Audio/          # Sound management
+├── Components/     # Scene and component structures
+├── Graphics/       # Raylib rendering/windowing abstraction
+├── Input/          # Cross-platform keyboard input (Win32 + Raylib)
+├── Monitoring/     # Performance monitor ImGui overlay
+├── Physics/        # Collision and physics logic
+├── User/           # Platform info helper
 └── Game/                      # Project runtime and test scenes
 ```
 

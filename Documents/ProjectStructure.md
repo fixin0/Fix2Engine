@@ -6,13 +6,13 @@
 
 ```
 Fix2Engine.sln
-├── Fix2Engine.Graphics   (class library)
-├── Fix2Engine.Components (class library)
-├── Fix2Engine.Input      (class library)
-├── Fix2Engine.User       (class library)  — platform info (Platform)
-├── Fix2Engine.Physics    (class library)  — stub (PhysicsWorld)
-├── Fix2Engine.Audio      (class library)  — stub
-├── Fix2Engine.Monitoring (class library)  — performance monitor overlay
+├── Graphics   (class library)
+├── Components (class library)
+├── Input      (class library)
+├── User       (class library)  — platform info (Platform)
+├── Physics    (class library)  — stub (PhysicsWorld)
+├── Audio      (class library)  — stub
+├── Monitoring (class library)  — performance monitor overlay
 └── Game                  (executable)
 ```
 
@@ -36,38 +36,38 @@ Fix2Engine/
 │   ├── PhysicsAndAudio.md
 │   ├── Monitoring.md
 │   └── ProjectStructure.md
-├── Fix2Engine.Graphics/
-│   ├── Fix2Engine.Graphics.csproj
+├── Graphics/
+│   ├── Graphics.csproj
 │   ├── Windowing.cs
 │   ├── Model3D.cs
 │   ├── Sprite2D.cs
 │   └── Skybox.cs
-├── Fix2Engine.Components/
-│   ├── Fix2Engine.Components.csproj
+├── Components/
+│   ├── Components.csproj
 │   ├── Cameras/Camera.cs       (namespace Fix2Engine.Components.Cameras)
 │   ├── Scene/IFixScene.cs
 │   ├── Scene/SceneLoader.cs   (SceneManager)
 │   ├── Node2D.cs               (was PineObject2D)
 │   └── Node3D.cs               (was Character3D)
-├── Fix2Engine.Input/
-│   ├── Fix2Engine.Input.csproj
+├── Input/
+│   ├── Input.csproj
 │   ├── InputBackend/Input.cs           (class InputManager, namespace Fix2Engine.Input, platform dispatch)
 │   ├── InputBackend/WindowsInputBackend.cs (was InputBackend_Windows.cs)
 │   ├── InputBackend/Keys.cs
 │   ├── InputBackend/KeyState.cs
 │   ├── InputConfig.cs
 │   └── ConfigReader.cs
-├── Fix2Engine.User/
-│   ├── Fix2Engine.User.csproj
+├── User/
+│   ├── User.csproj
 │   └── Platform.cs               (platform info helper)
-├── Fix2Engine.Physics/
-│   ├── Fix2Engine.Physics.csproj
+├── Physics/
+│   ├── Physics.csproj
 │   └── PhysicsWorld.cs         (was Class1.cs)
-├── Fix2Engine.Audio/
-│   ├── Fix2Engine.Audio.csproj
+├── Audio/
+│   ├── Audio.csproj
 │   └── OpenAL/SoundManager.cs (stub)
-├── Fix2Engine.Monitoring/
-│   ├── Fix2Engine.Monitoring.csproj
+├── Monitoring/
+│   ├── Monitoring.csproj
 │   └── PerformanceMonitor.cs   (FPS/frame-time/CPU/GPU ImGui overlay)
 ├── Fix2Console/
 │   ├── Fix2Console.csproj
@@ -88,14 +88,14 @@ Fix2Engine/
 ## Project References
 
 ```
-Game ──→ Fix2Engine.Components ──→ Fix2Engine.Graphics ──→ Fix2Engine.Input
-     ──→ Fix2Engine.Graphics
-     ──→ Fix2Engine.Input
-     ──→ Fix2Engine.Monitoring ──→ Fix2Engine.Graphics
+Game ──→ Components ──→ Graphics ──→ Input
+     ──→ Graphics
+     ──→ Input
+     ──→ Monitoring ──→ Graphics
 
-Fix2Engine.Graphics ──→ Fix2Engine.Input
-Fix2Engine.Components ──→ Fix2Engine.Graphics
-Fix2Engine.Input ──→ Fix2Engine.User
+Graphics ──→ Input
+Components ──→ Graphics
+Input ──→ User
 ```
 
 `Physics` and `Audio` are not yet referenced by `Game` (stubs). `Fix2Engine.IMGUI` was removed — UI now uses native `ImGui.NET` + `rlImGui-cs` directly.

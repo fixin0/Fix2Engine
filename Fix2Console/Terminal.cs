@@ -26,12 +26,18 @@ public class Terminal : IDisposable
         {
             if (args.Length == 0)
             {
-                PrintHelp();
+                if (ProjectSettings.FindProjectDirectory(Environment.CurrentDirectory) is not null)
+                    ProjectSettings.Initialize();
+                else
+                    PrintHelp();
                 return;
             }
 
             switch (args[0])
             {
+                case "--init" when args.Length <= 2:
+                    ProjectSettings.Initialize(args.Length == 2 ? args[1] : null);
+                    break;
                 case "--new-project" when args.Length >= 2:
                     ProjectGenerator.CreateNewProject(args[1]);
                     break;
@@ -53,6 +59,7 @@ public class Terminal : IDisposable
         }
         catch (Exception ex)
         {
+            Environment.ExitCode = 1;
             Console.WriteLine($"Error handling command '{(args.Length > 0 ? args[0] : "")}': {ex.Message}");
         }
     }
@@ -66,6 +73,7 @@ public class Terminal : IDisposable
             Console.WriteLine();
             Console.WriteLine("Usage:");
             Console.WriteLine("  Fix2Console --new-project {project name}   Create a new Fix2Engine project in current directory");
+            Console.WriteLine("  Fix2Console --init [engine-directory]      Configure the current project and create InputMap.toml");
             Console.WriteLine("  Fix2Console --help                         Show this help");
         }
         catch (Exception ex)
