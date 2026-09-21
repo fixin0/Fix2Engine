@@ -1,0 +1,17 @@
+<Project>
+  <PropertyGroup>
+    <_Fix2EngineLicensesImported>true</_Fix2EngineLicensesImported>
+  </PropertyGroup>
+  <ItemGroup>
+    <None Include="$(MSBuildThisFileDirectory)../LICENSE"
+          Link="Fix2Engine-LICENSE.txt"
+          TargetPath="Fix2Engine-LICENSE.txt"
+          CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest" />
+    <None Include="$(MSBuildThisFileDirectory)../THIRD-PARTY-NOTICES.txt"
+          Link="Fix2Engine-THIRD-PARTY-NOTICES.txt"
+          TargetPath="Fix2Engine-THIRD-PARTY-NOTICES.txt"
+          CopyToOutputDirectory="PreserveNewest"
+          CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+</Project>

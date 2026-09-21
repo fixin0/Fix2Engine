@@ -1,0 +1,76 @@
+{
+  "reviewed_date": "2026-09-21",
+  "target_framework": "net10.0",
+  "packages": [
+    {
+      "id": "ImGui.NET",
+      "version": "1.91.6.1",
+      "license": "MIT"
+    },
+    {
+      "id": "Microsoft.DotNet.ILCompiler",
+      "version": "10.0.12",
+      "license": "MIT"
+    },
+    {
+      "id": "Microsoft.DotNet.PlatformAbstractions",
+      "version": "3.1.6",
+      "license": "MIT"
+    },
+    {
+      "id": "Microsoft.Extensions.DependencyModel",
+      "version": "9.0.9",
+      "license": "MIT"
+    },
+    {
+      "id": "Microsoft.NET.ILLink.Tasks",
+      "version": "10.0.12",
+      "license": "MIT"
+    },
+    {
+      "id": "Raylib-cs",
+      "version": "8.0.0",
+      "license": "Zlib"
+    },
+    {
+      "id": "rlImgui-cs",
+      "version": "3.2.0",
+      "license": "Zlib"
+    },
+    {
+      "id": "Silk.NET.Core",
+      "version": "2.23.0",
+      "license": "MIT"
+    },
+    {
+      "id": "Silk.NET.OpenAL",
+      "version": "2.23.0",
+      "license": "MIT"
+    },
+    {
+      "id": "System.Configuration.ConfigurationManager",
+      "version": "8.0.0",
+      "license": "MIT"
+    },
+    {
+      "id": "System.Diagnostics.EventLog",
+      "version": "8.0.0",
+      "license": "MIT"
+    },
+    {
+      "id": "System.Diagnostics.PerformanceCounter",
+      "version": "8.0.0",
+      "license": "MIT"
+    },
+    {
+      "id": "System.Security.Cryptography.ProtectedData",
+      "version": "8.0.0",
+      "license": "MIT"
+    },
+    {
+      "id": "Tomlyn",
+      "version": "2.10.1",
+      "license": "BSD-2-Clause"
+    }
+  ]
+}

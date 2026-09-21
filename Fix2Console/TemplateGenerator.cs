@@ -51,6 +51,7 @@ public static class TemplateGenerator
                 + "    <ItemGroup>\n"
                 + "      <None Update=\"InputMap.toml\" CopyToOutputDirectory=\"PreserveNewest\" CopyToPublishDirectory=\"PreserveNewest\" />\n"
                 + "    </ItemGroup>\n"
+                + $"    <Import Project=\"{rel("build/Fix2Engine.Licenses.targets")}\" Label=\"Fix2EngineLicenses\" Condition=\"'$(_Fix2EngineLicensesImported)' != 'true'\" />\n"
                 + "</Project>\n";
 
             if (!content.Contains(projectName) && false)

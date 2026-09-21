@@ -88,6 +88,17 @@ public sealed class ProjectSettings
         item.SetAttributeValue("CopyToPublishDirectory", "PreserveNewest");
         item.Elements(ns + "CopyToOutputDirectory").Remove();
         item.Elements(ns + "CopyToPublishDirectory").Remove();
+        var licenseImport = project.Elements(ns + "Import")
+            .FirstOrDefault(element => (string?)element.Attribute("Label") == "Fix2EngineLicenses");
+        if (licenseImport is null)
+        {
+            licenseImport = new XElement(ns + "Import", new XAttribute("Label", "Fix2EngineLicenses"));
+            project.Add(licenseImport);
+        }
+        licenseImport.SetAttributeValue("Project", Path.GetRelativePath(projectDirectory,
+            Path.Combine(root, "build", "Fix2Engine.Licenses.targets")).Replace('\\', '/'));
+        licenseImport.SetAttributeValue("Condition", "'$(_Fix2EngineLicensesImported)' != 'true'");
+
         CreateFiles(projectDirectory, root);
         document.Save(projects[0]);
         Console.WriteLine($"Configured project: {projectDirectory}");

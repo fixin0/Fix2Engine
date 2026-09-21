@@ -89,6 +89,8 @@ try
     var doc = XDocument.Load(csproj);
     Check(doc.Descendants("None").Count(x => (string?)x.Attribute("Update") == "InputMap.toml") == 1, "Init must not duplicate copy items");
     Check(doc.Descendants("ProjectReference").Count(x => ((string?)x.Attribute("Include"))!.EndsWith("Input.csproj")) == 1, "Init must not duplicate Input reference");
+    Check(doc.Descendants("Import").Count(x => (string?)x.Attribute("Label") == "Fix2EngineLicenses") == 1,
+        "Repeated init must preserve exactly one license import");
     Check(EngineRootFinder.FindEngineRoot() == engine.TrimEnd(Path.DirectorySeparatorChar), "Resolve engine from nested project directory");
     Throws<DirectoryNotFoundException>(() => ProjectSettings.Initialize(Path.Combine(temp, "absent")));
     File.WriteAllText(Path.Combine(project, "Fix2Engine.toml"), "[Engine]\nDirectory = \"missing\"\n");
@@ -102,6 +104,8 @@ try
     Check(bareDoc.Descendants("ProjectReference").Count() == 1, "Existing plain project needs Input reference");
     Check(bareDoc.Descendants("None").Any(x => (string?)x.Attribute("CopyToPublishDirectory") == "PreserveNewest"), "Existing project needs publish copy metadata");
     Check(File.Exists(Path.Combine(bare, "InputMap.toml")), "Existing project needs default map");
+    Check(bareDoc.Descendants("Import").Any(x => (string?)x.Attribute("Label") == "Fix2EngineLicenses"),
+        "Existing plain project needs license distribution import");
     Environment.CurrentDirectory = temp;
     Throws<InvalidOperationException>(() => ProjectSettings.Initialize(engine));
     Console.WriteLine($"PASS: {assertions} assertions (parser, action transitions, reload, config and project initialization).");

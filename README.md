@@ -1,7 +1,7 @@
 
 # Fix2Engine
 
-Fix2Engine is a modular, code-first game engine built with C# and .NET. It is designed to offer full control over engine logic while keeping core systems separate, lightweight, and easy to maintain.
+Fix2Engine is a modular, code-first game engine built with C# and .NET, using Raylib through its C# bindings, Raylib-cs, for window management and 2D/3D rendering. It is designed to offer full control over engine logic while keeping core systems separate, lightweight, and easy to maintain.
 
 ---
 
@@ -47,3 +47,19 @@ Fix2Engine/
 ```
 
 Documentation: see [Documents/](Documents/README.md).
+
+## License and third-party software
+
+Fix2Engine's own code is licensed under the [MIT license](LICENSE). Raylib,
+Raylib-cs, ImGui, Tomlyn, Silk.NET, and other dependencies retain their respective
+licenses. Their license texts and copyright notices are collected in
+[THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt).
+
+Builds and publishes include `Fix2Engine-LICENSE.txt` and
+`Fix2Engine-THIRD-PARTY-NOTICES.txt`; keep both files with redistributed builds.
+See [licensing and release notes](Documents/Licensing.md) for scope and maintenance.
+
+## Contributing
+
+Read [CONTRIBUTOR.MD](CONTRIBUTOR.MD) for setup, testing, contribution licensing,
+and third-party code and asset requirements.

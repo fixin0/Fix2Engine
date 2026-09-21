@@ -1,0 +1,4 @@
+<Project>
+  <Import Project="$(MSBuildThisFileDirectory)build/Fix2Engine.Licenses.targets"
+          Condition="'$(_Fix2EngineLicensesImported)' != 'true'" />
+</Project>

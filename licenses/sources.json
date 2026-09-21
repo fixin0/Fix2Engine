@@ -1,0 +1,298 @@
+[
+  {
+    "component": "Raylib-cs 8.0.0 (Zlib)",
+    "source": "https://raw.githubusercontent.com/raylib-cs/raylib-cs/1f07b4b4a4b7e2e76775240eedfd511e8bb89ae5/LICENSE",
+    "notice_sha256": "c403bf3693e2a8a260657f65b826c2c4781398787c5664389d7b50cf0ed3caab"
+  },
+  {
+    "component": "raylib 6.0 (Zlib), native library bundled by Raylib-cs",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/LICENSE",
+    "notice_sha256": "882a5a819cf562aa3583aae3af3f2211dda15c63de9fc8cc4b399a2f9e78d799"
+  },
+  {
+    "component": "rlImgui-cs 3.2.0 (Zlib)",
+    "source": "NuGet rlImgui-cs 3.2.0 / LICENSE; https://github.com/raylib-extras/rlImGui-cs/tree/37d0d4ad462e8b646dd841acebfc5866130dff8c",
+    "notice_sha256": "97af25a1f999562e5ee43881a8ab7b02f3bee72b0f61c1747089d789d305e404"
+  },
+  {
+    "component": "ImGui.NET 1.91.6.1 (MIT)",
+    "source": "https://raw.githubusercontent.com/ImGuiNET/ImGui.NET/8e26803be78b344fd68834817905405b3cdffb94/LICENSE",
+    "notice_sha256": "a059eb95f3fbf8080cc8b13262517ed0c1e5d98d4e534096d193a13ad8a08e7a"
+  },
+  {
+    "component": "Dear ImGui 1.91.6 (MIT), native ImGui.NET component",
+    "source": "https://raw.githubusercontent.com/ocornut/imgui/v1.91.6/LICENSE.txt",
+    "notice_sha256": "0ebf8feb061536bdebd7c6a365b64808ae3479048b1c44113e19037680c5f2be"
+  },
+  {
+    "component": "cimgui 1.91.6 (MIT), native ImGui.NET component",
+    "source": "https://raw.githubusercontent.com/cimgui/cimgui/1.91.6/LICENSE",
+    "notice_sha256": "2437ab9e1f3dac75cf8ea64cd087ed87321302619c3b7496bd7a3aadd9a643cd"
+  },
+  {
+    "component": "Silk.NET.Core 2.23.0 and Silk.NET.OpenAL 2.23.0 (MIT)",
+    "source": "https://raw.githubusercontent.com/dotnet/Silk.NET/94605142f7b7bd6e69c9201e8e721d245c69eb7e/LICENSE.md",
+    "notice_sha256": "725919ae6dd430f6302bd4e84958ae5b99f4f231b164382f6197df1413d4a9c1"
+  },
+  {
+    "component": "Tomlyn 2.10.1 (BSD-2-Clause)",
+    "source": "https://raw.githubusercontent.com/xoofx/Tomlyn/6cc82dd23a2c0aefb858f92a51c1b184e2812103/license.txt",
+    "notice_sha256": "a408562aaf018566e69e3c3b8df6ff5757576c666349e7dffff6e0a60aa91026"
+  },
+  {
+    "component": "GLFW bundled in raylib 6.0 (Zlib)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/glfw/LICENSE.md",
+    "notice_sha256": "f6ffd11251b457bfe6627c0c8e2fe6f99dec9f4b175c9f578e5c35d69bae5065"
+  },
+  {
+    "component": "WTFPL version 2 (jar_mod and jar_xm license reference)",
+    "source": "https://raw.githubusercontent.com/spdx/license-list-data/v3.27.0/text/WTFPL.txt",
+    "notice_sha256": "13d8825a59e5e546d41e8711405d0f335a9934362a47c04a3b4280fa7932dc4a"
+  },
+  {
+    "component": "Proggy fonts license (MIT)",
+    "source": "https://raw.githubusercontent.com/bluescan/proggyfonts/master/LICENSE",
+    "notice_sha256": "fe61d069df303c697e04200f5f8232c2cb09dd3572f4357b323469f7d592d142"
+  },
+  {
+    "component": "ProggyClean embedded font attribution",
+    "source": "https://raw.githubusercontent.com/ocornut/imgui/v1.91.6/imgui_draw.cpp",
+    "notice_sha256": "8935d17150860a1da7bcc746670eb395296c077692b9f1ac27bf4fabc04b1516"
+  },
+  {
+    "component": "imgui.imstb_rectpack.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/ocornut/imgui/v1.91.6/imstb_rectpack.h",
+    "notice_sha256": "7587efcca32db8f95bf5860dea6dfa4be410ee723e1964db3689c8ddf2a2e4a9"
+  },
+  {
+    "component": "imgui.imstb_textedit.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/ocornut/imgui/v1.91.6/imstb_textedit.h",
+    "notice_sha256": "7587efcca32db8f95bf5860dea6dfa4be410ee723e1964db3689c8ddf2a2e4a9"
+  },
+  {
+    "component": "imgui.imstb_truetype.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/ocornut/imgui/v1.91.6/imstb_truetype.h",
+    "notice_sha256": "7587efcca32db8f95bf5860dea6dfa4be410ee723e1964db3689c8ddf2a2e4a9"
+  },
+  {
+    "component": "raylib.external.cgltf.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/cgltf.h",
+    "notice_sha256": "587adfe420ae374ff6da3b2fac0ae59910647acf0dbc19e7ee4c26c1854f929d"
+  },
+  {
+    "component": "raylib.external.cgltf_write.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/cgltf_write.h",
+    "notice_sha256": "7b920fec47a775b34aaaafcab8714add67932a14bb142baeea10837987d7133d"
+  },
+  {
+    "component": "raylib.external.dirent.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/dirent.h",
+    "notice_sha256": "6dc5cc68b5c1741fecb8f58c3344be2dd7e97e906aa6e74ccee98ee3cb1f83be"
+  },
+  {
+    "component": "raylib.external.dr_flac.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/dr_flac.h",
+    "notice_sha256": "6349f65eb5fe846bc48d8ac17c61872ad62a7578d9fc2c53c05157905f84fab1"
+  },
+  {
+    "component": "raylib.external.dr_mp3.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/dr_mp3.h",
+    "notice_sha256": "7f04bc7ffa523f75a94109769699c731d1fa46e4f010aa654faa70e8a5294594"
+  },
+  {
+    "component": "raylib.external.dr_wav.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/dr_wav.h",
+    "notice_sha256": "6349f65eb5fe846bc48d8ac17c61872ad62a7578d9fc2c53c05157905f84fab1"
+  },
+  {
+    "component": "raylib.external.glad.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/glad.h",
+    "notice_sha256": "438187dca092de4032c1a16524aa4c34c71a0f985a71251a675aad54e77ed561"
+  },
+  {
+    "component": "raylib.external.glad_gles2.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/glad_gles2.h",
+    "notice_sha256": "438187dca092de4032c1a16524aa4c34c71a0f985a71251a675aad54e77ed561"
+  },
+  {
+    "component": "raylib.external.jar_mod.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/jar_mod.h",
+    "notice_sha256": "65c391a68d9bcb9e6dfcd83877d3e9f418acff3e5238f727825da5e520ac63b2"
+  },
+  {
+    "component": "raylib.external.jar_xm.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/jar_xm.h",
+    "notice_sha256": "2ae8eda9de20baf75a285ff515c65be0b7ac53fabe515fe38af5bcb4c7aba795"
+  },
+  {
+    "component": "raylib.external.m3d.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/m3d.h",
+    "notice_sha256": "d4f62e084663e6faa1e67c147a749511f9338c10163ef551692240539481c244"
+  },
+  {
+    "component": "raylib.external.miniaudio.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/miniaudio.h",
+    "notice_sha256": "c6aba4ade0407b7cc952ef1253bcac50991bb6eed7b5b8a83c9f5b9d5627d8d6"
+  },
+  {
+    "component": "raylib.external.par_shapes.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/par_shapes.h",
+    "notice_sha256": "5e38714bf677b101805eabc1cd2443f6d05ba0be5ffc5723b1ae7c2bcbcacbd5"
+  },
+  {
+    "component": "raylib.external.qoa.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/qoa.h",
+    "notice_sha256": "618332bea337438653311d745781754bfd192ae50cddc21208df2b217e56b761"
+  },
+  {
+    "component": "raylib.external.qoaplay.c - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/qoaplay.c",
+    "notice_sha256": "b4fbe6ed82591fd9be701be1a5475aa053739f10119759aeb7623c42805729e4"
+  },
+  {
+    "component": "raylib.external.qoi.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/qoi.h",
+    "notice_sha256": "6d37b2da0a7e85561472bd1329e06eaa2fd0093cfc3d5b5f6b636cceb59d92b5"
+  },
+  {
+    "component": "raylib.external.rltexgpu.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/rltexgpu.h",
+    "notice_sha256": "6a1ebbd78889716ea04ef019a74bcc3c3b4e9b4856ad9dd6f81f04e8e4fb577e"
+  },
+  {
+    "component": "raylib.external.rprand.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/rprand.h",
+    "notice_sha256": "5ef6e487440248b042847fc243e9cf537d566eac98e584dc1e583f11d086859f"
+  },
+  {
+    "component": "raylib.external.sdefl.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/sdefl.h",
+    "notice_sha256": "cf4452e02c43926210358bc76b6a7f1b91ed6cae045faf7f366436d1c7b4cda6"
+  },
+  {
+    "component": "raylib.external.sinfl.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/sinfl.h",
+    "notice_sha256": "28ce22332a18051abca3b8d88cdc0ea385c8a8c00836602d79d57fb7eee83805"
+  },
+  {
+    "component": "raylib.external.stb_image.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/stb_image.h",
+    "notice_sha256": "7587efcca32db8f95bf5860dea6dfa4be410ee723e1964db3689c8ddf2a2e4a9"
+  },
+  {
+    "component": "raylib.external.stb_image_resize2.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/stb_image_resize2.h",
+    "notice_sha256": "7587efcca32db8f95bf5860dea6dfa4be410ee723e1964db3689c8ddf2a2e4a9"
+  },
+  {
+    "component": "raylib.external.stb_image_write.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/stb_image_write.h",
+    "notice_sha256": "7587efcca32db8f95bf5860dea6dfa4be410ee723e1964db3689c8ddf2a2e4a9"
+  },
+  {
+    "component": "raylib.external.stb_perlin.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/stb_perlin.h",
+    "notice_sha256": "7587efcca32db8f95bf5860dea6dfa4be410ee723e1964db3689c8ddf2a2e4a9"
+  },
+  {
+    "component": "raylib.external.stb_rect_pack.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/stb_rect_pack.h",
+    "notice_sha256": "7587efcca32db8f95bf5860dea6dfa4be410ee723e1964db3689c8ddf2a2e4a9"
+  },
+  {
+    "component": "raylib.external.stb_truetype.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/stb_truetype.h",
+    "notice_sha256": "7587efcca32db8f95bf5860dea6dfa4be410ee723e1964db3689c8ddf2a2e4a9"
+  },
+  {
+    "component": "raylib.external.stb_vorbis.c - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/stb_vorbis.c",
+    "notice_sha256": "7587efcca32db8f95bf5860dea6dfa4be410ee723e1964db3689c8ddf2a2e4a9"
+  },
+  {
+    "component": "raylib.external.tinyobj_loader_c.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/tinyobj_loader_c.h",
+    "notice_sha256": "eff70a2d52c68a2df9deeb89153660e0a0d2a31376d37711a5ed355659f7c247"
+  },
+  {
+    "component": "raylib.external.vox_loader.h - upstream license comment(s)",
+    "source": "https://raw.githubusercontent.com/raysan5/raylib/6.0/src/external/vox_loader.h",
+    "notice_sha256": "ce045e2d8a0a7d8f05fc75a96b869ffad0075d3d041a44601ed2846ea856d5bd"
+  },
+  {
+    "component": "Microsoft.DotNet.ILCompiler/10.0.12 / THIRD-PARTY-NOTICES.TXT",
+    "source": "https://www.nuget.org/packages/Microsoft.DotNet.ILCompiler/10.0.12 ; package file THIRD-PARTY-NOTICES.TXT",
+    "notice_sha256": "c6926930d0181fa515076603e1305461b1bce5275a8b35337d75d2eef3acad4a"
+  },
+  {
+    "component": "Microsoft.DotNet.PlatformAbstractions/3.1.6 / LICENSE.TXT",
+    "source": "https://www.nuget.org/packages/Microsoft.DotNet.PlatformAbstractions/3.1.6 ; package file LICENSE.TXT",
+    "notice_sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310"
+  },
+  {
+    "component": "Microsoft.DotNet.PlatformAbstractions/3.1.6 / THIRD-PARTY-NOTICES.TXT",
+    "source": "https://www.nuget.org/packages/Microsoft.DotNet.PlatformAbstractions/3.1.6 ; package file THIRD-PARTY-NOTICES.TXT",
+    "notice_sha256": "e7e3492d0251ce6ba47592d26f54f66d7ace8abba94881c28a2fe83ab5da303a"
+  },
+  {
+    "component": "Microsoft.Extensions.DependencyModel/9.0.9 / LICENSE.TXT",
+    "same_notice_as": "Microsoft.DotNet.PlatformAbstractions/3.1.6 / LICENSE.TXT"
+  },
+  {
+    "component": "Microsoft.Extensions.DependencyModel/9.0.9 / THIRD-PARTY-NOTICES.TXT",
+    "source": "https://www.nuget.org/packages/Microsoft.Extensions.DependencyModel/9.0.9 ; package file THIRD-PARTY-NOTICES.TXT",
+    "notice_sha256": "fa3e9d0a2c52476f04fe798d7dc4f6e7edb7b68a3d2f4d5f59a39bce957eedc8"
+  },
+  {
+    "component": "Microsoft.NET.ILLink.Tasks/10.0.12 / THIRD-PARTY-NOTICES.TXT",
+    "same_notice_as": "Microsoft.DotNet.ILCompiler/10.0.12 / THIRD-PARTY-NOTICES.TXT"
+  },
+  {
+    "component": "System.Configuration.ConfigurationManager/8.0.0 / LICENSE.TXT",
+    "same_notice_as": "Microsoft.DotNet.PlatformAbstractions/3.1.6 / LICENSE.TXT"
+  },
+  {
+    "component": "System.Configuration.ConfigurationManager/8.0.0 / THIRD-PARTY-NOTICES.TXT",
+    "source": "https://www.nuget.org/packages/System.Configuration.ConfigurationManager/8.0.0 ; package file THIRD-PARTY-NOTICES.TXT",
+    "notice_sha256": "7238e7fd468427aa3fe45b1d0cee1c3e2d93ff96692820768521e9780225d473"
+  },
+  {
+    "component": "System.Diagnostics.EventLog/8.0.0 / LICENSE.TXT",
+    "same_notice_as": "Microsoft.DotNet.PlatformAbstractions/3.1.6 / LICENSE.TXT"
+  },
+  {
+    "component": "System.Diagnostics.EventLog/8.0.0 / THIRD-PARTY-NOTICES.TXT",
+    "same_notice_as": "System.Configuration.ConfigurationManager/8.0.0 / THIRD-PARTY-NOTICES.TXT"
+  },
+  {
+    "component": "System.Diagnostics.PerformanceCounter/8.0.0 / LICENSE.TXT",
+    "same_notice_as": "Microsoft.DotNet.PlatformAbstractions/3.1.6 / LICENSE.TXT"
+  },
+  {
+    "component": "System.Diagnostics.PerformanceCounter/8.0.0 / THIRD-PARTY-NOTICES.TXT",
+    "same_notice_as": "System.Configuration.ConfigurationManager/8.0.0 / THIRD-PARTY-NOTICES.TXT"
+  },
+  {
+    "component": "System.Security.Cryptography.ProtectedData/8.0.0 / LICENSE.TXT",
+    "same_notice_as": "Microsoft.DotNet.PlatformAbstractions/3.1.6 / LICENSE.TXT"
+  },
+  {
+    "component": "System.Security.Cryptography.ProtectedData/8.0.0 / THIRD-PARTY-NOTICES.TXT",
+    "same_notice_as": "System.Configuration.ConfigurationManager/8.0.0 / THIRD-PARTY-NOTICES.TXT"
+  },
+  {
+    "component": ".NET SDK / NativeAOT / ILLink license (MIT)",
+    "source": "https://raw.githubusercontent.com/dotnet/dotnet/95017c711e6afc1085133d440e42b4bd78155701/LICENSE.TXT",
+    "notice_sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310"
+  },
+  {
+    "component": ".NET 10 SDK 10.0.112 / LICENSE.txt",
+    "source": "Installed .NET SDK 10.0.112, LICENSE.txt; https://github.com/dotnet/dotnet",
+    "notice_sha256": "cfc21f5e8bd655ae997eec916138b707b1d290b83272c02a95c9f821b8c87310"
+  },
+  {
+    "component": ".NET 10 SDK 10.0.112 / ThirdPartyNotices.txt",
+    "source": "Installed .NET SDK 10.0.112, ThirdPartyNotices.txt; https://github.com/dotnet/dotnet",
+    "notice_sha256": "2dc8f8c5a39401e928b5784ab564eb8b3ceb99ead3df8f260e0cab7e0bbecc7a"
+  }
+]
