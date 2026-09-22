@@ -1,7 +1,5 @@
 
 Microsoft Visual Studio Solution File, Format Version 12.00
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Game", "Game\Game.csproj", "{0F026A5D-1F50-4F32-AAF5-1DE499BFCA11}"
-EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Graphics", "Graphics\Graphics.csproj", "{0B12CCBA-5FF2-4FE3-B094-B99F8E2EDE4C}"
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Components", "Components\Components.csproj", "{317AB0A7-3EDD-4BBB-85DB-519A68017D5D}"
@@ -24,10 +22,6 @@ Global
 		Release|Any CPU = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(ProjectConfigurationPlatforms) = postSolution
-		{0F026A5D-1F50-4F32-AAF5-1DE499BFCA11}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
-		{0F026A5D-1F50-4F32-AAF5-1DE499BFCA11}.Debug|Any CPU.Build.0 = Debug|Any CPU
-		{0F026A5D-1F50-4F32-AAF5-1DE499BFCA11}.Release|Any CPU.ActiveCfg = Release|Any CPU
-		{0F026A5D-1F50-4F32-AAF5-1DE499BFCA11}.Release|Any CPU.Build.0 = Release|Any CPU
 		{0B12CCBA-5FF2-4FE3-B094-B99F8E2EDE4C}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
 		{0B12CCBA-5FF2-4FE3-B094-B99F8E2EDE4C}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0B12CCBA-5FF2-4FE3-B094-B99F8E2EDE4C}.Release|Any CPU.ActiveCfg = Release|Any CPU

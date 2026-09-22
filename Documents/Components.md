@@ -64,28 +64,6 @@ Notes:
 
 ---
 
-## Node3D
-
-`Node3D.cs` — namespace `Fix2Engine.Components` — **stub / prototype** for 3D entities.
-
-```csharp
-public class Node3D
-{
-    public Guid Guid { get; }
-    public string Name { get; set; }
-    public Vector3 Position { get; set; }
-    public Vector3 Rotation { get; set; }
-    public Vector3 Scale { get; set; }
-    public bool IsActive { get; set; }
-
-    public Node3D(string name = "Node3D");
-}
-```
-
-Currently holds identity plus transform (`Position`/`Rotation`/`Scale`). Intended as a base for future 3D entities with physics/rendering. For now, use `Camera` + `Model3D` or Raylib primitives directly for 3D objects.
-
----
-
 ## Adding Your Own Component
 
 Follow the `Node2D` pattern:

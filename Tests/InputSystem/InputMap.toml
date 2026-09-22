@@ -1,0 +1,4 @@
+# Local fixture for executable-relative input map loading.
+[Actions]
+Move = ["W", "Up"]
+Jump = ["Space"]

@@ -21,51 +21,32 @@ All scenes must implement these five methods plus `Dispose()` (from `IDisposable
 
 | Method | When | Typical Work |
 |--------|------|--------------|
-| `Start()` | Once, when scene becomes current | Init camera, spawn objects, load models/textures |
+| `Start()` | Once, when scene becomes current | Spawn objects, load textures |
 | `Update(float dt)` | Every frame (`dt` = frame time) | Input, gameplay, AI, physics |
-| `Render()` | Every frame, inside `BeginDrawing`/`EndDrawing` | 3D/2D world drawing (between `Camera.Begin`/`End`) |
+| `Render()` | Every frame, inside `BeginDrawing`/`EndDrawing` | 2D drawing |
 | `RenderUI()` | Every frame, inside `rlImGui.Begin`/`End` | ImGui panels, HUD, menus |
 | `Unload()` | Rarely used (use `Dispose` instead) | Custom cleanup if needed |
-| `Dispose()` | On scene switch and on app exit | Unload models, textures, etc. |
+| `Dispose()` | On scene switch and on app exit | Unload textures and other assets |
 
 Minimal scene:
 
 ```csharp
+using Fix2Engine.Components.Scene;
+using Raylib_cs;
+using static Raylib_cs.Raylib;
+
 public class MyScene : IFixScene
 {
-    private Camera _camera;
-
-    public void Start()
-    {
-        _camera = new Camera(new Vector3(0, 2, 10), Vector3.Zero, 75f, CameraType.FirstPerson);
-    }
-
-    public void Update(float dt)
-    {
-        if (InputManager.IsPressed(Keys.Escape))
-            SceneManager.LoadScene<MainMenuScene>();
-        _camera.Update();
-    }
+    public void Start() { }
+    public void Update(float dt) { }
 
     public void Render()
     {
-        _camera.Begin();
         ClearBackground(new Color(30, 30, 40, 255));
-        DrawGrid(20, 1.0f);
-        _camera.End();
+        DrawRectangle(100, 100, 160, 160, Color.Red);
     }
 
-    public void RenderUI()
-    {
-        ImGui.SetNextWindowPos(new Vector2(10, 10), ImGuiCond.FirstUseEver);
-        if (ImGui.Begin("HUD", ImGuiWindowFlags.NoSavedSettings))
-        {
-            ImGui.Text("MY SCENE");
-            ImGui.Text("Hello, world!");
-            ImGui.End();
-        }
-    }
-
+    public void RenderUI() { }
     public void Unload() { }
     public void Dispose() { }
 }
@@ -89,9 +70,8 @@ public static class SceneManager
 ### Switching Scenes
 
 ```csharp
-SceneManager.LoadScene<MainMenuScene>();          // generic — creates via new()
-SceneManager.LoadScene(new Debug2DPixelScene());   // instance
-SceneManager.LoadScene<Debug3DScene>();
+SceneManager.LoadScene<MyScene>();       // generic — creates via new()
+SceneManager.LoadScene(new MyScene());   // instance
 ```
 
 Switching is **deferred**: `LoadScene` only sets `_nextScene`. At the start of the next `SceneManager.Update(dt)`:
@@ -111,14 +91,14 @@ This makes it safe to call `LoadScene` from inside `Update`, from a button callb
 
 ### Wiring in Game
 
-`Game` (inherits `Windowing`) delegates to `SceneManager`:
+Your application's `Windowing` subclass delegates to `SceneManager`. The following
+example also uses the optional `Monitoring` project:
 
 ```csharp
 protected override void Start()
 {
     rlImGui.Setup(true);
-    ApplyImGuiTheme();
-    SceneManager.LoadScene<MainMenuScene>();
+    SceneManager.LoadScene<MyScene>();
 }
 
 protected override void Update(float dt)
@@ -129,7 +109,7 @@ protected override void Update(float dt)
 
 protected override void Render()
 {
-    SceneManager.Render();       // 3D world
+    SceneManager.Render();       // 2D scene
 
     rlImGui.Begin();
     SceneManager.RenderUI();     // ImGui (native ImGuiNET)
@@ -140,4 +120,4 @@ protected override void Render()
 }
 ```
 
-Current scenes in `Game/`: `MainMenuScene`, `Debug3DScene`, `Debug2DPixelScene`.
+Create scene classes in your own application project.

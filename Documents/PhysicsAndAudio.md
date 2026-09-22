@@ -25,24 +25,23 @@ Add your systems and call them from `Windowing.FixedUpdate` (deterministic 60 Hz
 // Physics/Collision.cs
 public static class Collision
 {
-    public static bool SphereVsSphere(Vector3 a, float ra, Vector3 b, float rb)
-        => Vector3.Distance(a, b) < ra + rb;
+    public static bool CircleVsCircle(Vector2 a, float ra, Vector2 b, float rb)
+        => Vector2.Distance(a, b) < ra + rb;
 
-    public static bool AabbVsAabb(BoundingBox a, BoundingBox b)
-        => Raylib.CheckCollisionBoxes(a, b);
+    public static bool RectangleVsRectangle(Rectangle a, Rectangle b)
+        => Raylib.CheckCollisionRecs(a, b);
 }
 
-// In your scene or Game.FixedUpdate:
+// In your Game.FixedUpdate:
 protected override void FixedUpdate(float fixedDt)
 {
-    // update rigidbodies, check collisions
-    SceneManager.CurrentScene?.FixedUpdate(fixedDt);
+    // Update movement and run 2D collision checks here.
 }
 ```
 
-Consider adding a `FixedUpdate` method to `IFixScene` and `Windowing` already provides the accumulator loop for it.
+Consider adding a `FixedUpdate` method to `IFixScene`; `Windowing` already provides the accumulator loop for it.
 
-Popular choices for a full physics backend: [BepuPhysics](https://github.com/bepu/bepuphysics2), [Jitter2](https://github.com/notgiven688/jitter2), or Raylib's built-in `CheckCollision*` helpers for simple cases.
+Raylib's built-in `CheckCollision*` helpers cover basic 2D collision checks.
 
 ---
 
@@ -95,7 +94,7 @@ private SoundManager _audio;
 protected override void Start()
 {
     _audio = new SoundManager();
-    SceneManager.LoadScene<MainMenuScene>();
+    SceneManager.LoadScene<MyScene>();
 }
 ```
 
@@ -107,7 +106,7 @@ Alternatively, for a simpler path, use Raylib's own audio (`InitAudioDevice`, `L
 
 | Module | Status | Next Step |
 |--------|--------|-----------|
-| `Physics` | Empty | Add collision helpers or integrate Bepu/Jitter; hook into `FixedUpdate` |
+| `Physics` | Empty | Add 2D collision helpers; hook into `FixedUpdate` |
 | `Audio` | Empty | Wrap `Silk.NET.OpenAL` or use Raylib audio (`Raylib.InitAudioDevice`) |
 
 Both are safe to ignore for prototyping with primitives; add them when you need real physics or sound.

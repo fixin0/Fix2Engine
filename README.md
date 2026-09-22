@@ -1,26 +1,20 @@
 
 # Fix2Engine
 
-Fix2Engine is a modular, code-first game engine built with C# and .NET, using Raylib through its C# bindings, Raylib-cs, for window management and 2D/3D rendering. It is designed to offer full control over engine logic while keeping core systems separate, lightweight, and easy to maintain.
-
----
-
-<img width="1276" height="752" alt="f2engine_2demo" src="https://github.com/user-attachments/assets/0d17fe5a-4ca3-4463-b47d-86e44669243b" />
-<img width="1277" height="752" alt="image" src="https://github.com/user-attachments/assets/be7ed4f1-0d1a-41a4-8aee-24af9cdc4f4f" />
-
+Fix2Engine is a modular, code-first game engine built with C# and .NET, using Raylib through its C# bindings, Raylib-cs, for window management and 2D rendering. It is designed to offer full control over engine logic while keeping core systems separate, lightweight, and easy to maintain.
 
 ## Architecture Overview
 
 The repository is organized into distinct class libraries to isolate responsibilities across the engine pipeline:
 
-* **Graphics:** Handles windowing, rendering, 3D model loading, 2D sprites, and skybox drawing. Uses Raylib (`Raylib-cs`) as its rendering backend to provide low-level operations without heavy abstractions.
-* **Components:** Implements a component-based scene and object structure (`IFixScene`, `Node2D`/`Node3D`, camera controls).
+* **Graphics:** Handles windowing, rendering, 2D sprites and drawing. Uses Raylib (`Raylib-cs`) as its rendering backend to provide low-level operations without heavy abstractions.
+* **Components:** Implements a component-based scene and object structure (`IFixScene`, `Node2D`).
 * **Input:** Cross-platform keyboard polling — Win32 backend on Windows, Raylib backend on Linux/macOS — plus optional TOML action maps.
 * **User:** Platform information helper.
 * **Monitoring:** Built-in `PerformanceMonitor` ImGui overlay (FPS, frame time, CPU/GPU).
 * **Audio:** Manages sound effects, music playback, and audio asset lifecycles.
 * **Physics:** Encapsulates collision detection, spatial checks, and physical movement logic.
-* **Game:** The entry point/sandbox project used to assemble scenes (`Debug2DPixelScene`, `Debug3DScene`), test features, and run game code.
+* **Fix2Console:** Creates standalone projects and configures their engine references and input maps.
 
 ---
 
@@ -43,10 +37,29 @@ Fix2Engine/
 ├── Monitoring/     # Performance monitor ImGui overlay
 ├── Physics/        # Collision and physics logic
 ├── User/           # Platform info helper
-└── Game/                      # Project runtime and test scenes
+└── Fix2Console/    # Project creation and configuration CLI
 ```
 
 Documentation: see [Documents/](Documents/README.md).
+
+## Build and create a project
+
+Build the engine libraries and CLI:
+
+```bash
+dotnet build Fix2Engine.sln -m:1
+```
+
+From the directory where you keep your projects, create a standalone application:
+
+```bash
+dotnet run --project /path/to/Fix2Engine/Fix2Console -- --new-project MyGame
+cd MyGame
+dotnet run
+```
+
+Replace `/path/to/Fix2Engine` with your engine checkout. See
+[Getting Started](Documents/GettingStarted.md) for project setup and scene creation.
 
 ## License and third-party software
 

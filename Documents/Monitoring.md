@@ -32,7 +32,7 @@ protected override void Render()
 ```
 
 - `PerformanceMonitor.Update(float dt)` — samples CPU/GPU usage and records the FPS / frame-time / CPU / GPU history arrays. Call once per frame.
-- `PerformanceMonitor.Draw(string? contextLine = null)` — renders the ImGui window. Must be called inside `rlImGui.Begin()` / `rlImGui.End()` (which `Windowing.Render()` already wraps, as does `Game.Render()`).
+- `PerformanceMonitor.Draw(string? contextLine = null)` — renders the ImGui window. Must be called inside `rlImGui.Begin()` / `rlImGui.End()` in your application's `Render()` override; `Windowing` does not initialize or wrap ImGui automatically.
 - `PerformanceMonitor.Visible { get; set; }` (default `true`) — toggles the overlay from script at runtime.
 
 ## What It Shows

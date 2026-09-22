@@ -4,7 +4,7 @@ This register records what can be established from the repository. An entry mark
 unverified is not a finding of infringement; it means permission cannot be
 established from the files available here.
 
-## README screenshots
+## Historical README screenshots
 
 On 2026-09-21, the maintainer confirmed: "İkisi de bana ait, izinsiz üçüncü taraf içerik yok"
 ("Both are mine; there is no unauthorized third-party content"). The entries below
@@ -13,8 +13,8 @@ are not represented as public-domain material.
 
 | Asset | Location | Provenance status | Required follow-up |
 | --- | --- | --- | --- |
-| 2D demo screenshot (`f2engine_2demo`) | README, GitHub attachment `0d17fe5a-4ca3-4463-b47d-86e44669243b` | Maintainer-confirmed authorship; no unauthorized third-party content (2026-09-21) | Retain this declaration; review provenance again if the image or its contents change |
-| Demo screenshot (`image`) | README, GitHub attachment `be7ed4f1-0d1a-41a4-8aee-24af9cdc4f4f` | Maintainer-confirmed authorship; no unauthorized third-party content (2026-09-21) | Review provenance again if replaced or modified |
+| 2D demo screenshot (`f2engine_2demo`) | Removed from current README; GitHub attachment `0d17fe5a-4ca3-4463-b47d-86e44669243b` | Maintainer-confirmed authorship; no unauthorized third-party content (2026-09-21) | Retain this declaration; review provenance again if the image or its contents change |
+| Demo screenshot (`image`) | Removed from current README; GitHub attachment `be7ed4f1-0d1a-41a4-8aee-24af9cdc4f4f` | Maintainer-confirmed authorship; no unauthorized third-party content (2026-09-21) | Review provenance again if replaced or modified |
 
 Source links:
 

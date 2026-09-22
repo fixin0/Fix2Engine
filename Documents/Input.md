@@ -116,7 +116,7 @@ The project must copy the map for both builds and publishing (Fix2Console sets t
 <None Update="InputMap.toml" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
 ```
 
-The demo uses actions for movement and debug controls. The built-in camera uses `MoveForward`, `MoveBackward`, `MoveLeft`, `MoveRight`, `MoveUp`, and `MoveDown` when defined, with its original key controls as fallback.
+Define action names for your application and keep its bindings in the project's `InputMap.toml`.
 
 ## Fix2Console project setup
 

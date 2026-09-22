@@ -114,8 +114,6 @@ public sealed class ProjectSettings
         MoveBackward = ["S", "Down"]
         MoveLeft = ["A", "Left"]
         MoveRight = ["D", "Right"]
-        MoveUp = ["Space"]
-        MoveDown = ["LeftControl"]
         Jump = ["Space"]
         Pause = ["Escape"]
         ToggleDebug = ["F1"]

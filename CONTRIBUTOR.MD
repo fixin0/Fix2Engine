@@ -5,7 +5,7 @@ examples, tests, and assets submitted to this repository.
 
 ## Development setup
 
-Install the .NET 10 SDK. The demo requires the native graphics/windowing support
+Install the .NET 10 SDK. Applications built with the engine require the native graphics/windowing support
 used by Raylib on your platform.
 
 From the repository root:
@@ -15,11 +15,11 @@ dotnet build Fix2Engine.sln -m:1
 dotnet build Tests/InputSystem/InputSystem.Tests.csproj -m:1
 dotnet run --project Tests/InputSystem/InputSystem.Tests.csproj --no-build
 python3 tools/check_licenses.py
-dotnet run --project Game/Game.csproj --no-build
 ```
 
-The input regression checks do not open a graphics window. Run the demo for changes
-to rendering, windowing, or device input; describe the platform and behavior tested.
+The input regression checks do not open a graphics window. For changes to rendering,
+windowing, or device input, create a project with `Fix2Console --new-project`, run
+the resulting application, and describe the platform and behavior tested.
 If Python 3 is not installed, install it before running the license inventory check.
 
 ## Making a contribution

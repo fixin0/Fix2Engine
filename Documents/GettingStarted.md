@@ -2,129 +2,83 @@
 
 ## 1. Prerequisites
 
-- Install [.NET 10 SDK](https://dotnet.microsoft.com/download)
-- Clone the repository and open `Fix2Engine.sln`
+- Install [.NET 10 SDK](https://dotnet.microsoft.com/download).
+- Clone the repository and open `Fix2Engine.sln`.
+- Install the native graphics/windowing support required by Raylib for your platform.
 
-## 2. Build
+## 2. Build the Engine
+
+From the engine checkout:
 
 ```bash
-dotnet build
-dotnet run --project Game
+dotnet build Fix2Engine.sln -m:1
 ```
 
-The `Game` project is the executable. All engine projects are class libraries referenced by `Game`.
+The solution contains the engine libraries and the `Fix2Console` command-line tool.
+Your executable lives in a separate project.
 
-## 3. Create a New Scene
+## 3. Create Your Project
 
-Every game screen implements `IFixScene` (see [Scene Management](SceneManagement.md)):
+From the directory where you keep your projects:
+
+```bash
+dotnet run --project /path/to/Fix2Engine/Fix2Console -- --new-project MyGame
+cd MyGame
+dotnet run
+```
+
+Replace `/path/to/Fix2Engine` with the engine checkout path. The generated project
+contains `Program.cs`, a `Game` class derived from `Windowing`, a scene,
+`InputMap.toml`, and `Fix2Engine.toml`. It references `Graphics`, `Components`,
+`Input`, `Physics`, and `Audio`, and sets up native ImGui and a simple 2D drawing.
+
+The generated `Game` class belongs to your application. Customize its `Start`,
+`Update`, and `Render` methods to wire up your scenes and systems. Its startup loads
+`InputMap.toml` from beside the executable before entering the loop.
+
+## 4. Add a Scene
+
+Every scene implements `IFixScene`:
 
 ```csharp
 using Fix2Engine.Components.Scene;
+using Raylib_cs;
 
 public class MyScene : IFixScene
 {
     public void Start() { }
     public void Update(float dt) { }
-    public void Render() { }
+    public void Render()
+    {
+        Raylib.ClearBackground(Color.Black);
+        Raylib.DrawRectangle(100, 100, 160, 160, Color.Red);
+    }
     public void RenderUI() { }
     public void Unload() { }
     public void Dispose() { }
 }
 ```
 
-Register it from the main menu or from `Game.Start()`:
+Select it in your application's `Start` method:
 
 ```csharp
-SceneManager.LoadScene<MyScene>();
-// or with an instance:
-SceneManager.LoadScene(new MyScene());
+Fix2Engine.Components.SceneManager.LoadScene<MyScene>();
 ```
 
-Scene switching is **deferred** — the actual switch happens at the start of the next `SceneManager.Update(dt)` call, so it is safe to call from inside `Update` or from a UI button.
+Scene switching is deferred until the next `SceneManager.Update(dt)`, so it can also
+be requested from gameplay logic or a UI button. See [Scene Management](SceneManagement.md).
 
-## 4. Wire Up the Game Class
+## 5. Configure an Existing Project
 
-`Game` inherits from `Windowing` (see [Windowing & Game Loop](WindowingAndGameLoop.md)):
-
-```csharp
-using Fix2Engine.Components.Scene;
-using Fix2Engine.Graphics;
-using Fix2Engine.Monitoring;
-using ImGuiNET;
-using Raylib_cs;
-using rlImGui_cs;
-
-namespace Fix2Engine
-{
-    public class Game : Windowing
-    {
-        public Game() : base(1280, 720, "My Game") { }
-
-        protected override void Start()
-        {
-            rlImGui.Setup(true);
-            ApplyImGuiTheme();
-            SceneManager.LoadScene<MainMenuScene>();
-        }
-
-        protected override void Update(float dt)
-        {
-            PerformanceMonitor.Update(dt);
-            SceneManager.Update(dt);
-        }
-
-        protected override void Render()
-        {
-            SceneManager.Render();
-            rlImGui.Begin();
-            SceneManager.RenderUI();
-            PerformanceMonitor.Draw();
-            rlImGui.End();
-            Raylib.DrawFPS(Width - 90, 10);
-        }
-
-        private static void ApplyImGuiTheme()
-        {
-            var style = ImGui.GetStyle();
-            style.WindowRounding = 12.0f;
-            // ... set colors ...
-        }
-    }
-}
-```
-
-UI uses native `ImGuiNET` inside `rlImGui.Begin()`/`End()` — no wrapper library. The FPS/CPU/GPU overlay is provided by `PerformanceMonitor` (`Fix2Engine.Monitoring`) — see [Monitoring](Monitoring.md).
-
-## 5. Entry Point
-
-`Game/Program.cs` loads `InputMap.toml` and starts the loop:
-
-```csharp
-internal static class Program
-{
-    static void Main(string[] args)
-    {
-        Fix2Engine.Input.InputManager.LoadInputMap();
-        using var game = new Game();
-        game.Run();
-    }
-}
-```
-
-Or scaffold a new project:
-
-```bash
-dotnet run --project Fix2Console -- --new-project MyGame
-cd MyGame && dotnet run
-```
-
-The generated project uses native ImGui and references `Graphics`, `Components`, `Input`, `Physics`, `Audio`.
-
-Existing projects can run `Fix2Console --init /path/to/Fix2Engine` to save the engine directory in `Fix2Engine.toml` and create `InputMap.toml`. See [Input](Input.md) for the action API and setup details.
+Inside an existing C# project, run the CLI with `--init /path/to/Fix2Engine` to save
+the engine directory, create an input map, and add its reference and copy rules.
+Call `Fix2Engine.Input.InputManager.LoadInputMap()` once at application startup.
+See [Input](Input.md) for configuration and action bindings.
 
 ## 6. Next Steps
 
-- Handle keyboard input → [Input](Input.md) (`InputManager.IsDown` / `IsPressed`)
-- Draw something → [Graphics](Graphics.md)
-- Control the camera → [Camera](Camera.md) (`Fix2Engine.Components.Cameras.Camera`)
-- Build a UI → native `ImGuiNET` inside `RenderUI`
+- [Windowing & Game Loop](WindowingAndGameLoop.md) — lifecycle and fixed updates
+- [Graphics](Graphics.md) — sprites and 2D drawing
+- [Components](Components.md) — `Node2D`
+- [UI](IMGUI.md) — native ImGui integration
+- [Monitoring](Monitoring.md) — optional performance overlay

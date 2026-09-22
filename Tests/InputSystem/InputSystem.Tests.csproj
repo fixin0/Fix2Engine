@@ -8,6 +8,6 @@
   <ItemGroup>
     <ProjectReference Include="../../Input/Input.csproj" />
     <ProjectReference Include="../../Fix2Console/Fix2Console.csproj" />
-    <None Include="../../Game/InputMap.toml" Link="InputMap.toml" CopyToOutputDirectory="PreserveNewest" />
+    <None Update="InputMap.toml" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 </Project>

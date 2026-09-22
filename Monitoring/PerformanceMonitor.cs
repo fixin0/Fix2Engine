@@ -105,6 +105,7 @@ public static class PerformanceMonitor
                 try
                 {
                     var cat = new PerformanceCounterCategory("GPU Engine");
+                    // Windows names the GPU graphics queue "3D" even for 2D rendering.
                     string? instance = cat.GetInstanceNames().FirstOrDefault(n => n.Contains("engtype_3D"));
                     if (instance != null)
                         _gpuCounter = new PerformanceCounter("GPU Engine", "Utilization Percentage", instance, true);

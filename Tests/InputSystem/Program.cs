@@ -69,8 +69,9 @@ try
     InputManager.LoadInputMap();
     Check(InputManager.HasAction("Jump"), "Default path must use executable directory regardless of working directory");
 
-    string engine = args.Length > 0 ? Path.GetFullPath(args[0], originalDirectory)
-        : Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../"));
+    string engine = Path.TrimEndingDirectorySeparator(args.Length > 0
+        ? Path.GetFullPath(args[0], originalDirectory)
+        : Path.GetFullPath(Path.Combine(AppContext.BaseDirectory, "../../../../../")));
     string project = Path.Combine(temp, "Example");
     Directory.CreateDirectory(project);
     string csproj = Path.Combine(project, "Example.csproj");

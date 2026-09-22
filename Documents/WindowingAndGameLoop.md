@@ -53,7 +53,7 @@ Inherit and override only what you need:
 ```csharp
 public class Game : Windowing
 {
-    public Game() : base(1280, 720, "Demo") { }
+    public Game() : base(1280, 720, "My Application") { }
 
     protected override void Init()
     {
@@ -64,7 +64,7 @@ public class Game : Windowing
     {
         rlImGui.Setup(true);
         ApplyImGuiTheme();
-        SceneManager.LoadScene<MainMenuScene>();
+        SceneManager.LoadScene<MyScene>();
     }
 
     protected override void Update(float dt)

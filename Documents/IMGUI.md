@@ -1,8 +1,8 @@
 # UI — Native ImGui
 
-> **Note:** `Fix2Engine.IMGUI` was removed. All UI now uses native `ImGuiNET` + `rlImGui-cs` directly (see `Game.cs:ApplyImGuiTheme()` for the theme setup). This document shows the current native patterns.
+> **Note:** `Fix2Engine.IMGUI` was removed. All UI now uses native `ImGuiNET` + `rlImGui-cs` directly. This document shows the current native patterns.
 
-All UI must be drawn between `rlImGui.Begin()` and `rlImGui.End()` (done in `Game.Render()` which calls `SceneManager.RenderUI()` inside that block).
+All UI must be drawn between `rlImGui.Begin()` and `rlImGui.End()` (wrap `SceneManager.RenderUI()` in this block inside your application's `Render()` override).
 
 ## Setup
 
@@ -10,10 +10,12 @@ Call once in `Game.Start()`:
 
 ```csharp
 rlImGui.Setup(true);
-ApplyImGuiTheme(); // private static method in Game.cs that sets ImGui.GetStyle() — see Game.cs
+var style = ImGui.GetStyle();
+style.WindowRounding = 12.0f;
+style.FrameRounding = 8.0f;
 ```
 
-`ApplyImGuiTheme()` configures rounding, spacing, and `ImGuiCol` colors (WindowBg, Border, Button, FrameBg, etc.) — previously in `Fix2Engine.IMGUI.Theme`.
+Configure rounding, spacing, and `ImGuiCol` colors through `ImGui.GetStyle()`.
 
 ## Native Patterns
 
@@ -35,7 +37,7 @@ if (ImGui.Begin("MainMenu", ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoM
     ImGui.Separator();
 
     if (ImGui.Button("Play", new Vector2(280, 48)))
-        SceneManager.LoadScene<Debug3DScene>();
+        SceneManager.LoadScene<MyScene>(); // your application's scene
 
     // danger button
     ImGui.PushStyleColor(ImGuiCol.Button, new Vector4(0.45f, 0.15f, 0.18f, 0.80f));
@@ -95,4 +97,4 @@ ImGui.Separator();
 ImGui.SliderFloat("Speed", ref speed, 0, 10);
 ```
 
-This works because `RenderUI` is already inside `rlImGui.Begin()`/`End()`.
+Call `RenderUI` inside `rlImGui.Begin()`/`End()` as shown above.
