@@ -1,39 +1,57 @@
 # Graphics
 
-Sources: `Graphics/Windowing.cs`, `Graphics/Sprite2D.cs` — namespace `Fix2Engine.Graphics`
+`Graphics` uses `Raylib-cs 8.0.0` for windowing and drawing and `rlImgui-cs 3.2.0`
+for UI integration. `Components` builds scene entities on this rendering layer.
 
-## Dependencies
+## Scene Objects
 
-The graphics project uses `Raylib-cs 8.0.0` for windowing and 2D drawing and `rlImgui-cs 3.2.0` for UI integration. Drawing takes place inside the `Windowing.Render()` frame.
+Use `SpriteObject2D` for a static image and `AnimatedSprite2D` for sprite-sheet
+animation. Both derive from `Object2D` and can be subclassed, parented and owned by
+a scene. See [Objects](Components.md) and [Animation](Animation.md).
 
-## Sprite2D
-
-`Sprite2D` draws a textured rectangle and implements `IDisposable`.
-
-```csharp
-using System.Numerics;
-using Fix2Engine.Graphics;
-
-using var player = new Sprite2D("assets/sprites/player.png");
-player.Position = new Vector2(100, 100);
-player.Scale = new Vector2(2, 2);
-player.CenterOrigin();
-player.Draw();
-```
-
-`Position`, `Scale`, `Origin`, `Rotation`, `Tint`, and `SourceRect` control how the sprite is drawn. Dispose a file-backed sprite when its scene exits to release its texture.
-
-## 2D Primitives
-
-Raylib shapes work directly inside a scene's `Render()` method:
+Object `OnRender()` hooks draw in local coordinates. The engine applies the full
+parent transform around the hook, including rotation, scale and translation.
+For a custom shape object:
 
 ```csharp
-using static Raylib_cs.Raylib;
-
-ClearBackground(new Color(40, 44, 52, 255));
-DrawRectangle(100, 100, 160, 160, Color.Red);
-DrawRectangleLines(100, 100, 160, 160, Color.White);
-DrawCircle(400, 180, 40, Color.Blue);
+public class Marker : Fix2Engine.Components.Object2D
+{
+    protected override void OnRender()
+    {
+        Raylib_cs.Raylib.DrawRectangle(0, 0, 32, 32, Raylib_cs.Color.Red);
+    }
+}
 ```
 
-Use these drawing calls in your application's scene; see [Getting Started](GettingStarted.md).
+Set `Position` on the marker and add it to a `FixScene`. Use `OnRenderUI` for screen
+coordinates and ImGui controls.
+
+## Low-Level Sprite Resource
+
+`Fix2Engine.Graphics.Sprite2D` owns or borrows a texture and supports direct drawing.
+It is a graphics resource rather than a scene entity.
+
+```csharp
+// After a graphics window has been created:
+using var resource = new Fix2Engine.Graphics.Sprite2D("assets/player.png");
+resource.Position = new System.Numerics.Vector2(100, 100);
+resource.Scale = new System.Numerics.Vector2(2, 2);
+resource.CenterOrigin();
+// Inside a drawing frame:
+resource.Draw();
+```
+
+`SourceRect`, `Origin`, `Position`, `Scale`, `Rotation` and `Tint` control direct
+rendering. Origin is measured in source pixels and is scaled with the sprite.
+Negative direct-draw scales flip the texture while keeping its destination size
+positive.
+
+File-backed resources own their textures. Existing `Texture2D` handles are borrowed
+by default: `new Sprite2D(texture, ownsTexture: true)` explicitly transfers ownership.
+A resource can be shared with objects using `obj.SetSprite(resource)`; it must outlive
+those objects. An object's `TexturePath` instead creates and owns its own resource,
+loads it only on first render, and releases it on replacement or destruction.
+
+Dispose owned textures on the application thread before closing the window.
+There is no graphics finalizer: native cleanup must not run on a GC thread.
+`Windowing.OnUnload` provides the shutdown hook for this purpose.

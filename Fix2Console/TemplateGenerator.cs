@@ -115,6 +115,10 @@ public static class TemplateGenerator
                 + "    {\n"
                 + "        SceneManager.Update(dt);\n"
                 + "    }\n\n"
+                + "    protected override void FixedUpdate(float dt)\n"
+                + "    {\n"
+                + "        SceneManager.FixedUpdate(dt);\n"
+                + "    }\n\n"
                 + "    protected override void Render()\n"
                 + "    {\n"
                 + "        SceneManager.Render();\n"
@@ -123,10 +127,10 @@ public static class TemplateGenerator
                 + "        rlImGui.End();\n"
                 + "        Raylib.DrawFPS(Width - 90, 10);\n"
                 + "    }\n\n"
-                + "    protected void OnUnload()\n"
+                + "    protected override void OnUnload()\n"
                 + "    {\n"
-                + "        SceneManager.Unload();\n"
-                + "        rlImGui.Shutdown();\n"
+                + "        try { SceneManager.Unload(); }\n"
+                + "        finally { rlImGui.Shutdown(); }\n"
                 + "    }\n\n"
                 + "    private static void ApplyImGuiTheme()\n"
                 + "    {\n"
@@ -154,52 +158,26 @@ public static class TemplateGenerator
 
     public static string GenerateScene(string projectName)
     {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(projectName)) throw new ArgumentException("Project name is empty", nameof(projectName));
+        ArgumentException.ThrowIfNullOrWhiteSpace(projectName);
+        return $$"""
+            using Fix2Engine.Components;
+            using Fix2Engine.Components.Scene;
+            using Raylib_cs;
 
-            return "using System.Numerics;\n"
-                + "using Raylib_cs;\n"
-                + "using ImGuiNET;\n"
-                + "using Fix2Engine.Components.Scene;\n"
-                + "using Fix2Engine.Graphics;\n"
-                + "using static Raylib_cs.Raylib;\n\n"
-                + $"namespace {projectName};\n\n"
-                + $"public class {projectName}Scene : IFixScene\n"
-                + "{\n"
-                + "    public void Start()\n"
-                + "    {\n"
-                + "    }\n\n"
-                + "    public void Update(float dt)\n"
-                + "    {\n"
-                + "    }\n\n"
-                + "    public void Render()\n"
-                + "    {\n"
-                + "        ClearBackground(new Color(15, 15, 20, 255));\n"
-                + "        DrawRectangle(100, 100, 160, 160, Color.Red);\n"
-                + "        DrawRectangleLines(100, 100, 160, 160, Color.White);\n"
-                + "    }\n\n"
-                + "    public void RenderUI()\n"
-                + "    {\n"
-                + "        var viewport = ImGui.GetMainViewport();\n"
-                + "        ImGui.SetNextWindowPos(viewport.GetCenter(), ImGuiCond.Always, new Vector2(0.5f, 0.5f));\n"
-                + "        ImGui.SetNextWindowSize(new Vector2(360, 200), ImGuiCond.Always);\n"
-                + "        if (ImGui.Begin(\"" + projectName + "\", ImGuiWindowFlags.NoDecoration | ImGuiWindowFlags.NoMove | ImGuiWindowFlags.NoResize | ImGuiWindowFlags.NoSavedSettings))\n"
-                + "        {\n"
-                + "            ImGui.Text(\"" + projectName + "\");\n"
-                + "            ImGui.Separator();\n"
-                + "            ImGui.Text(\"Welcome to " + projectName + "!\");\n"
-                + "            ImGui.Text($\"FPS: {GetFPS()}\");\n"
-                + "            ImGui.End();\n"
-                + "        }\n"
-                + "    }\n\n"
-                + "    public void Unload() { }\n"
-                + "    public void Dispose() { }\n"
-                + "}\n";
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to generate Scene for '{projectName}': {ex.Message}", ex);
-        }
+            namespace {{projectName}};
+
+            public class {{projectName}}Scene : FixScene
+            {
+                protected override void OnStart()
+                {
+                    // Add your Object2D subclasses here: Add(new Player());
+                }
+
+                protected override void OnRender()
+                {
+                    Raylib.ClearBackground(new Color(15, 15, 20, 255));
+                }
+            }
+            """ + "\n";
     }
 }

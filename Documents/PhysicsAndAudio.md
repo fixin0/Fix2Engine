@@ -39,7 +39,9 @@ protected override void FixedUpdate(float fixedDt)
 }
 ```
 
-Consider adding a `FixedUpdate` method to `IFixScene`; `Windowing` already provides the accumulator loop for it.
+`IFixScene` provides `FixedUpdate`, and `FixScene` automatically forwards it to
+objects. Override `Object2D.OnFixedUpdate` for object physics and route
+`Windowing.FixedUpdate` to `SceneManager.FixedUpdate`.
 
 Raylib's built-in `CheckCollision*` helpers cover basic 2D collision checks.
 
