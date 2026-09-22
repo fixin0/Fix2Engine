@@ -8,7 +8,7 @@ Fix2Engine is a modular, code-first game engine built with C# and .NET, using Ra
 The repository is organized into distinct class libraries to isolate responsibilities across the engine pipeline:
 
 * **Graphics:** Handles windowing, rendering, 2D sprites and drawing. Uses Raylib (`Raylib-cs`) as its rendering backend to provide low-level operations without heavy abstractions.
-* **Components:** Implements a component-based scene and object structure (`IFixScene`, `Node2D`).
+* **Components:** Provides inheritable `Object2D` entities, static and animated sprites, and `FixScene` ownership and lifecycle management.
 * **Input:** Cross-platform keyboard polling — Win32 backend on Windows, Raylib backend on Linux/macOS — plus optional TOML action maps.
 * **User:** Platform information helper.
 * **Monitoring:** Built-in `PerformanceMonitor` ImGui overlay (FPS, frame time, CPU/GPU).
@@ -40,7 +40,7 @@ Fix2Engine/
 └── Fix2Console/    # Project creation and configuration CLI
 ```
 
-Documentation: see [Documents/](Documents/README.md).
+Documentation: see [Documents/](Documents/README.md), [2D objects](Documents/Components.md), and [sprite animation](Documents/Animation.md).
 
 ## Build and create a project
 

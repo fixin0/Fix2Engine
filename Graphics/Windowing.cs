@@ -1,112 +1,75 @@
 using Fix2Engine.Input;
-using System;
-using System.Numerics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
 
-namespace Fix2Engine.Graphics
+namespace Fix2Engine.Graphics;
+
+public class Windowing : IDisposable
 {
-    public class Windowing : IDisposable
+    public int Width { get; set; }
+    public int Height { get; set; }
+    public string Title { get; set; }
+    private const float FixedDeltaTime = 1f / 60f;
+    private float _accumulator;
+    private bool _started;
+    private bool _disposed;
+
+    public Windowing(int width, int height, string title)
     {
-        public int Width { get; set; }
-        public int Height { get; set; }
-        public string Title { get; set; }
-        
-        private const float FixedDeltaTime = 1.0f / 60.0f; // ~0.01666s
-        private float _accumulator = 0.0f;
+        Width = width;
+        Height = height;
+        Title = title;
+        Init();
+        InitWindow(Width, Height, Title);
+        SetTargetFPS(240);
+    }
 
-        public Windowing(int width, int height, string title)
-        {
-            Width = width;
-            Height = height;
-            Title = title;
-            
-            Init();
-            InitWindow(Width, Height, Title);
-            SetTargetFPS(240);
-        }
+    protected virtual void Init() { }
+    protected virtual void Start() { }
+    protected virtual void Update(float dt) { }
+    protected virtual void FixedUpdate(float dt) { }
+    protected virtual void Render() => ClearBackground(Color.Black);
+    /// <summary>Release scene and graphics resources here, before the window closes.</summary>
+    protected virtual void OnUnload() { }
 
-        /// <summary>
-        /// Called before the window is created. Perform initial configuration here.
-        /// </summary>
-        protected virtual void Init()
-        {
-           
-        }
-
-        /// <summary>
-        /// Called once after the window is opened, before the game loop starts.
-        /// </summary>
-        protected virtual void Start()
-        {
-            
-        }
-
-        /// <summary>
-        /// Runs synchronized with the frame rate (FPS). Called once per frame.
-        /// </summary>
-        /// <param name="dt">Elapsed time since last frame (Delta Time)</param>
-        protected virtual void Update(float dt)
-        {
-            
-        }
-
-        /// <summary>
-        /// Runs at fixed time intervals, independent of frame rate.
-        /// Ideal for physics and collision calculations.
-        /// </summary>
-        /// <param name="fixedDt">Fixed time step (default 1/60 sec)</param>
-        protected virtual void FixedUpdate(float fixedDt)
-        {
-            
-        }
-
-        /// <summary>
-        /// Handles rendering. Called every frame.
-        /// </summary>
-        protected virtual void Render()
-        {
-            ClearBackground(Color.Black);
-
-            // Example default drawing
-            
-        }
-
-        /// <summary>
-        /// Starts the main lifecycle and runs the loop until the window is closed.
-        /// </summary>
-        public void Run()
+    public void Run()
+    {
+        ObjectDisposedException.ThrowIf(_disposed, this);
+        if (_started) throw new InvalidOperationException("Run can only be called once.");
+        _started = true;
+        try
         {
             Start();
-
-            while (!WindowShouldClose())
+            while (!_disposed && !WindowShouldClose())
             {
                 float dt = GetFrameTime();
-
-             
-                _accumulator += dt;
-                while (_accumulator >= FixedDeltaTime)
+                InputManager.Update();
+                Update(dt);
+                if (_disposed) break;
+                _accumulator += MathF.Min(dt, 0.25f);
+                while (_accumulator >= FixedDeltaTime && !_disposed)
                 {
                     FixedUpdate(FixedDeltaTime);
                     _accumulator -= FixedDeltaTime;
                 }
-
-                
-                Fix2Engine.Input.InputManager.Update();
-                Update(dt);
-
-              
+                if (_disposed) break;
                 BeginDrawing();
-                Render();
-                EndDrawing();
+                try { Render(); }
+                finally { EndDrawing(); }
             }
-
-            Dispose();
         }
+        finally { Dispose(); }
+    }
 
-        public void Dispose()
+    public void Dispose()
+    {
+        if (_disposed) return;
+        _disposed = true;
+        try { if (_started) OnUnload(); }
+        finally
         {
             CloseWindow();
+            GC.SuppressFinalize(this);
         }
     }
 }

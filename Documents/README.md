@@ -9,7 +9,7 @@ Fix2Engine is split into focused class-library projects and the `Fix2Console` pr
 | Project | Purpose | Key Dependencies |
 |---------|---------|-----------------|
 | `Graphics` | Window, 2D rendering and sprites | `Raylib-cs 8.0`, `rlImGui-cs 3.2` |
-| `Components` | 2D scene graph (`Node2D`) and scene interface | `Raylib-cs 8.0` |
+| `Components` | Inheritable `Object2D`, sprites, animation and `FixScene` | `Raylib-cs 8.0` |
 | `Input` | Keyboard polling (`Windows`/`Raylib` backends) + TOML config | `Tomlyn 2.10`, `Raylib-cs 8.0` |
 | `Physics` | `PhysicsWorld` placeholder for collision / physics | — |
 | `Audio` | `SoundManager` placeholder for OpenAL audio | `Silk.NET.OpenAL 2.23` |
@@ -23,13 +23,14 @@ All projects target **`net10.0`** with `ImplicitUsings` and `Nullable` enabled. 
 1. [Getting Started](GettingStarted.md) — create your first window and scene
 2. [Windowing & Game Loop](WindowingAndGameLoop.md) — lifecycle, `FixedUpdate`
 3. [Input](Input.md) — polling keys, TOML action maps, cross-platform backends
-4. [Graphics](Graphics.md) — `Sprite2D` and 2D primitives
-5. [Scene Management](SceneManagement.md) — `IFixScene`, `SceneManager`
+4. [Graphics](Graphics.md) — Sprite resources and object rendering
+5. [Scene Management](SceneManagement.md) — `FixScene`, `SceneManager`
 6. [IMGUI / UI](IMGUI.md) — native ImGui usage (legacy doc)
-7. [Components](Components.md) — `Node2D`
+7. [Components](Components.md) — `Object2D`, `SpriteObject2D`, hierarchy and lifecycle
 8. [Physics & Audio](PhysicsAndAudio.md) — `PhysicsWorld` / `SoundManager` stubs and how to extend
 9. [Monitoring](Monitoring.md) — `PerformanceMonitor` overlay (FPS/CPU/GPU)
 10. [Project Structure](ProjectStructure.md) — solution layout, build, conventions
+11. [2D Animation](Animation.md) — sprite-sheet clips and `AnimatedSprite2D`
 
 ## Create an Application
 

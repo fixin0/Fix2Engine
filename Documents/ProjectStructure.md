@@ -32,6 +32,7 @@ Fix2Engine/
 │   ├── SceneManagement.md
 │   ├── IMGUI.md                (legacy — now native ImGui, see below)
 │   ├── Components.md
+│   ├── Animation.md
 │   ├── PhysicsAndAudio.md
 │   ├── Monitoring.md
 │   └── ProjectStructure.md
@@ -42,8 +43,15 @@ Fix2Engine/
 ├── Components/
 │   ├── Components.csproj
 │   ├── Scene/IFixScene.cs
+│   ├── Scene/FixScene.cs
 │   ├── Scene/SceneLoader.cs   (SceneManager)
-│   └── Node2D.cs
+│   ├── Object2D.cs
+│   ├── SpriteObject2D.cs
+│   ├── AnimatedSprite2D.cs
+│   ├── Animation/
+│   │   ├── SpriteAnimation.cs
+│   │   └── AnimationPlayer.cs
+│   └── Node2D.cs               (legacy sprite-object name)
 ├── Input/
 │   ├── Input.csproj
 │   ├── InputBackend/Input.cs           (class InputManager, namespace Fix2Engine.Input, platform dispatch)
@@ -71,10 +79,9 @@ Fix2Engine/
 │   ├── TemplateGenerator.cs
 │   ├── EngineRootFinder.cs
 │   └── ProjectValidator.cs
-└── Tests/InputSystem/
-    ├── InputSystem.Tests.csproj
-    ├── InputMap.toml           (independent test fixture)
-    └── Program.cs
+└── Tests/
+    ├── InputSystem/            (input maps and project initialization)
+    └── Objects2D/              (objects, animation and optional native drawing checks)
 ```
 
 ## Project References
@@ -111,8 +118,8 @@ dotnet run --project Tests/InputSystem/InputSystem.Tests.csproj
 
 - **Namespaces:** `Fix2Engine.*` consistently. `InputManager` in `Fix2Engine.Input`, `WindowsInputBackend` in `Fix2Engine.Input.InputBackend`.
 - **Files:** `PascalCase.cs` without underscores (`WindowsInputBackend.cs` not `InputBackend_Windows.cs`).
-- **Scene graph:** `Node2D` is the base scene-graph node.
-- **Scenes:** implement `IFixScene` + `IDisposable`; register via `SceneManager.LoadScene<T>()`.
+- **Scene graph:** `Object2D` is the base class for scene entities; `SpriteObject2D` and `AnimatedSprite2D` add rendering.
+- **Scenes:** inherit `FixScene` for automatic object ownership, or implement `IFixScene` for a custom lifecycle; register via `SceneManager.LoadScene<T>()`.
 - **UI:** native `ImGuiNET` inside `rlImGui.Begin()`/`End()` — wrap `SceneManager.RenderUI()` in this block in your application's `Render()` override. No wrapper library.
 - **Input:** poll via `InputManager.IsDown/IsPressed/IsReleased(Keys.X)` (or `Fix2Engine.Input.InputManager`) inside `Update`; do not call `InputManager.Update()` yourself (handled by `Windowing`). Backend is auto-selected by OS — Win32 on Windows, Raylib on Linux/macOS.
 - **Performance:** `PerformanceMonitor` (`Fix2Engine.Monitoring`) draws the ImGui overlay (FPS, frame time, CPU/GPU graphs). Call `PerformanceMonitor.Update(dt)` in `Update` and `PerformanceMonitor.Draw()` (optionally with a context line) inside `rlImGui.Begin()`/`End()`.

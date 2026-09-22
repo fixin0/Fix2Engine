@@ -1,98 +1,62 @@
 # Scene Management
 
-Sources:
-- `Components/Scene/IFixScene.cs` — namespace `Fix2Engine.Components.Scene`
-- `Components/Scene/SceneLoader.cs` — namespace `Fix2Engine.Components` (class `SceneManager`)
+`FixScene` (`Fix2Engine.Components.Scene`) owns a collection of root `Object2D`
+instances. It is a separate container, not an object subclass. `SceneManager`
+(`Fix2Engine.Components`) switches between scenes and routes lifecycle calls.
 
-## IFixScene
-
-```csharp
-public interface IFixScene : IDisposable
-{
-    void Start();
-    void Update(float dt);
-    void Render();
-    void RenderUI();
-    void Unload();
-}
-```
-
-All scenes must implement these five methods plus `Dispose()` (from `IDisposable`).
-
-| Method | When | Typical Work |
-|--------|------|--------------|
-| `Start()` | Once, when scene becomes current | Spawn objects, load textures |
-| `Update(float dt)` | Every frame (`dt` = frame time) | Input, gameplay, AI, physics |
-| `Render()` | Every frame, inside `BeginDrawing`/`EndDrawing` | 2D drawing |
-| `RenderUI()` | Every frame, inside `rlImGui.Begin`/`End` | ImGui panels, HUD, menus |
-| `Unload()` | Rarely used (use `Dispose` instead) | Custom cleanup if needed |
-| `Dispose()` | On scene switch and on app exit | Unload textures and other assets |
-
-Minimal scene:
+## Define a Scene
 
 ```csharp
+using System.Numerics;
+using Fix2Engine.Components;
 using Fix2Engine.Components.Scene;
 using Raylib_cs;
-using static Raylib_cs.Raylib;
 
-public class MyScene : IFixScene
+public class MyScene : FixScene
 {
-    public void Start() { }
-    public void Update(float dt) { }
-
-    public void Render()
+    protected override void OnStart()
     {
-        ClearBackground(new Color(30, 30, 40, 255));
-        DrawRectangle(100, 100, 160, 160, Color.Red);
+        Add(new SpriteObject2D("Decoration")
+        {
+            Position = new Vector2(100, 100),
+            TexturePath = "assets/decoration.png"
+        });
+        // Add(new Player()); // your Object2D subclass
     }
 
-    public void RenderUI() { }
-    public void Unload() { }
-    public void Dispose() { }
+    protected override void OnRender()
+    {
+        Raylib.ClearBackground(Color.Black);
+    }
 }
 ```
 
-## SceneManager
+Scene hooks are `OnStart`, `OnUpdate`, `OnFixedUpdate`, `OnRender`, `OnRenderUI`, and
+`OnUnload`. Start runs once. Update/render hooks run before automatic object
+traversal; use `OnRender` for the background. `OnUnload` runs after object cleanup.
+Calling `Dispose` or `Unload` releases the entire owned hierarchy once, even if
+individual cleanup hooks throw; errors are then reported together.
+
+`Add(obj)` returns the typed object. `Objects` is a read-only root collection.
+`Remove(obj)` detaches a root without destroying it; use `obj.Destroy()` to remove
+and dispose it. Reparenting transfers ownership. See [Objects](Components.md).
+
+## Switch Scenes
 
 ```csharp
-public static class SceneManager
-{
-    public static IFixScene? CurrentScene { get; }
-    public static void LoadScene<T>() where T : IFixScene, new();
-    public static void LoadScene(IFixScene scene);
-    public static void Update(float dt);
-    public static void Render();
-    public static void RenderUI();
-    public static void Unload();
-}
+SceneManager.LoadScene<MyScene>();
+// Or transfer ownership of an existing scene:
+SceneManager.LoadScene(new MyScene());
 ```
 
-### Switching Scenes
+Switching is deferred until the next `SceneManager.Update(dt)`. The old scene is
+disposed before the new scene starts. Requests made during the new scene's
+`OnStart` remain pending for the following update. Replaced pending scenes are
+disposed too. `SceneManager.Unload()` cleans up both current and pending scenes.
 
-```csharp
-SceneManager.LoadScene<MyScene>();       // generic — creates via new()
-SceneManager.LoadScene(new MyScene());   // instance
-```
+## Connect to Your Application
 
-Switching is **deferred**: `LoadScene` only sets `_nextScene`. At the start of the next `SceneManager.Update(dt)`:
-
-```
-if (_nextScene != null)
-{
-    CurrentScene?.Dispose();
-    CurrentScene = _nextScene;
-    CurrentScene.Start();
-    _nextScene = null;
-}
-CurrentScene?.Update(dt);
-```
-
-This makes it safe to call `LoadScene` from inside `Update`, from a button callback, or from `RenderUI`.
-
-### Wiring in Game
-
-Your application's `Windowing` subclass delegates to `SceneManager`. The following
-example also uses the optional `Monitoring` project:
+In your `Windowing` subclass:
 
 ```csharp
 protected override void Start()
@@ -101,23 +65,44 @@ protected override void Start()
     SceneManager.LoadScene<MyScene>();
 }
 
-protected override void Update(float dt)
-{
-    PerformanceMonitor.Update(dt);
-    SceneManager.Update(dt);
-}
+protected override void Update(float dt) => SceneManager.Update(dt);
+protected override void FixedUpdate(float dt) => SceneManager.FixedUpdate(dt);
 
 protected override void Render()
 {
-    SceneManager.Render();       // 2D scene
-
+    SceneManager.Render();
     rlImGui.Begin();
-    SceneManager.RenderUI();     // ImGui (native ImGuiNET)
-    PerformanceMonitor.Draw();
+    SceneManager.RenderUI();
     rlImGui.End();
+}
 
-    Raylib.DrawFPS(Width - 90, 10);
+protected override void OnUnload()
+{
+    try { SceneManager.Unload(); }
+    finally { rlImGui.Shutdown(); }
 }
 ```
 
-Create scene classes in your own application project.
+`Windowing.OnUnload` runs before the graphics context closes. This is where scene
+textures and ImGui must be released. The CLI-generated application wires up these
+calls. Objects are updated once by the scene; do not manually traverse them again.
+
+## Manual Scene Implementations
+
+Existing code can still implement `IFixScene` directly:
+
+```csharp
+public interface IFixScene : IDisposable
+{
+    void Start();
+    void Update(float dt);
+    void FixedUpdate(float dt) { }
+    void Render();
+    void RenderUI();
+    void Unload();
+}
+```
+
+The default fixed-update implementation is empty for compatibility. Direct
+implementations own their own lifecycle and resources. Inherit `FixScene` to get
+automatic object ownership, traversal and cleanup.

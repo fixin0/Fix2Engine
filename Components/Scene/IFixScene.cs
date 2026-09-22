@@ -4,6 +4,7 @@ public interface IFixScene : IDisposable
 {
     void Start();
     void Update(float dt);
+    void FixedUpdate(float dt) { }
     void Render();
     void RenderUI();
     void Unload();

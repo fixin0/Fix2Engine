@@ -1,100 +1,70 @@
 # Windowing & Game Loop
 
-Source: `Graphics/Windowing.cs` — namespace `Fix2Engine.Graphics`
+Source: `Graphics/Windowing.cs` — namespace `Fix2Engine.Graphics`.
 
-## Class
+Inherit `Windowing` in your application's entry class. The constructor calls `Init`
+before creating the Raylib window. `Run` starts the application once and guarantees
+cleanup if startup, updates or rendering throw.
+
+## Frame Order
+
+```text
+constructor → Init → InitWindow
+Run → Start
+    each frame:
+        InputManager.Update
+        Update(dt)                 # applies pending scene switches
+        FixedUpdate(1/60)           # zero or more steps
+        BeginDrawing
+            Render
+        EndDrawing
+    Dispose → OnUnload → CloseWindow
+```
+
+Fixed updates accumulate frame time at 60 Hz. Catch-up is capped at 0.25 seconds per
+frame to keep long stalls from causing an unbounded loop. Input is polled before
+updates; do not poll it again in your scene. Use key press/release actions in
+`OnUpdate` so a pressed key is handled once per frame, not once per fixed step.
+
+## Scene Integration
 
 ```csharp
-public class Windowing : IDisposable
-{
-    public int Width { get; set; }
-    public int Height { get; set; }
-    public string Title { get; set; }
-
-    public Windowing(int width, int height, string title);
-    protected virtual void Init();
-    protected virtual void Start();
-    protected virtual void Update(float dt);
-    protected virtual void FixedUpdate(float fixedDt);
-    protected virtual void Render();
-    public void Run();
-    public void Dispose();
-}
-```
-
-## Lifecycle
-
-```
-ctor(width, height, title)
-  → Init()                      // before InitWindow — override for Raylib config
-  → InitWindow(width,height,title)
-  → SetTargetFPS(240)
-
-Run()
-  → Start()                     // once, after window is open
-  → loop while (!WindowShouldClose())
-      dt = GetFrameTime()
-      accumulator += dt
-      while (accumulator >= 1/60)
-          FixedUpdate(1/60)     // deterministic 60 Hz
-          accumulator -= 1/60
-      Fix2Engine.Input.InputManager.Update() // polls all keys via OS-appropriate backend
-      Update(dt)                // per-frame logic
-      BeginDrawing()
-        Render()               // your drawing (ClearBackground etc.)
-      EndDrawing()
-  → Dispose() → CloseWindow()
-```
-
-## Overriding
-
-Inherit and override only what you need:
-
-```csharp
-public class Game : Windowing
+public class Game : Fix2Engine.Graphics.Windowing
 {
     public Game() : base(1280, 720, "My Application") { }
-
-    protected override void Init()
-    {
-        // e.g. SetConfigFlags(ConfigFlags.Msaa4xHint);
-    }
 
     protected override void Start()
     {
         rlImGui.Setup(true);
-        ApplyImGuiTheme();
         SceneManager.LoadScene<MyScene>();
     }
 
-    protected override void Update(float dt)
-    {
-        PerformanceMonitor.Update(dt);
-        SceneManager.Update(dt);
-    }
-
-    protected override void FixedUpdate(float fixedDt)
-    {
-        // physics / collision here — runs at fixed 60 Hz
-    }
+    protected override void Update(float dt) => SceneManager.Update(dt);
+    protected override void FixedUpdate(float dt) => SceneManager.FixedUpdate(dt);
 
     protected override void Render()
     {
-        Raylib.ClearBackground(new Color(15, 15, 20, 255));
         SceneManager.Render();
         rlImGui.Begin();
         SceneManager.RenderUI();
-        PerformanceMonitor.Draw($"Resolution: {Width}x{Height}   Scene: {SceneManager.CurrentScene?.GetType().Name}");
         rlImGui.End();
+    }
+
+    protected override void OnUnload()
+    {
+        try { SceneManager.Unload(); }
+        finally { rlImGui.Shutdown(); }
     }
 }
 ```
 
-`ApplyImGuiTheme()` sets `ImGui.GetStyle()` colors/rounding natively (no `Fix2Engine.IMGUI` wrapper). `PerformanceMonitor` (namespace `Fix2Engine.Monitoring`) owns the performance overlay — see `Monitoring.md`.
+Use namespaces `Fix2Engine.Components` and `rlImGui_cs` for this example. Define
+`MyScene` in your application. `Fix2Console` generates this lifecycle wiring.
 
-## Notes
+`Dispose` is idempotent. `OnUnload` runs once after startup, while the graphics
+context is still alive; release scenes, textures and UI resources there. The window
+also closes if `OnUnload` throws.
 
-- `FixedUpdate` is ideal for physics. Use `Update` for input and gameplay.
-- `Fix2Engine.Input.InputManager.Update()` is called automatically before `Update` — do not call it yourself.
-- `Width`/`Height`/`Title` are mutable but changing them does not resize the window; use Raylib `SetWindowSize` / `SetWindowTitle` if needed.
-- `Run()` blocks until the window closes. Call it once from `Program.Main`.
+`Width`, `Height` and `Title` store application values. Use Raylib's `SetWindowSize`
+and `SetWindowTitle` to change the actual window. `Run` can be called only once.
+See [Monitoring](Monitoring.md) to add the optional performance overlay.
