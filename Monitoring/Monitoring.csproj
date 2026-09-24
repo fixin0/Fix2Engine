@@ -16,8 +16,4 @@
     <PackageReference Include="System.Diagnostics.PerformanceCounter" Version="8.0.0" />
   </ItemGroup>
 
-  <ItemGroup>
-    <PackageReference Include="rlImgui-cs" Version="3.2.0" />
-  </ItemGroup>
-
 </Project>

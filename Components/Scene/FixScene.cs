@@ -1,3 +1,5 @@
+using Fix2Engine.Graphics;
+
 namespace Fix2Engine.Components.Scene;
 
 /// <summary>A scene owns objects but is not itself an Object2D.</summary>
@@ -54,7 +56,7 @@ public abstract class FixScene : IFixScene
         Run(Object2D.Phase.FixedUpdate, () => OnFixedUpdate(dt), dt);
     }
 
-    public void Render() => Run(Object2D.Phase.Render, OnRender);
+    public void Render() => Run(Object2D.Phase.Render, () => OnRender(RenderContext.Current));
     public void RenderUI() => Run(Object2D.Phase.RenderUI, OnRenderUI);
 
     private void Run(Object2D.Phase phase, Action hook, float dt = 0)
@@ -71,6 +73,7 @@ public abstract class FixScene : IFixScene
     protected virtual void OnUpdate(float dt) { }
     protected virtual void OnFixedUpdate(float dt) { }
     protected virtual void OnRender() { }
+    protected virtual void OnRender(RenderContext graphics) => OnRender();
     protected virtual void OnRenderUI() { }
     protected virtual void OnUnload() { }
 

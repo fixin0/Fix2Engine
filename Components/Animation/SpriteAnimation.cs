@@ -1,4 +1,4 @@
-using Raylib_cs;
+using Fix2Engine.Core;
 
 namespace Fix2Engine.Components.Animation;
 
@@ -6,12 +6,12 @@ namespace Fix2Engine.Components.Animation;
 public sealed class SpriteAnimation
 {
     public string Name { get; }
-    public IReadOnlyList<Rectangle> Frames { get; }
+    public IReadOnlyList<RectF> Frames { get; }
     public float FramesPerSecond { get; }
     public bool Loop { get; }
     public double Duration => Frames.Count / (double)FramesPerSecond;
 
-    public SpriteAnimation(string name, IEnumerable<Rectangle> frames, float framesPerSecond = 12, bool loop = true)
+    public SpriteAnimation(string name, IEnumerable<RectF> frames, float framesPerSecond = 12, bool loop = true)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(name);
         ArgumentNullException.ThrowIfNull(frames);
@@ -37,11 +37,11 @@ public sealed class SpriteAnimation
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(frameCount);
         ArgumentOutOfRangeException.ThrowIfNegativeOrZero(columns);
         ArgumentOutOfRangeException.ThrowIfNegative(startFrame);
-        var frames = new Rectangle[frameCount];
+        var frames = new RectF[frameCount];
         for (int i = 0; i < frameCount; i++)
         {
             long frame = (long)startFrame + i;
-            frames[i] = new Rectangle((frame % columns) * (float)frameWidth,
+            frames[i] = new RectF((frame % columns) * (float)frameWidth,
                 (frame / columns) * (float)frameHeight, frameWidth, frameHeight);
         }
         return new SpriteAnimation(name, frames, framesPerSecond, loop);

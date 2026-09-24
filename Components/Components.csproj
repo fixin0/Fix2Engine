@@ -8,11 +8,10 @@
     </PropertyGroup>
 
     <ItemGroup>
-      <PackageReference Include="Raylib-cs" Version="8.0.0" />
-    </ItemGroup>
-
-    <ItemGroup>
       <ProjectReference Include="..\Graphics\Graphics.csproj" />
     </ItemGroup>
 
+    <ItemGroup>
+      <ProjectReference Include="../Core/Core.csproj" />
+    </ItemGroup>
 </Project>

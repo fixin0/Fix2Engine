@@ -7,7 +7,10 @@ Fix2Engine is a modular, code-first game engine built with C# and .NET, using Ra
 
 The repository is organized into distinct class libraries to isolate responsibilities across the engine pipeline:
 
-* **Graphics:** Handles windowing, rendering, 2D sprites and drawing. Uses Raylib (`Raylib-cs`) as its rendering backend to provide low-level operations without heavy abstractions.
+* **Core:** Engine-owned Color32 / RectF types and backend contracts.
+* **Backends/Raylib:** Native rendering, input and window implementation. Native types stay in this project.
+* **Graphics:** Public texture, sprite and RenderContext API.
+* **Runner:** FixGame lifecycle, automatic scene dispatch and cleanup. Games start with Fix2.Run<Game>().
 * **Components:** Provides inheritable `Object2D` entities, static and animated sprites, and `FixScene` ownership and lifecycle management.
 * **Input:** Cross-platform keyboard polling — Win32 backend on Windows, Raylib backend on Linux/macOS — plus optional TOML action maps.
 * **User:** Platform information helper.
@@ -30,6 +33,9 @@ The repository is organized into distinct class libraries to isolate responsibil
 
 ```text
 Fix2Engine/
+├── Core/           # Public primitives and backend contracts
+├── Backends/Raylib/ # Native implementation
+├── Runner/         # Game host and lifecycle
 ├── Audio/          # Sound management
 ├── Components/     # Scene and component structures
 ├── Graphics/       # Raylib rendering/windowing abstraction
@@ -40,7 +46,11 @@ Fix2Engine/
 └── Fix2Console/    # Project creation and configuration CLI
 ```
 
-Documentation: see [Documents/](Documents/README.md), [2D objects](Documents/Components.md), and [sprite animation](Documents/Animation.md).
+Games use Fix2Engine APIs without importing Raylib or managing native UI frames.
+
+Documentation: choose the [English or Turkish tutorial](Documents/README.md). It
+covers setup, game settings, text, sprites, animation, a basic glow effect, and
+publishing.
 
 ## Build and create a project
 
@@ -58,8 +68,8 @@ cd MyGame
 dotnet run
 ```
 
-Replace `/path/to/Fix2Engine` with your engine checkout. See
-[Getting Started](Documents/GettingStarted.md) for project setup and scene creation.
+Replace `/path/to/Fix2Engine` with your engine checkout. See the
+[tutorial index](Documents/README.md) for project setup and scene creation.
 
 ## License and third-party software
 
@@ -70,7 +80,8 @@ licenses. Their license texts and copyright notices are collected in
 
 Builds and publishes include `Fix2Engine-LICENSE.txt` and
 `Fix2Engine-THIRD-PARTY-NOTICES.txt`; keep both files with redistributed builds.
-See [licensing and release notes](Documents/Licensing.md) for scope and maintenance.
+Review [LICENSE](LICENSE) and [THIRD-PARTY-NOTICES.txt](THIRD-PARTY-NOTICES.txt)
+before redistribution.
 
 ## Contributing
 

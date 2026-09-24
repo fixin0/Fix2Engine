@@ -38,14 +38,12 @@ public static class TemplateGenerator
                 + "        <InvariantGlobalization>true</InvariantGlobalization>\n"
                 + "    </PropertyGroup>\n\n"
                 + "    <ItemGroup>\n"
+                + $"      <ProjectReference Include=\"{rel("Runner/Runner.csproj")}\" />\n"
                 + $"      <ProjectReference Include=\"{rel("Graphics/Graphics.csproj")}\" />\n"
                 + $"      <ProjectReference Include=\"{rel("Components/Components.csproj")}\" />\n"
                 + $"      <ProjectReference Include=\"{rel("Input/Input.csproj")}\" />\n"
                 + $"      <ProjectReference Include=\"{rel("Physics/Physics.csproj")}\" />\n"
                 + $"      <ProjectReference Include=\"{rel("Audio/Audio.csproj")}\" />\n"
-                + "    </ItemGroup>\n\n"
-                + "    <ItemGroup>\n"
-                + "      <PackageReference Include=\"rlImgui-cs\" Version=\"3.2.0\" />\n"
                 + "    </ItemGroup>\n\n"
                 + "    <ItemGroup>\n"
                 + "      <None Update=\"InputMap.toml\" CopyToOutputDirectory=\"PreserveNewest\" CopyToPublishDirectory=\"PreserveNewest\" />\n"
@@ -77,8 +75,7 @@ public static class TemplateGenerator
                 + "    static void Main(string[] args)\n"
                 + "    {\n"
                 + "        Fix2Engine.Input.InputManager.LoadInputMap();\n"
-                + "        using var game = new Game();\n"
-                + "        game.Run();\n"
+                + "        Fix2Engine.Fix2.Run<Game>();\n"
                 + "    }\n"
                 + "}\n";
         }
@@ -90,70 +87,29 @@ public static class TemplateGenerator
 
     public static string GenerateGame(string projectName)
     {
-        try
-        {
-            if (string.IsNullOrWhiteSpace(projectName)) throw new ArgumentException("Project name is empty", nameof(projectName));
+        ArgumentException.ThrowIfNullOrWhiteSpace(projectName);
+        return $$"""
+            using Fix2Engine;
+            using Fix2Engine.Core;
+            using Fix2Engine.Components;
 
-            return "using System.Numerics;\n"
-                + "using Raylib_cs;\n"
-                + "using rlImGui_cs;\n"
-                + "using Fix2Engine.Components;\n"
-                + "using Fix2Engine.Components.Scene;\n"
-                + "using Fix2Engine.Graphics;\n"
-                + "using ImGuiNET;\n\n"
-                + $"namespace {projectName};\n\n"
-                + "public class Game : Windowing\n"
-                + "{\n"
-                + $"    public Game() : base(1280, 720, \"{projectName}\") {{ }}\n\n"
-                + "    protected override void Start()\n"
-                + "    {\n"
-                + "        rlImGui.Setup(true);\n"
-                + "        ApplyImGuiTheme();\n"
-                + $"        SceneManager.LoadScene<{projectName}Scene>();\n"
-                + "    }\n\n"
-                + "    protected override void Update(float dt)\n"
-                + "    {\n"
-                + "        SceneManager.Update(dt);\n"
-                + "    }\n\n"
-                + "    protected override void FixedUpdate(float dt)\n"
-                + "    {\n"
-                + "        SceneManager.FixedUpdate(dt);\n"
-                + "    }\n\n"
-                + "    protected override void Render()\n"
-                + "    {\n"
-                + "        SceneManager.Render();\n"
-                + "        rlImGui.Begin();\n"
-                + "        SceneManager.RenderUI();\n"
-                + "        rlImGui.End();\n"
-                + "        Raylib.DrawFPS(Width - 90, 10);\n"
-                + "    }\n\n"
-                + "    protected override void OnUnload()\n"
-                + "    {\n"
-                + "        try { SceneManager.Unload(); }\n"
-                + "        finally { rlImGui.Shutdown(); }\n"
-                + "    }\n\n"
-                + "    private static void ApplyImGuiTheme()\n"
-                + "    {\n"
-                + "        var style = ImGui.GetStyle();\n"
-                + "        style.WindowRounding = 12.0f;\n"
-                + "        style.FrameRounding = 8.0f;\n"
-                + "        style.GrabRounding = 8.0f;\n"
-                + "        style.WindowBorderSize = 1.0f;\n"
-                + "        style.ItemSpacing = new System.Numerics.Vector2(10, 12);\n"
-                + "        var c = style.Colors;\n"
-                + "        c[(int)ImGuiCol.WindowBg] = new System.Numerics.Vector4(0.08f, 0.08f, 0.12f, 0.85f);\n"
-                + "        c[(int)ImGuiCol.Border] = new System.Numerics.Vector4(0.25f, 0.27f, 0.38f, 0.50f);\n"
-                + "        c[(int)ImGuiCol.Button] = new System.Numerics.Vector4(0.18f, 0.20f, 0.28f, 1.00f);\n"
-                + "        c[(int)ImGuiCol.ButtonHovered] = new System.Numerics.Vector4(0.28f, 0.33f, 0.48f, 1.00f);\n"
-                + "        c[(int)ImGuiCol.ButtonActive] = new System.Numerics.Vector4(0.38f, 0.45f, 0.65f, 1.00f);\n"
-                + "        c[(int)ImGuiCol.Text] = new System.Numerics.Vector4(0.90f, 0.92f, 0.98f, 1.00f);\n"
-                + "    }\n"
-                + "}\n";
-        }
-        catch (Exception ex)
-        {
-            throw new InvalidOperationException($"Failed to generate Game.cs for '{projectName}': {ex.Message}", ex);
-        }
+            namespace {{projectName}};
+
+            public sealed class Game : FixGame
+            {
+                protected override void Configure(GameSettings settings)
+                {
+                    settings.Title = "{{projectName}}";
+                    settings.ClearColor = new Color32(15, 15, 20);
+                    settings.ShowFps = true;
+                }
+
+                protected override void Start()
+                {
+                    SceneManager.LoadScene<{{projectName}}Scene>();
+                }
+            }
+            """ + "\n";
     }
 
     public static string GenerateScene(string projectName)
@@ -162,7 +118,8 @@ public static class TemplateGenerator
         return $$"""
             using Fix2Engine.Components;
             using Fix2Engine.Components.Scene;
-            using Raylib_cs;
+            using Fix2Engine.Graphics;
+            using Fix2Engine.Core;
 
             namespace {{projectName}};
 
@@ -173,9 +130,9 @@ public static class TemplateGenerator
                     // Add your Object2D subclasses here: Add(new Player());
                 }
 
-                protected override void OnRender()
+                protected override void OnRender(RenderContext graphics)
                 {
-                    Raylib.ClearBackground(new Color(15, 15, 20, 255));
+                    // Draw in screen coordinates, or add SpriteObject2D objects to the scene.
                 }
             }
             """ + "\n";

@@ -1,4 +1,6 @@
 using System.Numerics;
+using Fix2Engine.Core;
+using Fix2Engine.Backends.Raylib;
 using Fix2Engine.Components;
 using Fix2Engine.Components.Animation;
 using Fix2Engine.Graphics;
@@ -11,7 +13,7 @@ static class GraphicsChecks
     {
         SetTraceLogLevel(TraceLogLevel.Warning);
         SetConfigFlags(ConfigFlags.HiddenWindow);
-        InitWindow(320, 240, "Object2D rendering checks");
+        using var backendWindow = new Windowing(320, 240, "Object2D rendering checks");
         if (!IsWindowReady()) throw new InvalidOperationException("A graphics display is required for --graphics.");
         string path = Path.Combine(Path.GetTempPath(), $"fix2-sprite-{Guid.NewGuid():N}.png");
         try
@@ -19,7 +21,7 @@ static class GraphicsChecks
             var image = GenImageColor(32, 16, Color.Red);
             ImageDrawRectangle(ref image, 16, 0, 16, 16, Color.Blue);
             ExportImage(image, path);
-            Texture2D texture = LoadTextureFromImage(image);
+            using var texture = Content.LoadTexture(path);
             UnloadImage(image);
             try
             {
@@ -30,7 +32,7 @@ static class GraphicsChecks
                 animated.Animator.Add(SpriteAnimation.FromGrid("colors", 16, 16, 2, 2, 4));
                 animated.Animator.Play("colors");
                 var parent = scene.Add(new Object2D { Position = new(120, 60), Rotation = 90, Scale = new(2, 1) });
-                var child = parent.AddChild(new SpriteObject2D { Position = new(10, 0), SourceRect = new Rectangle(0, 0, 16, 16) });
+                var child = parent.AddChild(new SpriteObject2D { Position = new(10, 0), SourceRect = new RectF(0, 0, 16, 16) });
                 child.SetSprite(shared);
                 var mirror = scene.Add(new SpriteObject2D { Position = new(220, 20), Scale = new(-2, 2) });
                 mirror.SetSprite(shared);
@@ -72,11 +74,11 @@ static class GraphicsChecks
                 scene.Dispose();
                 check(cached!.IsDisposed && !shared.IsDisposed, "Scene cleanup must release owned textures while retaining borrowed resources.");
             }
-            finally { UnloadTexture(texture); }
+            finally { texture.Dispose(); }
         }
         finally
         {
-            CloseWindow();
+            backendWindow.Dispose();
             File.Delete(path);
         }
 
@@ -94,6 +96,50 @@ static class GraphicsChecks
             check(window.Unloads == 1 && window.Resource!.IsDisposed && !IsWindowReady(),
                 "Update failures must still release scene resources and close the window.");
         }
+        var game = new HostedGame();
+        var uiDirectory = Directory.CreateTempSubdirectory("fix2-ui-check-");
+        string previousDirectory = Environment.CurrentDirectory;
+        try
+        {
+            Environment.CurrentDirectory = uiDirectory.FullName;
+            Fix2Engine.Fix2.Run(game);
+        }
+        finally
+        {
+            Environment.CurrentDirectory = previousDirectory;
+            uiDirectory.Delete(recursive: true);
+        }
+        check(game.UiFrames == 1 && game.Scene.Object.Updates == 1 && game.Scene.Object.Draws == 1,
+            "FixGame must automatically dispatch scene update, rendering and the optional UI frame.");
+        check(game.Scene.IsDisposed && game.Scene.Object.IsDestroyed && !IsWindowReady() && !EngineBackend.IsAttached,
+            "FixGame must dispose the scene, UI context and native window on exit.");
+    }
+
+    private sealed class HostedGame : Fix2Engine.FixGame
+    {
+        public readonly HostedScene Scene = new();
+        public int UiFrames;
+        protected override void Configure(Fix2Engine.GameSettings settings)
+        {
+            settings.Width = 64; settings.Height = 64; settings.EnableUI = true;
+        }
+        protected override void Start() => SceneManager.LoadScene(Scene);
+        protected override void RenderUI() { UiFrames++; RequestClose(); }
+    }
+    private sealed class HostedScene : Fix2Engine.Components.Scene.FixScene
+    {
+        public readonly HostedObject Object = new();
+        protected override void OnStart() => Add(Object);
+    }
+    private sealed class HostedObject : Object2D
+    {
+        public int Updates, Draws;
+        protected override void OnUpdate(float dt) => Updates++;
+        protected override void OnRender(RenderContext graphics)
+        {
+            Draws++;
+            graphics.DrawRectangle(new RectF(0, 0, 16, 16), Color32.White);
+        }
     }
 
     private sealed class CleanupWindow(bool fail) : Windowing(64, 64, "Cleanup check")
@@ -104,7 +150,9 @@ static class GraphicsChecks
         protected override void Start()
         {
             var image = GenImageColor(4, 4, Color.White);
-            Resource = new Sprite2D(LoadTextureFromImage(image), ownsTexture: true);
+            string path = Path.Combine(Path.GetTempPath(), $"fix2-cleanup-{Guid.NewGuid():N}.png");
+            try { ExportImage(image, path); Resource = new Sprite2D(path); }
+            finally { File.Delete(path); }
             UnloadImage(image);
             var scene = new ProbeScene();
             var obj = scene.Add(new SpriteObject2D());

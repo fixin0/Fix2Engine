@@ -76,6 +76,12 @@ try
     Directory.CreateDirectory(project);
     string csproj = Path.Combine(project, "Example.csproj");
     File.WriteAllText(csproj, TemplateGenerator.GenerateCsproj("Example", project, engine));
+    var generatedSources = new[] { TemplateGenerator.GenerateProgram("Example"), TemplateGenerator.GenerateGame("Example"), TemplateGenerator.GenerateScene("Example") };
+    foreach (var source in generatedSources)
+        Check(!source.Contains("Raylib") && !source.Contains("rlImGui") && !source.Contains("ImGuiNET"),
+            "Generated games must use only the engine API.");
+    Check(File.ReadAllText(csproj).Contains("Runner/Runner.csproj"), "Generated games need the automatic runtime.");
+    Check(!File.ReadAllText(csproj).Contains("PackageReference"), "Templates must not require native backend packages.");
     ProjectSettings.CreateFiles(project, engine);
     Check(ProjectSettings.ReadEngineDirectory(project) == engine.TrimEnd(Path.DirectorySeparatorChar), "Engine directory round trip");
     Check(InputConfig.Load(Path.Combine(project, "InputMap.toml")).Actions.ContainsKey("Jump"), "Generated map must parse");

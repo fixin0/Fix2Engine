@@ -1,4 +1,4 @@
-using Raylib_cs;
+using Fix2Engine.Core;
 
 namespace Fix2Engine.Components.Animation;
 
@@ -12,7 +12,7 @@ public sealed class AnimationPlayer
 
     public SpriteAnimation? CurrentAnimation { get; private set; }
     public int FrameIndex { get; private set; }
-    public Rectangle? CurrentFrame => CurrentAnimation?.Frames[FrameIndex];
+    public RectF? CurrentFrame => CurrentAnimation?.Frames[FrameIndex];
     public bool IsPlaying { get; private set; }
     public float Speed
     {

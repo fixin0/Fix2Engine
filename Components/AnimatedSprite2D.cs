@@ -1,12 +1,12 @@
 using Fix2Engine.Components.Animation;
-using Raylib_cs;
+using Fix2Engine.Core;
 
 namespace Fix2Engine.Components;
 
 public class AnimatedSprite2D : SpriteObject2D
 {
     public AnimationPlayer Animator { get; } = new();
-    protected override Rectangle? FrameRectangle => Animator.CurrentFrame ?? base.FrameRectangle;
+    protected override RectF? FrameRectangle => Animator.CurrentFrame ?? base.FrameRectangle;
 
     public AnimatedSprite2D(string name = "AnimatedSprite2D") : base(name) { }
 

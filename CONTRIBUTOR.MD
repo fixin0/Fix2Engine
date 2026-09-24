@@ -31,8 +31,8 @@ If Python 3 is not installed, install it before running the license inventory ch
 1. Keep the change focused. Explain the problem and the resulting behavior.
 2. Follow the surrounding C# style and the existing module boundaries. Project
    names such as `Graphics` are short; public namespaces remain `Fix2Engine.*`.
-3. Add meaningful regression checks for changed behavior. Update the examples and
-   relevant pages in `Documents/` when the public API or setup changes.
+3. Add meaningful regression checks for changed behavior. Update both the English
+   and Turkish tutorials in `Documents/` when the public API or setup changes.
 4. Build the solution and run the relevant checks. Report any failures or checks
    you could not run in the pull request.
 5. Include reproduction steps or before/after screenshots for visual defects.
@@ -60,8 +60,8 @@ requirements as other contributions; generated code is not a license clearance.
 - Check both managed packages and any native libraries or embedded components.
 - Confirm that the intended use and distribution satisfy their licenses. A
   binding's license does not automatically cover the native library it loads.
-- Update `licenses/dependencies.json`, the complete texts in
-  `THIRD-PARTY-NOTICES.txt`, and `Documents/Licensing.md` when applicable.
+- Update `licenses/dependencies.json` and the complete texts in
+  `THIRD-PARTY-NOTICES.txt` when applicable.
 - Use the license from the actual version/commit, retain copyright statements,
   and record its source. A URL or an SPDX identifier alone is not a substitute
   for a required license text.
@@ -78,9 +78,9 @@ additional runtime packages and notices.
 ## Assets, screenshots, and branding
 
 For each external image, model, texture, font, audio file, or substantial example,
-record its author, source, license/permission, and modifications in
-`Documents/AssetProvenance.md`. Include the required license text or permission
-record; do not commit private correspondence without permission.
+record its author, source, license/permission, and modifications in the
+contribution. Include the required license text or permission record; do not
+commit private correspondence without permission.
 
 Do not assume that an asset is reusable because it is downloadable or visible on
 GitHub. Verify redistribution and commercial-use rights separately where relevant.
@@ -90,8 +90,8 @@ in issues, screenshots, or sample data.
 
 ## Release review
 
-Before publishing a release, follow `Documents/Licensing.md`, review the actual
-files being shipped, and resolve outstanding asset provenance entries. Keep the
+Before publishing a release, review the actual files being shipped and resolve
+outstanding asset provenance entries. Keep the
 license notices in installers, archives, and store packages as well as ordinary
 publish directories. Projects using Fix2Engine remain responsible for their own
 code, assets, additional dependencies, and distribution conditions.

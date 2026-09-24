@@ -1,6 +1,6 @@
 using System.Diagnostics;
 using System.Numerics;
-using Raylib_cs;
+using Fix2Engine.Graphics;
 using ImGuiNET;
 
 namespace Fix2Engine.Monitoring;
@@ -27,7 +27,7 @@ public static class PerformanceMonitor
         UpdateCpuUsage();
         UpdateGpuUsage();
 
-        FpsHistory[_historyIndex] = Raylib.GetFPS();
+        FpsHistory[_historyIndex] = RenderContext.Current.FramesPerSecond;
         FrameTimeHistory[_historyIndex] = dt * 1000.0f;
         CpuHistory[_historyIndex] = _currentCpu;
         GpuHistory[_historyIndex] = _currentGpu;
@@ -47,8 +47,8 @@ public static class PerformanceMonitor
             bool show = Visible;
             if (ImGui.Begin("Performance Monitor", ref show, flags))
             {
-                float fps = Raylib.GetFPS();
-                float frameTime = Raylib.GetFrameTime() * 1000.0f;
+                float fps = RenderContext.Current.FramesPerSecond;
+                float frameTime = RenderContext.Current.FrameTime * 1000.0f;
                 long memory = GC.GetTotalMemory(false) / (1024 * 1024);
 
                 ImGui.Text($"FPS: {fps:0}"); ImGui.SameLine(); ImGui.TextDisabled($"({frameTime:0.00} ms)");

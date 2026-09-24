@@ -1,0 +1,13 @@
+name: Engine checks
+on: [push, pull_request]
+jobs:
+  test:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-dotnet@v4
+        with:
+          dotnet-version: '10.0.x'
+      - run: dotnet build Fix2Engine.sln -m:1
+      - run: dotnet run --project Tests/Objects2D/Objects2D.Tests.csproj -p:BuildInParallel=false
+      - run: dotnet run --project Tests/InputSystem/InputSystem.Tests.csproj -p:BuildInParallel=false

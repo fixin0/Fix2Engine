@@ -1,6 +1,6 @@
 using System.Numerics;
 using Fix2Engine.Components.Scene;
-using Raylib_cs;
+using Fix2Engine.Graphics;
 
 namespace Fix2Engine.Components;
 
@@ -89,6 +89,7 @@ public class Object2D : IDisposable
     protected virtual void OnFixedUpdate(float dt) { }
     /// <summary>Draw in local coordinates; the complete parent transform is applied automatically.</summary>
     protected virtual void OnRender() { }
+    protected virtual void OnRender(RenderContext graphics) => OnRender();
     /// <summary>Called inside the application's ImGui frame, in screen coordinates.</summary>
     protected virtual void OnRenderUI() { }
     protected virtual void OnDestroy() { }
@@ -162,30 +163,8 @@ public class Object2D : IDisposable
                     break;
                 case Phase.FixedUpdate: obj.OnFixedUpdate(dt); break;
                 case Phase.Render:
-                    // Mirrored transforms reverse triangle winding. Flush before changing
-                    // culling so sprites already in Raylib's batch retain their render state.
-                    bool mirrored = obj.GlobalTransform.GetDeterminant() < 0;
-                    if (mirrored)
-                    {
-                        Rlgl.DrawRenderBatchActive();
-                        Rlgl.DisableBackfaceCulling();
-                    }
-                    Rlgl.PushMatrix();
-                    try
-                    {
-                        // System.Numerics uses row vectors; Raylib's matrix helper uses column vectors.
-                        Rlgl.MultMatrixf(Matrix4x4.Transpose(new Matrix4x4(obj.GlobalTransform)));
-                        obj.OnRender();
-                    }
-                    finally
-                    {
-                        Rlgl.PopMatrix();
-                        if (mirrored)
-                        {
-                            Rlgl.DrawRenderBatchActive();
-                            Rlgl.EnableBackfaceCulling();
-                        }
-                    }
+                    using (RenderContext.Current.PushTransform(obj.GlobalTransform))
+                        obj.OnRender(RenderContext.Current);
                     break;
                 case Phase.RenderUI: obj.OnRenderUI(); break;
             }

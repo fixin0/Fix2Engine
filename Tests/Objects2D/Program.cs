@@ -3,7 +3,7 @@ using Fix2Engine.Components;
 using Fix2Engine.Components.Animation;
 using Fix2Engine.Components.Scene;
 using Fix2Engine.Graphics;
-using Raylib_cs;
+using Fix2Engine.Core;
 
 int assertions = 0;
 void Check(bool condition, string message)
@@ -130,15 +130,15 @@ using (var destination = new ProbeScene())
         "Cleanup callbacks that transfer ownership must not destroy the transferred object.");
 }
 
-var frames = new[] { new Rectangle(0, 0, 16, 16), new Rectangle(16, 0, 16, 16) };
+var frames = new[] { new RectF(0, 0, 16, 16), new RectF(16, 0, 16, 16) };
 var immutable = new SpriteAnimation("copy", frames);
-frames[0] = new Rectangle(999, 999, 1, 1);
+frames[0] = new RectF(999, 999, 1, 1);
 Check(immutable.Frames[0].X == 0, "Clip frame storage must be a defensive copy.");
 var grid = SpriteAnimation.FromGrid("grid", 16, 24, 3, 4, startFrame: 3);
 Check(grid.Frames[0].X == 48 && grid.Frames[1].X == 0 && grid.Frames[1].Y == 24,
     "Grid clips must wrap rows and respect the starting frame.");
 Throws<ArgumentException>(() => new SpriteAnimation("empty", []));
-Throws<ArgumentException>(() => new SpriteAnimation("bad", [new Rectangle(0, 0, 0, 1)]));
+Throws<ArgumentException>(() => new SpriteAnimation("bad", [new RectF(0, 0, 0, 1)]));
 Throws<ArgumentOutOfRangeException>(() => new SpriteAnimation("fps", immutable.Frames, 0));
 Throws<ArgumentOutOfRangeException>(() => SpriteAnimation.FromGrid("bad", 16, 16, 2, 0));
 
@@ -192,7 +192,11 @@ using (var scene = new ProbeScene())
     Check(animated.Animator.FrameIndex == 0, "Hidden animated objects must continue updating.");
 }
 
-var borrowed = new Sprite2D(new Texture2D { Id = 123, Width = 32, Height = 16 });
+var fake = new FakeBackend();
+EngineBackend.Attach(fake);
+using var borrowedTexture = Content.LoadTexture("fake.png");
+var borrowed = new Sprite2D(borrowedTexture);
+EngineBackend.Detach(fake);
 var holder = new SpriteObject2D(); holder.SetSprite(borrowed); holder.Destroy();
 Check(!borrowed.IsDisposed, "Borrowed sprite wrappers must not be disposed by objects.");
 var owner = new SpriteObject2D(); owner.SetSprite(borrowed, ownsSprite: true); owner.Destroy();
@@ -228,6 +232,7 @@ Check(afterStart.IsDisposed && pending.IsDisposed && SceneManager.CurrentScene =
 Throws<ArgumentNullException>(() => SceneManager.LoadScene(null!));
 Throws<ObjectDisposedException>(() => SceneManager.LoadScene(pending));
 
+BackendChecks.Run(Check);
 if (args.Contains("--graphics")) GraphicsChecks.Run(Check);
 Console.WriteLine($"PASS: {assertions} checks (object ownership, lifecycle, transforms, animation, scene switching" +
     (args.Contains("--graphics") ? ", native rendering and window cleanup)." : ")."));

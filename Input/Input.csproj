@@ -9,11 +9,13 @@
 
     <ItemGroup>
       <PackageReference Include="Tomlyn" Version="2.10.1" />
-      <PackageReference Include="Raylib-cs" Version="8.0.0" />
     </ItemGroup>
 
     <ItemGroup>
       <ProjectReference Include="..\User\User.csproj" />
     </ItemGroup>
     
+    <ItemGroup>
+      <ProjectReference Include="../Core/Core.csproj" />
+    </ItemGroup>
 </Project>
