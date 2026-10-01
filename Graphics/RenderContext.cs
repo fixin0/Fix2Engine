@@ -12,6 +12,13 @@ public sealed class RenderContext
     public float FrameTime => EngineBackend.Current.FrameTime;
     public void Clear(Color32 color) => EngineBackend.Current.Clear(color);
     public void DrawRectangle(RectF rectangle, Color32 color) => EngineBackend.Current.DrawRectangle(rectangle, color);
+    public void DrawCircle(Vector2 center, float radius, Color32 color)
+    {
+        ArgumentOutOfRangeException.ThrowIfNegative(radius);
+        EngineBackend.Current.DrawCircle(center, radius, color);
+    }
+    public void DrawTriangle(Vector2 first, Vector2 second, Vector2 third, Color32 color) =>
+        EngineBackend.Current.DrawTriangle(first, second, third, color);
     public void DrawLine(Vector2 start, Vector2 end, Color32 color, float thickness = 1) => EngineBackend.Current.DrawLine(start, end, thickness, color);
     public void DrawText(string text, Vector2 position, int fontSize, Color32 color) => EngineBackend.Current.DrawText(text, position, fontSize, color);
     public void DrawTexture(Texture texture, Vector2 position, Color32? tint = null)
@@ -26,4 +33,6 @@ public sealed class RenderContext
         EngineBackend.Current.DrawTexture(texture.Resource, source, destination, origin, rotation, tint);
     }
     public IDisposable PushTransform(Matrix3x2 transform) => EngineBackend.Current.PushTransform(transform);
+    /// <summary>Temporarily draws subsequent primitives with additive blending.</summary>
+    public IDisposable PushAdditiveBlend() => EngineBackend.Current.PushAdditiveBlend();
 }

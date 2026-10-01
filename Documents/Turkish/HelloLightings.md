@@ -1,40 +1,74 @@
-# Merhaba Işıklandırma (Hello Lightings)
+# 2D Işıklandırma
 
-Fix2Engine şu anda gerçek ışık, shader, normal map veya additive blending API'si
-sunmaz. Bu nesne basit, yarı saydam ve kare biçimli bir parlama üretir. Bir
-prototip efektidir; diğer sprite'ları gerçekten aydınlatmaz.
+Fix2Engine, `Fix2Engine.Graphics.Lighting` altında additive harmanlama kullanan,
+sprite'lardan bağımsız 2D ışık şekilleri sunar. Işıkları, aydınlatmak istediğiniz
+sprite'lardan sonra çizin. Ekrandaki mevcut pikselleri parlaklaştırırlar; normal
+map, gölge oluşturma ve engellenme henüz desteklenmez.
+
+## Nokta ışığı
+
+`PointLight2D` dairesel bir ışıktır. `Range` yarıçapı, `Energy` parlaklığı
+belirler.
 
 ```csharp
-using Fix2Engine.Components;
+using System.Numerics;
+using Fix2Engine.Components.Scene;
 using Fix2Engine.Core;
 using Fix2Engine.Graphics;
+using Fix2Engine.Graphics.Lighting;
 
-namespace MyGame;
-
-public sealed class GlowLight : Object2D
+public sealed class LightingScene : FixScene
 {
-    public GlowLight() : base("Glow Light")
+    private readonly PointLight2D _lamba = new()
     {
-        ZIndex = 10;
-    }
+        Position = new Vector2(400, 260),
+        Range = 160,
+        Color = new Color32(255, 210, 90),
+        Energy = 1.2f
+    };
 
     protected override void OnRender(RenderContext graphics)
     {
-        // Önce en geniş ve en soluk katmanı çiz.
-        for (int layer = 8; layer >= 1; layer--)
-        {
-            float size = layer * 28f;
-            byte alpha = (byte)(10 + (8 - layer) * 7);
-            graphics.DrawRectangle(
-                new RectF(-size / 2, -size / 2, size, size),
-                new Color32(255, 210, 90, alpha));
-        }
+        // Önce arka planı ve sprite'ları çizin.
+        _lamba.Draw(graphics);
     }
 }
 ```
 
-Nesneyi sahneye ekleyip konumlandırın:
+## Yönlü ve spot ışıkları
+
+`DirectionalLight2D` geniş, dikdörtgen bir ışık demeti üretir.
+`SpotLight2D` ise koni biçiminde çalışır. `Direction` ekran uzayındaki vektördür;
+`Vector2.UnitY` aşağıyı gösterir.
 
 ```csharp
-Add(new GlowLight { Position = new System.Numerics.Vector2(400, 260) });
+private readonly DirectionalLight2D _gunes = new()
+{
+    Position = new Vector2(400, 0),
+    Direction = Vector2.UnitY,
+    Width = 800,
+    Length = 500,
+    Color = new Color32(150, 200, 255),
+    Energy = 0.45f
+};
+
+private readonly SpotLight2D _fener = new()
+{
+    Position = new Vector2(120, 280),
+    Direction = Vector2.UnitX,
+    Range = 220,
+    AngleDegrees = 38,
+    Color = new Color32(255, 236, 190)
+};
+
+protected override void OnRender(RenderContext graphics)
+{
+    // Dünya sprite'larını önce, ışık katmanını sonra çizin.
+    _gunes.Draw(graphics);
+    _fener.Draw(graphics);
+}
 ```
+
+Tüm ışık türlerinde `Enabled`, `Position`, `Color` ve `Energy` bulunur. Nokta ve
+spot ışıklarında ayrıca `FalloffSteps` vardır; artırmak geçişi yumuşatır, ancak
+bir miktar daha fazla çizim gerektirir.

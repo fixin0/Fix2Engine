@@ -2,6 +2,7 @@ using System.Numerics;
 using System.Reflection;
 using Fix2Engine.Core;
 using Fix2Engine.Graphics;
+using Fix2Engine.Graphics.Lighting;
 using Fix2Engine.Components;
 using Fix2Engine.Input;
 using Fix2Engine.Input.InputBackend;
@@ -58,6 +59,11 @@ static class BackendChecks
                 "Sprite source flips and RGBA must cross the backend boundary intact.");
             check(backend.LastTransform == obj.GlobalTransform && backend.TransformDepth == 0,
                 "Object transforms must reach the backend and be restored.");
+            new PointLight2D { Position = new(20, 20), Range = 24, FalloffSteps = 3 }.Draw(RenderContext.Current);
+            new DirectionalLight2D { Position = new(30, 0), Length = 50, Width = 80 }.Draw(RenderContext.Current);
+            new SpotLight2D { Position = new(0, 30), Range = 60, FalloffSteps = 4 }.Draw(RenderContext.Current);
+            check(backend.CircleCount == 3 && backend.TriangleCount == 4 && backend.AdditiveDepth == 0,
+                "2D lights must render their shapes and restore additive blending.");
             using var throwing = new ThrowingObject();
             try { throwing.Render(); } catch (InvalidOperationException) { }
             check(backend.TransformDepth == 0, "Render exceptions must restore transforms.");

@@ -7,7 +7,7 @@ sealed class FakeBackend : IGameBackend
     public bool ShouldClose => false;
     public float FrameTime => 1f / 60f;
     public int FramesPerSecond => 60;
-    public int BeginCount, EndCount, DisposeCount, DrawCount, TransformDepth;
+    public int BeginCount, EndCount, DisposeCount, DrawCount, CircleCount, TriangleCount, AdditiveDepth;
     public RectF LastSource;
     public Color32 LastTint;
     public Matrix3x2 LastTransform;
@@ -35,12 +35,19 @@ sealed class FakeBackend : IGameBackend
         DrawCount++; LastSource = source; LastTint = tint;
     }
     public void DrawRectangle(RectF rectangle, Color32 color) { }
+    public void DrawCircle(Vector2 center, float radius, Color32 color) => CircleCount++;
+    public void DrawTriangle(Vector2 first, Vector2 second, Vector2 third, Color32 color) => TriangleCount++;
     public void DrawLine(Vector2 start, Vector2 end, float thickness, Color32 color) { }
     public void DrawText(string text, Vector2 position, int fontSize, Color32 color) { }
     public IDisposable PushTransform(Matrix3x2 transform)
     {
         TransformDepth++; LastTransform = transform;
         return new Scope(() => TransformDepth--);
+    }
+    public IDisposable PushAdditiveBlend()
+    {
+        AdditiveDepth++;
+        return new Scope(() => AdditiveDepth--);
     }
     public void Dispose()
     {

@@ -9,7 +9,7 @@ The repository is organized into distinct class libraries to isolate responsibil
 
 * **Core:** Engine-owned Color32 / RectF types and backend contracts.
 * **Backends/Raylib:** Native rendering, input and window implementation. Native types stay in this project.
-* **Graphics:** Public texture, sprite and RenderContext API.
+* **Graphics:** Public texture, sprite, RenderContext, and additive 2D lighting API.
 * **Runner:** FixGame lifecycle, automatic scene dispatch and cleanup. Games start with Fix2.Run<Game>().
 * **Components:** Provides inheritable `Object2D` entities, static and animated sprites, and `FixScene` ownership and lifecycle management.
 * **Input:** Cross-platform keyboard polling — Win32 backend on Windows, Raylib backend on Linux/macOS — plus optional TOML action maps.
@@ -49,8 +49,7 @@ Fix2Engine/
 Games use Fix2Engine APIs without importing Raylib or managing native UI frames.
 
 Documentation: choose the [English or Turkish tutorial](Documents/README.md). It
-covers setup, game settings, text, sprites, animation, a basic glow effect, and
-publishing.
+covers setup, game settings, text, sprites, animation, 2D lighting, and publishing.
 
 ## Build and create a project
 

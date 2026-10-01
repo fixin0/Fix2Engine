@@ -16,9 +16,12 @@ public interface IRenderBackend
     void Clear(Color32 color);
     void DrawTexture(ITextureResource texture, RectF source, RectF destination, Vector2 origin, float rotation, Color32 tint);
     void DrawRectangle(RectF rectangle, Color32 color);
+    void DrawCircle(Vector2 center, float radius, Color32 color);
+    void DrawTriangle(Vector2 first, Vector2 second, Vector2 third, Color32 color);
     void DrawLine(Vector2 start, Vector2 end, float thickness, Color32 color);
     void DrawText(string text, Vector2 position, int fontSize, Color32 color);
     IDisposable PushTransform(Matrix3x2 transform);
+    IDisposable PushAdditiveBlend();
     void BeginDrawing();
     void EndDrawing();
 }

@@ -30,6 +30,9 @@ public sealed partial class RaylibBackend : IGameBackend
     public void EndDrawing() => Native.EndDrawing();
     public void Clear(Color32 color) => Native.ClearBackground(Convert(color));
     public void DrawRectangle(RectF rectangle, Color32 color) => Native.DrawRectangleRec(Convert(rectangle), Convert(color));
+    public void DrawCircle(Vector2 center, float radius, Color32 color) => Native.DrawCircleV(center, radius, Convert(color));
+    public void DrawTriangle(Vector2 first, Vector2 second, Vector2 third, Color32 color) =>
+        Native.DrawTriangle(first, second, third, Convert(color));
     public void DrawLine(Vector2 start, Vector2 end, float thickness, Color32 color) => Native.DrawLineEx(start, end, thickness, Convert(color));
     public void DrawText(string text, Vector2 position, int fontSize, Color32 color) => Native.DrawText(text, (int)position.X, (int)position.Y, fontSize, Convert(color));
     public ITextureResource LoadTexture(string path)
@@ -50,6 +53,7 @@ public sealed partial class RaylibBackend : IGameBackend
         Native.DrawTexturePro(resource.NativeTexture, Convert(source), Convert(destination), origin, rotation, Convert(tint));
     }
     public IDisposable PushTransform(Matrix3x2 transform) => new TransformScope(transform);
+    public IDisposable PushAdditiveBlend() => new AdditiveBlendScope();
     public void BeginUI()
     {
         if (!_uiReady) { rlImGui.Setup(true); _uiReady = true; }
@@ -102,6 +106,17 @@ public sealed partial class RaylibBackend : IGameBackend
             _disposed = true;
             Rlgl.PopMatrix();
             if (_mirrored) { Rlgl.DrawRenderBatchActive(); Rlgl.EnableBackfaceCulling(); }
+        }
+    }
+    private sealed class AdditiveBlendScope : IDisposable
+    {
+        private bool _disposed;
+        public AdditiveBlendScope() => Native.BeginBlendMode(BlendMode.Additive);
+        public void Dispose()
+        {
+            if (_disposed) return;
+            _disposed = true;
+            Native.EndBlendMode();
         }
     }
 }
