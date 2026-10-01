@@ -5,7 +5,7 @@ sprite'lardan bağımsız 2D ışık şekilleri sunar. Işıkları, aydınlatmak
 sprite'lardan sonra çizin. Ekrandaki mevcut pikselleri parlaklaştırırlar; normal
 map, gölge oluşturma ve engellenme henüz desteklenmez.
 
-## Nokta ışığı
+## Point Light
 
 `PointLight2D` dairesel bir ışıktır. `Range` yarıçapı, `Energy` parlaklığı
 belirler.
@@ -35,7 +35,7 @@ public sealed class LightingScene : FixScene
 }
 ```
 
-## Yönlü ve spot ışıkları
+## Directional and spot light
 
 `DirectionalLight2D` geniş, dikdörtgen bir ışık demeti üretir.
 `SpotLight2D` ise koni biçiminde çalışır. `Direction` ekran uzayındaki vektördür;
