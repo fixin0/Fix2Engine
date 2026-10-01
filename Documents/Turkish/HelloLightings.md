@@ -35,7 +35,7 @@ public sealed class LightingScene : FixScene
 }
 ```
 
-## Directional and spot light
+## Directional and Spot Light
 
 `DirectionalLight2D` geniş, dikdörtgen bir ışık demeti üretir.
 `SpotLight2D` ise koni biçiminde çalışır. `Direction` ekran uzayındaki vektördür;
