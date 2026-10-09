@@ -62,6 +62,7 @@ public class Windowing : IDisposable
             {
                 float dt = _backend.FrameTime;
                 InputManager.Update();
+                Graphics3D.AdvanceFrame(dt);
                 Update(dt);
                 if (_closeRequested) break;
                 _accumulator += MathF.Min(dt, 0.25f);

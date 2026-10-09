@@ -1,4 +1,5 @@
 using Fix2Engine.Components;
+using Fix2Engine.Components.Scene;
 using Fix2Engine.Core;
 using Fix2Engine.Graphics;
 
@@ -56,14 +57,18 @@ internal sealed class GameHost : Windowing
         game.CloseRequested = RequestClose;
     }
     protected override void Start() => _game.Start();
-    protected override void Update(float dt) { _game.Update(dt); SceneManager.Update(dt); }
-    protected override void FixedUpdate(float dt) { _game.FixedUpdate(dt); SceneManager.FixedUpdate(dt); }
-    protected override void Render(RenderContext graphics) { SceneManager.Render(); _game.Render(graphics); }
+    protected override void Update(float dt) { _game.Update(dt); Scene3DManager.Update(dt); SceneManager.Update(dt); }
+    protected override void FixedUpdate(float dt) { _game.FixedUpdate(dt); Scene3DManager.FixedUpdate(dt); SceneManager.FixedUpdate(dt); }
+    protected override void Render(RenderContext graphics) { Scene3DManager.Render(); SceneManager.Render(); _game.Render(graphics); }
     protected override void RenderUI() { SceneManager.RenderUI(); _game.RenderUI(); }
     protected override void OnUnload()
     {
         _game.CloseRequested = null;
         try { _game.OnUnload(); }
-        finally { SceneManager.Unload(); }
+        finally
+        {
+            try { Scene3DManager.Unload(); }
+            finally { SceneManager.Unload(); }
+        }
     }
 }

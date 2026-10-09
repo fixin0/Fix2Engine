@@ -99,6 +99,9 @@ try
     Check(doc.Descendants("Import").Count(x => (string?)x.Attribute("Label") == "Fix2EngineLicenses") == 1,
         "Repeated init must preserve exactly one license import");
     Check(EngineRootFinder.FindEngineRoot() == engine.TrimEnd(Path.DirectorySeparatorChar), "Resolve engine from nested project directory");
+    var desktopBuild = ProjectBuilder.CreateDesktopBuildStartInfo(csproj, project);
+    Check(desktopBuild.FileName == "dotnet" && desktopBuild.ArgumentList.SequenceEqual(new[] { "build", csproj, "--configuration", "Release" }),
+        "Desktop build must invoke a Release dotnet build");
     Throws<DirectoryNotFoundException>(() => ProjectSettings.Initialize(Path.Combine(temp, "absent")));
     File.WriteAllText(Path.Combine(project, "Fix2Engine.toml"), "[Engine]\nDirectory = \"missing\"\n");
     Throws<DirectoryNotFoundException>(() => EngineRootFinder.FindEngineRoot());

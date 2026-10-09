@@ -42,9 +42,14 @@ public class Terminal : IDisposable
                     ProjectGenerator.CreateNewProject(args[1]);
                     break;
                 case "--new-project":
-                    
                     Console.WriteLine("Error: --new-project requires a project name.");
                     Console.WriteLine("Usage: Fix2Console --new-project {project name}");
+                    break;
+                case "--build" when args.Length == 1:
+                    ProjectBuilder.BuildDesktop();
+                    break;
+                case "--build":
+                    Console.WriteLine($"Error: {args[0]} does not accept additional arguments.");
                     break;
                 case "--help":
                 case "-h":
@@ -74,6 +79,7 @@ public class Terminal : IDisposable
             Console.WriteLine("Usage:");
             Console.WriteLine("  Fix2Console --new-project {project name}   Create a new Fix2Engine project in current directory");
             Console.WriteLine("  Fix2Console --init [engine-directory]      Configure the current project and create InputMap.toml");
+            Console.WriteLine("  Fix2Console --build                        Build the current project for PC (Release)");
             Console.WriteLine("  Fix2Console --help                         Show this help");
         }
         catch (Exception ex)

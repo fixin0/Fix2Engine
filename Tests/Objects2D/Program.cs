@@ -210,6 +210,24 @@ using (var clearPath = new SpriteObject2D { TexturePath = "not-loaded.png" })
 Throws<ObjectDisposedException>(() => new SpriteObject2D().SetSprite(borrowed));
 Check(new Node2D() is Object2D, "Node2D must use the common object hierarchy.");
 
+var fake3D = new FakeBackend();
+EngineBackend.Attach(fake3D);
+using (var world = new Scene3D())
+{
+    var model = Model3D.Cube(new(1, 1, 1));
+    var material = Material3D.FromPreset(ShaderSet.Toon).SetFloat("steps", 3).SetFloat("rimStrength", .5f);
+    var node = new Object3D { Position = new(1, 2, 3) };
+    node.AddComponent(new ModelRenderer3D(model, material, ownsModel: true, ownsMaterial: true));
+    world.Add(node);
+    Scene3DManager.Load(world);
+    Scene3DManager.Update(1f / 60f);
+    Scene3DManager.Render();
+    Check(fake3D.Draw3DCount == 1 && node.GlobalPosition == new Vector3(1, 2, 3),
+        "3D worlds must draw component-owned primitive models through the backend without native API types.");
+}
+Scene3DManager.Unload();
+EngineBackend.Detach(fake3D);
+
 SceneManager.Unload();
 var superseded = new ProbeScene();
 var currentScene = new ProbeScene();

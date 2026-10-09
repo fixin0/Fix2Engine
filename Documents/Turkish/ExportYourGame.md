@@ -1,8 +1,17 @@
 # Oyununu Dışa Aktar (Export Your Game)
 
-Publish işlemi, kaynak proje dışında çalışabilen bir release klasörü oluşturur.
-Özellikle oluşturulan projede Native AOT açıkken, komutu hedefle aynı işletim
-sistemi ailesinde çalıştırın.
+Fix2Console ile proje klasöründeyken release masaüstü build'i alabilirsiniz:
+
+```bash
+dotnet run --project /Fix2Engine/yolu/Fix2Console -- --build
+```
+
+Bu komut `dotnet build -c Release` çalıştırır ve çıktıyı
+`bin/Release/net10.0/` altında oluşturur.
+
+Masaüstü dağıtımı için publish işlemi, kaynak proje dışında çalışabilen bir
+release klasörü oluşturur. Özellikle oluşturulan projede Native AOT açıkken,
+komutu hedefle aynı işletim sistemi ailesinde çalıştırın.
 
 ```bash
 # Windows 64-bit

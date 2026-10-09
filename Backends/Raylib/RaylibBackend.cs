@@ -66,6 +66,8 @@ public sealed partial class RaylibBackend : IGameBackend
         _disposed = true;
         try
         {
+            foreach (var model in _models3D.ToArray()) model.Dispose();
+            foreach (var shader in _shaders3D.ToArray()) shader.Dispose();
             foreach (var texture in _textures.ToArray()) texture.Dispose();
             if (_uiReady) rlImGui.Shutdown();
         }

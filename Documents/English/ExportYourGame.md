@@ -1,8 +1,17 @@
 # Export Your Game
 
-Publishing creates a release folder that can run outside the source project. Run
-the command on the same operating-system family as the target, especially when
-Native AOT is enabled by the generated project.
+From the project directory, use Fix2Console to create a release desktop build:
+
+```bash
+dotnet run --project /path/to/Fix2Engine/Fix2Console -- --build
+```
+
+This runs `dotnet build -c Release` and writes its output under
+`bin/Release/net10.0/`.
+
+For desktop distribution, publishing creates a release folder that can run
+outside the source project. Run the command on the same operating-system family
+as the target, especially when Native AOT is enabled by the generated project.
 
 ```bash
 # Windows 64-bit

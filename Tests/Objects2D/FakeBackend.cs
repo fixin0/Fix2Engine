@@ -7,12 +7,14 @@ sealed class FakeBackend : IGameBackend
     public bool ShouldClose => false;
     public float FrameTime => 1f / 60f;
     public int FramesPerSecond => 60;
-    public int BeginCount, EndCount, DisposeCount, DrawCount, CircleCount, TriangleCount, AdditiveDepth;
+    public int BeginCount, EndCount, DisposeCount, DrawCount, Draw3DCount, CircleCount, TriangleCount, AdditiveDepth, TransformDepth;
     public RectF LastSource;
     public Color32 LastTint;
     public Matrix3x2 LastTransform;
     public readonly HashSet<int> Keys = new();
     public readonly List<FakeTexture> Textures = new();
+    public readonly List<FakeModel> Models = new();
+    public readonly List<FakeShader> Shaders = new();
     public void Open(int width, int height, string title) => IsReady = true;
     public void SetSize(int width, int height) { }
     public void SetTitle(string title) { }
@@ -39,6 +41,19 @@ sealed class FakeBackend : IGameBackend
     public void DrawTriangle(Vector2 first, Vector2 second, Vector2 third, Color32 color) => TriangleCount++;
     public void DrawLine(Vector2 start, Vector2 end, float thickness, Color32 color) { }
     public void DrawText(string text, Vector2 position, int fontSize, Color32 color) { }
+    public IModel3DResource LoadModel3D(string path) => CreateModel();
+    public IModel3DResource CreatePrimitive3D(Primitive3D primitive, Vector3 dimensions, int slices, int rings) => CreateModel();
+    public IShaderResource LoadShader3D(string vertexPath, string fragmentPath) => CreateShader();
+    public IShaderResource LoadShader3DFromSource(string vertexSource, string fragmentSource) => CreateShader();
+    public IDisposable Begin3D(Camera3DState camera) => new Scope(() => { });
+    public void DrawModel3D(IModel3DResource model, Matrix4x4 transform, Color32 tint) => Draw3DCount++;
+    public void SetModelShader3D(IModel3DResource model, IShaderResource shader) { }
+    public void SetModelTexture3D(IModel3DResource model, MaterialTextureSlot slot, ITextureResource texture) { }
+    public void SetShaderFloat(IShaderResource shader, string name, float value) { }
+    public void SetShaderVector2(IShaderResource shader, string name, Vector2 value) { }
+    public void SetShaderVector3(IShaderResource shader, string name, Vector3 value) { }
+    public void SetShaderVector4(IShaderResource shader, string name, Vector4 value) { }
+    public void SetShaderTexture(IShaderResource shader, string name, ITextureResource texture) { }
     public IDisposable PushTransform(Matrix3x2 transform)
     {
         TransformDepth++; LastTransform = transform;
@@ -53,8 +68,24 @@ sealed class FakeBackend : IGameBackend
     {
         DisposeCount++; IsReady = false;
         foreach (var texture in Textures) texture.Dispose();
+        foreach (var model in Models) model.Dispose();
+        foreach (var shader in Shaders) shader.Dispose();
     }
+    private FakeModel CreateModel() { var model = new FakeModel(); Models.Add(model); return model; }
+    private FakeShader CreateShader() { var shader = new FakeShader(); Shaders.Add(shader); return shader; }
     private sealed class Scope(Action close) : IDisposable { public void Dispose() => close(); }
+}
+
+sealed class FakeModel : IModel3DResource
+{
+    public bool IsDisposed { get; private set; }
+    public void Dispose() => IsDisposed = true;
+}
+
+sealed class FakeShader : IShaderResource
+{
+    public bool IsDisposed { get; private set; }
+    public void Dispose() => IsDisposed = true;
 }
 
 sealed class FakeTexture : ITextureResource

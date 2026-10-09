@@ -70,6 +70,15 @@ dotnet run
 Replace `/path/to/Fix2Engine` with your engine checkout. See the
 [tutorial index](Documents/README.md) for project setup and scene creation.
 
+From a project directory, Fix2Console can also run the release build directly:
+
+```bash
+dotnet run --project /path/to/Fix2Engine/Fix2Console -- --build
+```
+
+See [Export Your Game](Documents/English/ExportYourGame.md) for output paths and
+desktop deployment notes.
+
 ## License and third-party software
 
 Fix2Engine's own code is licensed under the [MIT license](LICENSE). Raylib,
