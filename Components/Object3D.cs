@@ -119,6 +119,7 @@ public class Object3D : IDisposable
     internal void FixedUpdate(float dt)
     {
         if (!IsActiveInHierarchy) return;
+        Start();
         OnFixedUpdate(dt);
         foreach (var component in _components.ToArray()) component.FixedUpdate(dt);
         foreach (var child in _children.ToArray()) child.FixedUpdate(dt);
