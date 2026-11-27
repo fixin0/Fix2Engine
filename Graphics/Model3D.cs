@@ -8,12 +8,26 @@ public sealed class Model3D : IDisposable
 {
     internal IModel3DResource Resource { get; }
     public bool IsDisposed => Resource.IsDisposed;
-    private Model3D(IModel3DResource resource) => Resource = resource;
+    /// <summary>The file path used to load the model, or null for generated primitives.</summary>
+    public string? SourcePath { get; }
+    private Model3D(IModel3DResource resource, string? sourcePath = null)
+    {
+        Resource = resource;
+        SourcePath = sourcePath;
+    }
 
     public static Model3D Load(string path)
     {
         ArgumentException.ThrowIfNullOrWhiteSpace(path);
-        return new Model3D(EngineBackend.Current.LoadModel3D(path));
+        return new Model3D(EngineBackend.Current.LoadModel3D(path), Path.GetFullPath(path));
+    }
+
+    /// <summary>Loads skeletal animation clips from the model's source file.</summary>
+    public ModelAnimationSet LoadAnimations()
+    {
+        ObjectDisposedException.ThrowIf(IsDisposed, this);
+        if (SourcePath == null) throw new InvalidOperationException("Generated primitive models do not contain animation data.");
+        return ModelAnimationSet.Load(SourcePath);
     }
 
     public static Model3D Cube(Vector3 size) => Create(Primitive3D.Cube, size, 3, 2);

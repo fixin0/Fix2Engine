@@ -1,6 +1,7 @@
 using System.Numerics;
 using Fix2Engine.Components;
 using Fix2Engine.Components.Animation;
+using Fix2Engine.Components.Animation3D;
 using Fix2Engine.Components.Scene;
 using Fix2Engine.Graphics;
 using Fix2Engine.Core;
@@ -18,6 +19,9 @@ void Throws<T>(Action action) where T : Exception
     throw new Exception($"Expected {typeof(T).Name}");
 }
 bool Near(Vector2 a, Vector2 b) => Vector2.Distance(a, b) < 0.001f;
+bool NearF(float a, float b) => MathF.Abs(a - b) < 0.001f;
+bool NearV3(Vector3 a, Vector3 b) => Vector3.Distance(a, b) < 0.001f;
+bool NearQ(Quaternion a, Quaternion b) => MathF.Abs(Quaternion.Dot(a, b)) > 0.9999f;
 
 using (var scene = new ProbeScene())
 {
@@ -191,6 +195,195 @@ using (var scene = new ProbeScene())
     scene.Update(0.25f);
     Check(animated.Animator.FrameIndex == 0, "Hidden animated objects must continue updating.");
 }
+
+Check(NearF(Easing.Evaluate(EasingKind.Linear, 0.25f), 0.25f), "Linear easing must be the identity.");
+Check(NearF(Easing.Evaluate(EasingKind.SineInOut, 0f), 0f) && NearF(Easing.Evaluate(EasingKind.SineInOut, 1f), 1f),
+    "Easing curves must preserve their endpoints.");
+
+var floatCurve = AnimationCurves3D.Float([new(0f, 0f), new(1f, 10f)]);
+Check(NearF(floatCurve.Evaluate(-1f), 0f) && NearF(floatCurve.Evaluate(0.5f), 5f) && NearF(floatCurve.Evaluate(2f), 10f),
+    "Curves must interpolate and clamp outside their key range.");
+Throws<ArgumentException>(() => AnimationCurves3D.Float([]));
+Throws<ArgumentException>(() => AnimationCurves3D.Float([new(0f, 0f), new(0f, 1f)]));
+
+var transformClip = new TransformClip3D("move")
+    .AddPosition(0f, Vector3.Zero)
+    .AddPosition(1f, new Vector3(10, 0, 0))
+    .AddRotation(0f, Vector3.Zero)
+    .AddRotation(1f, new Vector3(0, 90, 0))
+    .AddScale(0f, Vector3.One)
+    .AddScale(1f, new Vector3(2, 2, 2));
+var halfPose = transformClip.Evaluate(0.5f);
+Check(NearV3(halfPose.Position, new Vector3(5, 0, 0)) &&
+    NearQ(halfPose.Rotation, Quaternion.CreateFromYawPitchRoll(MathF.PI / 4f, 0f, 0f)) &&
+    NearV3(halfPose.Scale, new Vector3(1.5f)),
+    "Transform clips must interpolate position, rotation and scale independently.");
+Throws<InvalidOperationException>(() => new TransformClip3D("empty").Evaluate(0f));
+
+using (var world = new Scene3D())
+{
+    var node = world.Add(new Object3D());
+    var animator = node.AddComponent(new TransformAnimator3D());
+    animator.Add(transformClip);
+    int starts = 0, loops = 0;
+    animator.Started += _ => starts++;
+    animator.Looped += _ => loops++;
+    animator.Play("move");
+    Check(starts == 1 && NearV3(node.Position, Vector3.Zero), "Play must apply the first pose and raise Started.");
+    Scene3DManager.Load(world);
+    Scene3DManager.Update(0.5f);
+    Check(NearV3(node.Position, new Vector3(5, 0, 0)) &&
+        NearQ(node.Orientation, Quaternion.CreateFromYawPitchRoll(MathF.PI / 4f, 0f, 0f)),
+        "Transform animation must advance automatically through the 3D scene.");
+    Scene3DManager.Update(0.75f);
+    Check(loops == 1 && NearV3(node.Position, new Vector3(2.5f, 0, 0)), "Looping clips must wrap and raise Looped.");
+    animator.Pause();
+    Scene3DManager.Update(0.25f);
+    Check(NearV3(node.Position, new Vector3(2.5f, 0, 0)) && !animator.IsPlaying, "Pause must hold the current pose.");
+    animator.Resume();
+    animator.Speed = 2;
+    Scene3DManager.Update(0.125f);
+    Check(NearV3(node.Position, new Vector3(5, 0, 0)), "Speed must scale playback.");
+    animator.Speed = 0;
+    Scene3DManager.Update(1f);
+    Check(NearV3(node.Position, new Vector3(5, 0, 0)), "Zero speed must freeze playback.");
+    animator.Speed = 1;
+    animator.Seek(0.25f);
+    Check(NearV3(node.Position, new Vector3(2.5f, 0, 0)), "Seek must apply the requested time immediately.");
+    Throws<ArgumentOutOfRangeException>(() => animator.Speed = -1);
+    Throws<ArgumentOutOfRangeException>(() => animator.Update(float.NaN));
+    Throws<KeyNotFoundException>(() => animator.Play("missing"));
+    Throws<ArgumentException>(() => animator.Add(transformClip));
+    Scene3DManager.Unload();
+}
+
+using (var world = new Scene3D())
+{
+    var once = new TransformClip3D("once") { Loop = false }
+        .AddPosition(0f, Vector3.Zero)
+        .AddPosition(1f, Vector3.UnitX);
+    var node = world.Add(new Object3D());
+    var animator = node.AddComponent(new TransformAnimator3D());
+    animator.Add(once);
+    int finished3D = 0;
+    animator.Finished += _ => finished3D++;
+    animator.Play("once");
+    Scene3DManager.Load(world);
+    Scene3DManager.Update(2f);
+    Check(NearV3(node.Position, Vector3.UnitX) && finished3D == 1 && !animator.IsPlaying,
+        "One-shot transform clips must finish once and retain the last pose.");
+    animator.Play("once");
+    Check(NearV3(node.Position, Vector3.Zero) && animator.IsPlaying, "Play after completion must restart.");
+    Scene3DManager.Unload();
+}
+
+var timeline = new Timeline3D();
+float timelineValue = 0;
+int timelineFinished = 0, timelineLooped = 0;
+timeline.Add(0f, 1f, t => timelineValue = t * 10f);
+timeline.Finished += () => timelineFinished++;
+timeline.Looped += () => timelineLooped++;
+timeline.Play();
+timeline.Update(0.5f);
+Check(NearF(timelineValue, 5f), "Timeline tracks must receive eased progress.");
+timeline.Update(0.6f);
+Check(NearF(timelineValue, 10f) && timelineFinished == 1 && !timeline.IsPlaying,
+    "Timelines must finish once and hold their final value.");
+timeline.Play(restart: true);
+timeline.Update(0.5f);
+Check(NearF(timelineValue, 5f), "Timeline restart must rewind tracks.");
+timeline.Loop = true;
+timeline.Seek(0f);
+timeline.Play();
+timeline.Update(1.5f);
+Check(timelineLooped == 1 && NearF(timelineValue, 5f), "Looping timelines must wrap and raise Looped.");
+Throws<ArgumentOutOfRangeException>(() => timeline.Add(-1f, 1f, _ => { }));
+Throws<ArgumentOutOfRangeException>(() => timeline.Speed = -1);
+
+using (var world = new Scene3D())
+{
+    var node = world.Add(new Object3D());
+    var cameraAnimator = node.AddComponent(new CameraAnimator3D());
+    cameraAnimator.AnimatePosition(0f, 1f, Vector3.Zero, new Vector3(10, 0, 0));
+    cameraAnimator.AnimateTarget(0f, 1f, Vector3.Zero, new Vector3(0, 5, 0));
+    cameraAnimator.AnimateFieldOfView(0f, 1f, 60f, 90f);
+    cameraAnimator.Play();
+    Scene3DManager.Load(world);
+    Scene3DManager.Update(0.5f);
+    Check(NearV3(world.Camera.Position, new Vector3(5, 0, 0)) &&
+        NearV3(world.Camera.Target, new Vector3(0, 2.5f, 0)) &&
+        NearF(world.Camera.FieldOfView, 75f),
+        "Camera animators must drive the owning scene camera.");
+    Scene3DManager.Unload();
+}
+
+var fakeMaterial = new FakeBackend();
+EngineBackend.Attach(fakeMaterial);
+using (var model = Model3D.Cube(new Vector3(1)))
+using (var material = Material3D.FromPreset(ShaderSet.Unlit).SetFloat("pulse", 0f))
+using (var world = new Scene3D())
+{
+    var node = world.Add(new Object3D());
+    node.AddComponent(new ModelRenderer3D(model, material));
+    var materialAnimator = node.AddComponent(new MaterialAnimator3D(material));
+    materialAnimator.AnimateFloat("pulse", 0f, 1f, 0f, 10f);
+    materialAnimator.Play();
+    Scene3DManager.Load(world);
+    Scene3DManager.Update(0.5f);
+    Scene3DManager.Render();
+    Check(NearF(fakeMaterial.ShaderFloats["pulse"], 5f) && fakeMaterial.Draw3DCount == 1,
+        "Material animators must update shader parameters before drawing.");
+    Scene3DManager.Unload();
+}
+EngineBackend.Detach(fakeMaterial);
+
+var fakeSkeletal = new FakeBackend();
+EngineBackend.Attach(fakeSkeletal);
+using (var model = Model3D.Load("fake.glb"))
+using (var animations = model.LoadAnimations())
+using (var world = new Scene3D())
+{
+    Check(animations.Clips.Count == 1 && animations.Clips[0].Name == "Idle" &&
+        animations.Clips[0].FrameCount == 12 && animations.Clips[0].BoneCount == 2,
+        "Animation sets must expose clip metadata through the backend contract.");
+    var node = world.Add(new Object3D());
+    var animator = node.AddComponent(new ModelAnimator3D(model, animations));
+    int starts = 0, loops = 0;
+    animator.Started += _ => starts++;
+    animator.Looped += _ => loops++;
+    animator.Play("Idle");
+    Check(starts == 1 && fakeSkeletal.AnimationUpdateCount == 1 && NearF(fakeSkeletal.LastAnimationFrame, 0f),
+        "Playing a skeletal clip must validate and apply its first frame.");
+    Scene3DManager.Load(world);
+    Scene3DManager.Update(0.1f);
+    Check(NearF(animator.Time, 0.1f) && NearF(fakeSkeletal.LastAnimationFrame, 6f),
+        "Skeletal playback must convert seconds to animation frames.");
+    Scene3DManager.Update(0.15f);
+    Check(loops == 1 && NearF(animator.Time, 0.05f), "Skeletal clips must loop by default.");
+    animator.Loop = false;
+    animator.Play("Idle", restart: true);
+    animator.Update(1f);
+    Check(!animator.IsPlaying && NearF(animator.Time, 0.2f),
+        "One-shot skeletal clips must stop at their duration.");
+    Throws<KeyNotFoundException>(() => animator.Play("missing"));
+    fakeSkeletal.AnimationValid = false;
+    Throws<InvalidOperationException>(() => animator.Play("Idle", restart: true));
+    fakeSkeletal.AnimationValid = true;
+    Scene3DManager.Unload();
+}
+EngineBackend.Detach(fakeSkeletal);
+
+var fakeOwnedAnimation = new FakeBackend();
+EngineBackend.Attach(fakeOwnedAnimation);
+using (var model = Model3D.Load("fake.glb"))
+{
+    var animations = model.LoadAnimations();
+    var node = new Object3D();
+    node.AddComponent(new ModelAnimator3D(model, animations, ownsAnimations: true));
+    node.Destroy();
+    Check(animations.IsDisposed, "Model animators must dispose owned animation sets.");
+}
+EngineBackend.Detach(fakeOwnedAnimation);
 
 var fake = new FakeBackend();
 EngineBackend.Attach(fake);

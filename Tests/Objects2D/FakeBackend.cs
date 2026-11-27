@@ -8,12 +8,18 @@ sealed class FakeBackend : IGameBackend
     public float FrameTime => 1f / 60f;
     public int FramesPerSecond => 60;
     public int BeginCount, EndCount, DisposeCount, DrawCount, Draw3DCount, CircleCount, TriangleCount, AdditiveDepth, TransformDepth;
+    public int AnimationUpdateCount, LastAnimationIndex;
+    public float LastAnimationFrame;
+    public bool AnimationValid = true;
     public RectF LastSource;
     public Color32 LastTint;
     public Matrix3x2 LastTransform;
     public readonly HashSet<int> Keys = new();
+    public readonly Dictionary<string, float> ShaderFloats = new(StringComparer.Ordinal);
+    public readonly Dictionary<string, Vector3> ShaderVectors = new(StringComparer.Ordinal);
     public readonly List<FakeTexture> Textures = new();
     public readonly List<FakeModel> Models = new();
+    public readonly List<FakeAnimationSet> AnimationSets = new();
     public readonly List<FakeShader> Shaders = new();
     public void Open(int width, int height, string title) => IsReady = true;
     public void SetSize(int width, int height) { }
@@ -43,15 +49,28 @@ sealed class FakeBackend : IGameBackend
     public void DrawText(string text, Vector2 position, int fontSize, Color32 color) { }
     public IModel3DResource LoadModel3D(string path) => CreateModel();
     public IModel3DResource CreatePrimitive3D(Primitive3D primitive, Vector3 dimensions, int slices, int rings) => CreateModel();
+    public IModelAnimationSetResource LoadModelAnimations3D(string path)
+    {
+        var set = new FakeAnimationSet();
+        AnimationSets.Add(set);
+        return set;
+    }
+    public void UpdateModelAnimation3D(IModel3DResource model, IModelAnimationSetResource animations, int index, float frame)
+    {
+        AnimationUpdateCount++;
+        LastAnimationIndex = index;
+        LastAnimationFrame = frame;
+    }
+    public bool IsModelAnimationValid3D(IModel3DResource model, IModelAnimationSetResource animations, int index) => AnimationValid;
     public IShaderResource LoadShader3D(string vertexPath, string fragmentPath) => CreateShader();
     public IShaderResource LoadShader3DFromSource(string vertexSource, string fragmentSource) => CreateShader();
     public IDisposable Begin3D(Camera3DState camera) => new Scope(() => { });
     public void DrawModel3D(IModel3DResource model, Matrix4x4 transform, Color32 tint) => Draw3DCount++;
     public void SetModelShader3D(IModel3DResource model, IShaderResource shader) { }
     public void SetModelTexture3D(IModel3DResource model, MaterialTextureSlot slot, ITextureResource texture) { }
-    public void SetShaderFloat(IShaderResource shader, string name, float value) { }
+    public void SetShaderFloat(IShaderResource shader, string name, float value) => ShaderFloats[name] = value;
     public void SetShaderVector2(IShaderResource shader, string name, Vector2 value) { }
-    public void SetShaderVector3(IShaderResource shader, string name, Vector3 value) { }
+    public void SetShaderVector3(IShaderResource shader, string name, Vector3 value) => ShaderVectors[name] = value;
     public void SetShaderVector4(IShaderResource shader, string name, Vector4 value) { }
     public void SetShaderTexture(IShaderResource shader, string name, ITextureResource texture) { }
     public IDisposable PushTransform(Matrix3x2 transform)
@@ -69,6 +88,7 @@ sealed class FakeBackend : IGameBackend
         DisposeCount++; IsReady = false;
         foreach (var texture in Textures) texture.Dispose();
         foreach (var model in Models) model.Dispose();
+        foreach (var animations in AnimationSets) animations.Dispose();
         foreach (var shader in Shaders) shader.Dispose();
     }
     private FakeModel CreateModel() { var model = new FakeModel(); Models.Add(model); return model; }
@@ -79,6 +99,16 @@ sealed class FakeBackend : IGameBackend
 sealed class FakeModel : IModel3DResource
 {
     public bool IsDisposed { get; private set; }
+    public void Dispose() => IsDisposed = true;
+}
+
+sealed class FakeAnimationSet : IModelAnimationSetResource
+{
+    public bool IsDisposed { get; private set; }
+    public int Count => 1;
+    public string GetName(int index) => "Idle";
+    public int GetFrameCount(int index) => 12;
+    public int GetBoneCount(int index) => 2;
     public void Dispose() => IsDisposed = true;
 }
 

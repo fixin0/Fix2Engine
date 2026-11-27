@@ -1,4 +1,5 @@
 using System.Numerics;
+using System.Runtime.InteropServices;
 using Fix2Engine.Core;
 using Raylib_cs;
 using Native = Raylib_cs.Raylib;
@@ -9,6 +10,7 @@ namespace Fix2Engine.Backends.Raylib;
 public sealed partial class RaylibBackend
 {
     private readonly HashSet<Model3DResource> _models3D = new();
+    private readonly HashSet<AnimationSetResource> _animationSets3D = new();
     private readonly HashSet<ShaderResource> _shaders3D = new();
 
     public IModel3DResource LoadModel3D(string path)
@@ -39,6 +41,38 @@ public sealed partial class RaylibBackend
         };
         return TrackModel(Native.LoadModelFromMesh(mesh));
     }
+
+    public unsafe IModelAnimationSetResource LoadModelAnimations3D(string path)
+    {
+        ArgumentException.ThrowIfNullOrWhiteSpace(path);
+        Ensure3DReady();
+        var fileName = Marshal.StringToHGlobalAnsi(path);
+        try
+        {
+            int count;
+            var pointer = Native.LoadModelAnimations((sbyte*)fileName, &count);
+            if (pointer == null || count <= 0)
+            {
+                if (pointer != null) Native.UnloadModelAnimations(pointer, count);
+                throw new InvalidOperationException($"Could not load model animations from '{path}'.");
+            }
+            return TrackAnimationSet(pointer, count);
+        }
+        finally { Marshal.FreeHGlobal(fileName); }
+    }
+
+    public void UpdateModelAnimation3D(IModel3DResource model, IModelAnimationSetResource animations, int index, float frame)
+    {
+        var modelResource = GetModel(model);
+        var animation = GetAnimationSet(animations).GetAnimation(index);
+        if (!Native.IsModelAnimationValid(modelResource.NativeModel, animation))
+            throw new InvalidOperationException("The model and animation skeleton do not match.");
+        float lastFrame = MathF.Max(0f, animation.KeyFrameCount - 1f);
+        Native.UpdateModelAnimation(modelResource.NativeModel, animation, Math.Clamp(frame, 0f, lastFrame));
+    }
+
+    public bool IsModelAnimationValid3D(IModel3DResource model, IModelAnimationSetResource animations, int index) =>
+        Native.IsModelAnimationValid(GetModel(model).NativeModel, GetAnimationSet(animations).GetAnimation(index));
 
     public IShaderResource LoadShader3D(string vertexPath, string fragmentPath)
     {
@@ -138,6 +172,13 @@ public sealed partial class RaylibBackend
         return resource;
     }
 
+    private unsafe AnimationSetResource TrackAnimationSet(ModelAnimation* pointer, int count)
+    {
+        var resource = new AnimationSetResource(this, pointer, count);
+        _animationSets3D.Add(resource);
+        return resource;
+    }
+
     private ShaderResource TrackShader(Shader shader)
     {
         var resource = new ShaderResource(this, shader);
@@ -150,6 +191,14 @@ public sealed partial class RaylibBackend
         if (model is not Model3DResource resource || resource.Owner != this)
             throw new ArgumentException("Model belongs to a different backend.", nameof(model));
         ObjectDisposedException.ThrowIf(resource.IsDisposed, model);
+        return resource;
+    }
+
+    private AnimationSetResource GetAnimationSet(IModelAnimationSetResource animations)
+    {
+        if (animations is not AnimationSetResource resource || resource.Owner != this)
+            throw new ArgumentException("Animation set belongs to a different backend.", nameof(animations));
+        ObjectDisposedException.ThrowIf(resource.IsDisposed, animations);
         return resource;
     }
 
@@ -180,6 +229,63 @@ public sealed partial class RaylibBackend
             IsDisposed = true;
             Native.UnloadModel(NativeModel);
             owner._models3D.Remove(this);
+        }
+    }
+
+    private sealed unsafe class AnimationSetResource : IModelAnimationSetResource
+    {
+        private readonly RaylibBackend _owner;
+        private readonly ModelAnimation* _pointer;
+        private readonly ModelAnimation[] _animations;
+        internal RaylibBackend Owner => _owner;
+        public int Count => _animations.Length;
+        public bool IsDisposed { get; private set; }
+
+        internal AnimationSetResource(RaylibBackend owner, ModelAnimation* pointer, int count)
+        {
+            _owner = owner;
+            _pointer = pointer;
+            _animations = new ModelAnimation[count];
+            for (int i = 0; i < count; i++) _animations[i] = pointer[i];
+        }
+
+        public string GetName(int index)
+        {
+            Validate(index);
+            var animation = _animations[index];
+            return Marshal.PtrToStringAnsi((IntPtr)animation.Name) ?? string.Empty;
+        }
+
+        public int GetFrameCount(int index)
+        {
+            Validate(index);
+            return _animations[index].KeyFrameCount;
+        }
+
+        public int GetBoneCount(int index)
+        {
+            Validate(index);
+            return _animations[index].BoneCount;
+        }
+
+        internal ModelAnimation GetAnimation(int index)
+        {
+            Validate(index);
+            return _animations[index];
+        }
+
+        private void Validate(int index)
+        {
+            ObjectDisposedException.ThrowIf(IsDisposed, this);
+            if ((uint)index >= (uint)_animations.Length) throw new ArgumentOutOfRangeException(nameof(index));
+        }
+
+        public void Dispose()
+        {
+            if (IsDisposed) return;
+            IsDisposed = true;
+            Native.UnloadModelAnimations(_pointer, _animations.Length);
+            _owner._animationSets3D.Remove(this);
         }
     }
 

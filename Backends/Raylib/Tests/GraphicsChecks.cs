@@ -3,6 +3,8 @@ using Fix2Engine.Core;
 using Fix2Engine.Backends.Raylib;
 using Fix2Engine.Components;
 using Fix2Engine.Components.Animation;
+using Fix2Engine.Components.Animation3D;
+using Fix2Engine.Components.Scene;
 using Fix2Engine.Graphics;
 using Raylib_cs;
 using static Raylib_cs.Raylib;
@@ -73,6 +75,24 @@ static class GraphicsChecks
                 check(ReferenceEquals(cached, lazy.Sprite), "Texture must be cached across frames.");
                 scene.Dispose();
                 check(cached!.IsDisposed && !shared.IsDisposed, "Scene cleanup must release owned textures while retaining borrowed resources.");
+
+                // Skeletal animation: load the CC0 SimpleSkin sample and drive its clip.
+                string gltfPath = Path.GetFullPath("TestAssets/SimpleSkin.gltf");
+                using (var skinned = Model3D.Load(gltfPath))
+                using (var anims = skinned.LoadAnimations())
+                using (var world = new Scene3D())
+                {
+                    check(anims.Clips.Count == 1 && anims.Clips[0].FrameCount == 12 && anims.Clips[0].BoneCount == 2,
+                        "The backend must expose SimpleSkin's clip metadata.");
+                    var node = world.Add(new Object3D());
+                    var animator = node.AddComponent(new ModelAnimator3D(skinned, anims));
+                    animator.Play(anims.Clips[0].Name, restart: true);
+                    Scene3DManager.Load(world);
+                    Scene3DManager.Update(0.1f);
+                    check(animator.IsPlaying && animator.CurrentFrame > 0f,
+                        "Skeletal playback must advance frames through the native backend.");
+                    Scene3DManager.Unload();
+                }
             }
             finally { texture.Dispose(); }
         }

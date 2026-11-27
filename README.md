@@ -49,7 +49,8 @@ Fix2Engine/
 Games use Fix2Engine APIs without importing Raylib or managing native UI frames.
 
 Documentation: choose the [English or Turkish tutorial](Documents/README.md). It
-covers setup, game settings, text, sprites, animation, 2D lighting, and publishing.
+covers setup, game settings, text, sprites, 2D animation, 2D lighting, 3D scenes,
+3D animation, and publishing.
 
 ## Build and create a project
 

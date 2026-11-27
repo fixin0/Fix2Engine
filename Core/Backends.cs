@@ -16,6 +16,16 @@ public interface IModel3DResource : IDisposable
     bool IsDisposed { get; }
 }
 
+/// <summary>Opaque set of skeletal animation clips owned by a rendering backend.</summary>
+public interface IModelAnimationSetResource : IDisposable
+{
+    int Count { get; }
+    string GetName(int index);
+    int GetFrameCount(int index);
+    int GetBoneCount(int index);
+    bool IsDisposed { get; }
+}
+
 /// <summary>Opaque native shader handle owned by a rendering backend.</summary>
 public interface IShaderResource : IDisposable
 {
@@ -40,6 +50,9 @@ public interface IRender3DBackend
 {
     IModel3DResource LoadModel3D(string path);
     IModel3DResource CreatePrimitive3D(Primitive3D primitive, Vector3 dimensions, int slices, int rings);
+    IModelAnimationSetResource LoadModelAnimations3D(string path);
+    void UpdateModelAnimation3D(IModel3DResource model, IModelAnimationSetResource animations, int index, float frame);
+    bool IsModelAnimationValid3D(IModel3DResource model, IModelAnimationSetResource animations, int index);
     IShaderResource LoadShader3D(string vertexPath, string fragmentPath);
     IShaderResource LoadShader3DFromSource(string vertexSource, string fragmentSource);
     IDisposable Begin3D(Camera3DState camera);

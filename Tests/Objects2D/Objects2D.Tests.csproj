@@ -10,4 +10,7 @@
     <ProjectReference Include="../../Runner/Runner.csproj" />
     <Compile Include="../../Backends/Raylib/Tests/GraphicsChecks.cs" Link="GraphicsChecks.cs" />
   </ItemGroup>
+  <ItemGroup>
+    <None Update="TestAssets/**/*" CopyToOutputDirectory="PreserveNewest" />
+  </ItemGroup>
 </Project>

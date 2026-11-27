@@ -10,6 +10,8 @@ public class Object3D : IDisposable
     private readonly List<Component3D> _components = new();
     private readonly IReadOnlyList<Object3D> _childrenView;
     private readonly IReadOnlyList<Component3D> _componentsView;
+    private Vector3 _rotation;
+    private Quaternion _orientation = Quaternion.Identity;
 
     public string Name { get; set; }
     public bool IsActive { get; set; } = true;
@@ -18,7 +20,28 @@ public class Object3D : IDisposable
     public bool IsDestroyed { get; private set; }
     public Vector3 Position { get; set; }
     /// <summary>Euler rotation in degrees: X pitch, Y yaw, Z roll.</summary>
-    public Vector3 Rotation { get; set; }
+    public Vector3 Rotation
+    {
+        get => _rotation;
+        set
+        {
+            _rotation = value;
+            _orientation = Quaternion.CreateFromYawPitchRoll(ToRadians(value.Y), ToRadians(value.X), ToRadians(value.Z));
+        }
+    }
+    /// <summary>Quaternion orientation. Setting it also updates <see cref="Rotation"/> to equivalent Euler angles.</summary>
+    public Quaternion Orientation
+    {
+        get => _orientation;
+        set
+        {
+            if (!float.IsFinite(value.X) || !float.IsFinite(value.Y) || !float.IsFinite(value.Z) || !float.IsFinite(value.W) ||
+                value.LengthSquared() < 1e-12f)
+                throw new ArgumentOutOfRangeException(nameof(value));
+            _orientation = Quaternion.Normalize(value);
+            _rotation = ToEulerDegrees(_orientation);
+        }
+    }
     public Vector3 Scale { get; set; } = Vector3.One;
     public Object3D? Parent { get; private set; }
     public Scene3D? Scene { get; private set; }
@@ -27,7 +50,7 @@ public class Object3D : IDisposable
     public bool IsActiveInHierarchy => !IsDestroyed && IsActive && (Parent?.IsActiveInHierarchy ?? true);
     public bool IsVisibleInHierarchy => IsVisible && (Parent?.IsVisibleInHierarchy ?? true);
     public Matrix4x4 LocalTransform => Matrix4x4.CreateScale(Scale) *
-        Matrix4x4.CreateFromYawPitchRoll(ToRadians(Rotation.Y), ToRadians(Rotation.X), ToRadians(Rotation.Z)) *
+        Matrix4x4.CreateFromQuaternion(_orientation) *
         Matrix4x4.CreateTranslation(Position);
     public Matrix4x4 GlobalTransform => LocalTransform * (Parent?.GlobalTransform ?? Matrix4x4.Identity);
     public Vector3 GlobalPosition => Vector3.Transform(Vector3.Zero, GlobalTransform);
@@ -145,6 +168,25 @@ public class Object3D : IDisposable
     protected virtual void OnDestroy() { }
     protected void ThrowIfDestroyed() => ObjectDisposedException.ThrowIf(IsDestroyed, this);
     private static float ToRadians(float degrees) => degrees * MathF.PI / 180f;
+    private static float ToDegrees(float radians) => radians * 180f / MathF.PI;
+    private static Vector3 ToEulerDegrees(Quaternion orientation)
+    {
+        var matrix = Matrix4x4.CreateFromQuaternion(orientation);
+        float sinPitch = Math.Clamp(-matrix.M32, -1f, 1f);
+        float pitch = MathF.Asin(sinPitch);
+        float yaw, roll;
+        if (MathF.Abs(sinPitch) < 0.999999f)
+        {
+            yaw = MathF.Atan2(matrix.M31, matrix.M33);
+            roll = MathF.Atan2(matrix.M12, matrix.M22);
+        }
+        else
+        {
+            yaw = MathF.Atan2(-matrix.M13, matrix.M11);
+            roll = 0f;
+        }
+        return new Vector3(ToDegrees(pitch), ToDegrees(yaw), ToDegrees(roll));
+    }
     private static void Attempt(Action action, ICollection<Exception> errors)
     {
         try { action(); }
